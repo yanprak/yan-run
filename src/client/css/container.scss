@@ -1,0 +1,89 @@
+//container grid composition
+
+.container {
+  display: flex;
+  overflow: auto;
+  align-items: stretch;
+  position: relative;
+  margin: 0;
+  height: inherit;
+}
+
+// modification
+// class = "container container_[name]"
+
+.container_isColumn {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.container_center {
+  justify-content: center;
+  align-items: center;
+}
+
+.container_stretch {
+  align-items: stretch;
+}
+
+.container_centerStart {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container_size_auto {
+  flex-grow: 1;
+}
+
+.container_size_fix {
+  flex-shrink: 0;
+}
+
+.container_size_1 {
+  flex: 0 0 8.333333333333334%;
+  min-width: 0;
+}
+.container_size_2 {
+  flex: 0 0 16.666666666666668%;
+  min-width: 0;
+}
+.container_siz_size_3 {
+  flex: 0 0 25%;
+  min-width: 0;
+}
+.container_size_4 {
+  flex: 0 0 33.333333333333336%;
+  min-width: 0;
+}
+.container_size_5 {
+  flex: 0 0 41.66666666666667%;
+  min-width: 0;
+}
+.container_size_6 {
+  flex: 0 0 50%;
+  min-width: 0;
+}
+.container_size_7 {
+  flex: 0 0 58.333333333333336%;
+  min-width: 0;
+}
+.container_size_8 {
+  flex: 0 0 66.66666666666667%;
+  min-width: 0;
+}
+.container_size_9 {
+  flex: 0 0 75%;
+  min-width: 0;
+}
+.container_size_10 {
+  flex: 0 0 83.33333333333334%;
+  min-width: 0;
+}
+.container_size_11 {
+  flex: 0 0 91.66666666666667%;
+  min-width: 0;
+}
+.container_size_12 {
+  flex: 0 0 100%;
+  min-width: 0;
+}
