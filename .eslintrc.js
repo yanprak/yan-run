@@ -1,4 +1,6 @@
 module.exports = {
+  root: true,
+
   parser: '@typescript-eslint/parser',
 
   parserOptions: {
@@ -18,7 +20,8 @@ module.exports = {
 
   env: {
     'es6': true,
-    'browser': true
+    'browser': true,
+    'node': true
   },
 
   rules: {
@@ -35,16 +38,5 @@ module.exports = {
 
     'react/destructuring-assignment': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off'
-    // '@typescript-eslint/no-unused-vars': 'off',
-    // '@typescript-eslint/no-explicit-any': 'off',
-    // '@typescript-eslint/comma-dangle': 'off',
-    // '@typescript-eslint/no-unsafe-assignment': 'off',
-    // '@typescript-eslint/explicit-module-boundary-types': 'off',
-    // '@typescript-eslint/no-non-null-assertion': 'off',
-    // '@typescript-eslint/no-unsafe-call': 'off',
-    // '@typescript-eslint/no-unsafe-return': 'off',
-    // '@typescript-eslint/no-unsafe-member-access': 'off',
-    // '@typescript-eslint/no-use-before-define': 'off',
-    // '@typescript-eslint/unbound-method': 'off'
   }
 };
