@@ -1,6 +1,6 @@
 import React from 'react';
 import {Props} from './types';
-import './Button.scss';
+import './button.scss';
 
 const Button: Props = ({children, size, styleType, ...otherProps}) => {
   return (
