@@ -1,4 +1,4 @@
-import {FC, HTMLAttributes} from 'react';
+import { FC, HTMLAttributes } from 'react';
 
 export type OwnProps = {
   url?: string;
