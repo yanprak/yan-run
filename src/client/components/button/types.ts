@@ -1,4 +1,4 @@
-import {FC, ButtonHTMLAttributes} from 'react';
+import { FC, ButtonHTMLAttributes } from 'react';
 
 export type OwnProps = {
   size: 'small' | 'large';

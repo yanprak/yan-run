@@ -1,10 +1,16 @@
 import React from 'react';
-import {Props} from './types';
+import { Props, OwnProps } from './types';
 import './button.scss';
 
-const Button: Props = ({children, size, styleType, ...otherProps}) => {
+const Button: Props = (props: OwnProps) => {
+  const {
+    children,
+    size,
+    styleType,
+    ...otherProps
+  } = props;
   return (
-    <button className={`button button_${styleType} button_${size}`} {...otherProps}>{children}</button>
+    <button type="button" className={`button button_${styleType} button_${size}`} {...otherProps}>{children}</button>
   );
 };
 
