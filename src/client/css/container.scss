@@ -12,7 +12,7 @@
   // modification
   // class = "container container_[name]"
 
-  &_isColumn {
+  &_is-column {
     flex-direction: column;
     flex-wrap: nowrap;
   }
@@ -21,7 +21,7 @@
     margin: 0 auto;
   }
 
-  &_centerItems {
+  &_center-items {
     justify-content: center;
     align-items: center;
   }
@@ -30,21 +30,21 @@
     align-items: stretch;
   }
 
-  &_centerStart {
+  &_center-start {
     justify-content: center;
     align-items: flex-start;
   }
 
-  &_size_auto {
+  &_size-auto {
     flex-grow: 1;
   }
 
-  &_size_fix {
+  &_size-fix {
     flex-shrink: 0;
   }
 
   @for $i from 12 through 1 {
-    &_size_#{$i} {
+    &_size-#{$i} {
       flex-grow: 0;
       flex-shrink: 0;
       flex-basis: #{100%*$i/12};
