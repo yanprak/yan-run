@@ -1,9 +1,9 @@
-import {ChangeEvent, InputHTMLAttributes} from "react";
+import { ChangeEvent, InputHTMLAttributes } from 'react';
 
 export type OwnProps = {
-  handleChange?: (event: ChangeEvent) => void
+  handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
   errormessage?: string
   title?: string
-} & InputHTMLAttributes<HTMLInputElement>
+} & InputHTMLAttributes<HTMLInputElement>;
 
 export type Props = OwnProps;
