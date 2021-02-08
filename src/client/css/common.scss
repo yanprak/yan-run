@@ -1,9 +1,17 @@
 @import "typo";
 @import "var";
-@import "var-color";
 @import "fun-color";
+@import "var-color";
 @import "container";
 @import "margin";
+
+* {
+  &, &::before,  &::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -21,7 +29,7 @@
   display: block;
 }
 
-.showFlex {
+.show-flex {
   display: flex;
 }
 
@@ -38,9 +46,6 @@ body {
   height: 100%;
   background: var(--default-bg-color);
   color: var(--default-color);
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   overflow: auto
 }
 
