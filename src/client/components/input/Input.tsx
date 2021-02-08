@@ -4,9 +4,8 @@ import './input.scss';
 
 const Input = (props: Props) => (
   <div className="input">
-    <label className="input-label" htmlFor={props.name}>
-      {props.title}
-    </label>
+    {(props.title && props.title.length > 0)
+    && <label className="input-label" htmlFor={props.name}>{props.title}</label>}
     <input
       id={props.name}
       name={props.name}
