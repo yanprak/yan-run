@@ -1,6 +1,7 @@
 @import "typo";
 @import "var";
 @import "var-color";
+@import "fun-color";
 @import "container";
 @import "margin";
 
@@ -28,15 +29,15 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: var(--defoult-bg-color);
-  color: var(--defoult-color);
+  background: var(--default-bg-color);
+  color: var(--default-color);
 }
 
 .main {
   width: 100%;
   height: 100%;
-  background: var(--defoult-bg-color);
-  color: var(--defoult-color);
+  background: var(--default-bg-color);
+  color: var(--default-color);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
