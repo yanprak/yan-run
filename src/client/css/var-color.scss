@@ -1,34 +1,33 @@
 :root {
-
+  //default
   --default-bg-color: #363636;
   --default-bg-hover-color: lighten(#363636, 10%);
-  --default-color: #CBCBCB;
+  --default-color: #cbcbcb;
   --default-border-color: #505050;
-
-  --primary-bg-color: #5B8A20;
-  --primary-bg-hover-color: lighten(#5B8A20, 10%);
+  //primary
+  --primary-bg-color: #5b8a20;
+  --primary-bg-hover-color: lighten(#5b8a20, 10%);
   --primary-color: #fff;
-
+  //secondary
   --secondary-bg-color: #404040;
   --secondary-bg-hover-color: lighten(#404040, 10%);
-  --secondary-color: #83D21F;
-
-  --success-bg-color: #147C4A;
-  --success-bg-hover-color: lighten(#147C4A, 10%);
+  --secondary-color: #83d21f;
+  //success
+  --success-bg-color: #147c4a;
+  --success-bg-hover-color: lighten(#147c4a, 10%);
   --success-color: #fff;
-
-  --error-color: #FF6C6C;
-
+  //error
+  --error-color: #ff6c6c;
+  //ghost
   --ghost-bg-color: transparent;
-  --ghost-bg-hover-color: rgba(265,256,256, .1);
-  --ghost-color: #CBCBCB;
-
+  --ghost-bg-hover-color: rgba(255, 255, 255, 0.1);
+  --ghost-color: #cbcbcb;
+  //successInvert
   --successInvert-bg-color: transparent;
-  --successInvert-bg-hover-color: rgba(265,256,256, .1);
+  --successInvert-bg-hover-color: rgba(255, 255, 255, 0.1);
   --successInvert-color: #8cf38c;
-
+  //dark
   --dark-bg-color: #202020;
-
-  --focus-border-color: #ffffff;
-
+  //focus
+  --focus-border-color: #fff;
 }

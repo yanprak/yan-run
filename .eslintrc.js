@@ -37,6 +37,7 @@ module.exports = {
     ],
 
     'react/destructuring-assignment': 'off',
+    'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off'
   }
 };
