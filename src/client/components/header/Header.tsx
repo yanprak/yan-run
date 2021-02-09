@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Avatar from '../avatar';
+
 import './header.scss';
 
 export default function Header() {
@@ -26,10 +28,8 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="header__user-nav">
-            <a className="header__user-nav-link" href="/signin">Sign In</a>
-            <a className="header__user-nav-link" href="/signup">Sign Up</a>
-          </div>
+          <Avatar />
+
         </div>
       </div>
     </header>
