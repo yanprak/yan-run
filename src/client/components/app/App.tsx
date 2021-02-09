@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 
 import {
@@ -15,22 +14,13 @@ import {
   Forum,
   Leaderboard,
 } from '../../pages';
+import Header from '../header';
 
 export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/game">Game</Link></li>
-            <li><Link to="/signin">Вход</Link></li>
-            <li><Link to="/signup">Регистрация</Link></li>
-            <li><Link to="/profile">Профиль</Link></li>
-            <li><Link to="/forum">Форум</Link></li>
-            <li><Link to="/leaderboard">Рйтинг / top 10</Link></li>
-          </ul>
-        </nav>
+        <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/game" component={Game} />
