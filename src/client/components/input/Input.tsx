@@ -2,12 +2,12 @@ import React from 'react';
 import { Props } from './types';
 import './input.scss';
 
-const Input: React.FunctionComponent = ({ title, errormessage, ...props }: Props) => (
-  <div className="input">
-    {title && <label className="input-label" htmlFor={props.name}>{title}</label>}
+const Input: React.FC<Props> = ({ title, errormessage, ...props }: Props) => (
+  <label className="input">
+    {title && <h6 className="input-title">{title}</h6>}
     <input className="input-control" {...props} />
     {errormessage && <span className="input-error">{errormessage}</span>}
-  </div>
+  </label>
 );
 
 export default Input;
