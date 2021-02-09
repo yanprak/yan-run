@@ -1,20 +1,20 @@
 :root {
   //default
   --default-bg-color: #363636;
-  --default-bg-hover-color: lighten(#363636, 10%);
+  --default-bg-hover-color: #4e4c4c;
   --default-color: #cbcbcb;
   --default-border-color: #505050;
   //primary
   --primary-bg-color: #5b8a20;
-  --primary-bg-hover-color: lighten(#5b8a20, 10%);
+  --primary-bg-hover-color: #6da328;
   --primary-color: #fff;
   //secondary
   --secondary-bg-color: #404040;
-  --secondary-bg-hover-color: lighten(#404040, 10%);
+  --secondary-bg-hover-color: #5f5f5f;
   --secondary-color: #83d21f;
   //success
   --success-bg-color: #147c4a;
-  --success-bg-hover-color: lighten(#147c4a, 10%);
+  --success-bg-hover-color: #18995b;
   --success-color: #fff;
   //error
   --error-color: #ff6c6c;
