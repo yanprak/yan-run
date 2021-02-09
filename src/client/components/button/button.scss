@@ -1,4 +1,5 @@
-@import "../../css/var";
+@import '../../css/var';
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap');
 
 .button {
   border-radius: $base-radius;
@@ -6,6 +7,7 @@
   padding: 12px;
   margin: 10px;
   cursor: pointer;
+  font-family: 'Balsamiq Sans', cursive;
 
   &:focus {
     border-color: var(--focus-border-color);

@@ -9,8 +9,9 @@ const Button: FC<OwnProps> = (props: OwnProps) => {
     styleType,
     ...otherProps
   } = props;
+  const className = `button button_${styleType} button_${size} ${props.className ? props.className : ''}`;
   return (
-    <button type="button" className={`button button_${styleType} button_${size}`} {...otherProps}>{children}</button>
+    <button type="button" {...otherProps} className={className}>{children}</button>
   );
 };
 
