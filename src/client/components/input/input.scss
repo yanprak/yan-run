@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
 
-  &-label {
+  &-title {
     font-size: 1.2rem;
     margin-top: 1.2rem;
     margin-bottom: .4rem;
@@ -13,11 +13,11 @@
     background: var(--default-bg-color);
     border: 1px solid var(--default-border-color);
     box-sizing: border-box;
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 12px;
+    border-radius: $base-radius;
+    font-size: 1.4rem;
+    line-height: 1.2rem;
     outline: none;
-    padding: 0 12px;
+    padding: 0 1.2rem;
     color: inherit;
 
     &:focus {
