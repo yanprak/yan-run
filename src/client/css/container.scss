@@ -1,0 +1,51 @@
+//container grid composition
+
+.container {
+  display: flex;
+  overflow: auto;
+  align-items: stretch;
+  position: relative;
+  margin: 0;
+  height: inherit;
+  max-width: 1200px;
+
+  // modification
+  // class = "container container_[name]"
+
+  &_is-column {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  &_center {
+    margin: 0 auto;
+  }
+
+  &_center-items {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_center-start {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &_size-auto {
+    flex-grow: 1;
+  }
+
+  &_size-fix {
+    flex-shrink: 0;
+  }
+
+  @for $i from 12 through 1 {
+    &_size-#{$i} {
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: #{100%*$i/12};
+      min-width: 0;
+    }
+  }
+}
+

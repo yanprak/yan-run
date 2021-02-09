@@ -1,0 +1,60 @@
+@import "var";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap');
+
+html {
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: $font-size;
+}
+
+.h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: inherit;
+  font-size: 4rem;
+  line-height: 4rem;
+  margin: 0;
+}
+
+.h2 {
+  font-family: 'Press Start 2P', cursive;
+  color: inherit;
+  font-size: 3.2rem;
+  line-height: 4rem;
+  margin: 0;
+}
+
+.h3 {
+  font-family: 'Press Start 2P', cursive;
+  color: inherit;
+  font-size: 2rem;
+  line-height: 2rem;
+  margin: 0;
+}
+
+.h4 {
+  color: inherit;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  margin: 0;
+}
+
+.h6 {
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin: 0;
+}
+
+.text {
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  margin: 0;
+}
+
+.caption {
+  color: inherit;
+  font-size: .9rem;
+  line-height: 1rem;
+  margin: 0;
+}
