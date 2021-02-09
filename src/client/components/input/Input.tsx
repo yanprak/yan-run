@@ -4,7 +4,12 @@ import './input.scss';
 
 class Input extends PureComponent<Props> {
   render() {
-    const { title, errormessage, name, ...otherProps } = this.props;
+    const {
+      title,
+      errormessage,
+      name,
+      ...otherProps
+    } = this.props;
     return (
       <label htmlFor={name} className="input">
         {title && <h6 className="input-title">{title}</h6>}
