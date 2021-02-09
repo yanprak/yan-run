@@ -1,3 +1,10 @@
 $base-radius: 4px;
 $step: 4px;
 $font-size: 10px;
+
+:root {
+  --base-radius: $base-radius;
+  --base-step: $step;
+  --base-font: $font-size;
+}
+
