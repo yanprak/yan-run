@@ -1,0 +1,26 @@
+.avatar {
+  border: 1px solid var(--default-color);
+  border-radius: 50%;
+  background-color: var(--default-color);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &_small {
+    $size: 36px;
+    height: $size;
+    width: $size;
+  }
+
+  &_medium {
+    $size: 48px;
+    height: $size;
+    width: $size;
+  }
+
+  &_large {
+    $size: 156px;
+    height: $size;
+    width: $size;
+  }
+}
