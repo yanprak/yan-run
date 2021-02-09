@@ -4,7 +4,7 @@
 
 html {
   font-family: 'Balsamiq Sans', cursive;
-  font-size: $font-size;
+  font-size: var(--base-font);
 }
 
 .h1 {
@@ -54,7 +54,7 @@ html {
 
 .caption {
   color: inherit;
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 1rem;
   margin: 0;
 }
