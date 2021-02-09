@@ -29,6 +29,7 @@ module.exports = {
     'no-plusplus': 'off',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
+    'linebreak-style': 'off',
 
     'max-len': ['error', { 'code': 120 }],
     'arrow-parens': [
