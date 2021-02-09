@@ -1,8 +1,8 @@
-import React from 'react';
-import { Props, OwnProps } from './types';
+import React, { FC } from 'react';
+import { OwnProps } from './types';
 import './button.scss';
 
-const Button: Props = (props: OwnProps) => {
+const Button: FC<OwnProps> = (props: OwnProps) => {
   const {
     children,
     size,
