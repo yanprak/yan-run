@@ -1,0 +1,38 @@
+.input {
+  display: flex;
+  flex-direction: column;
+
+  &-title {
+    font-size: 1.2rem;
+    margin-top: 1.2rem;
+    margin-bottom: .4rem;
+  }
+
+  &-control {
+    height: 3.2rem;
+    background: var(--default-bg-color);
+    border: 1px solid var(--default-border-color);
+    box-sizing: border-box;
+    border-radius: var(--base-radius);
+    font-size: 1.4rem;
+    line-height: 1.2rem;
+    outline: none;
+    padding: 0 1.2rem;
+    color: inherit;
+
+    &:focus {
+      box-shadow: 0 0 0 1px var(--focus-border-color);
+    }
+  }
+
+  &-text_focus {
+    box-shadow: 0 0 0 1px var(--focus-border-color);
+  }
+
+  &-error {
+    font-size: 1rem;
+    color: var(--error-color);
+    margin-top: .8rem;
+  }
+
+}
