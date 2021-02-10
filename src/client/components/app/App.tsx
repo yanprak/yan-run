@@ -13,13 +13,14 @@ import {
   SignUp,
   Forum,
   Leaderboard,
+  NotFound,
 } from '../../pages';
 import Header from '../header';
 
 export default function App() {
   return (
     <Router>
-      <div>
+      <div className="main">
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/forum" component={Forum} />
           <Route path="/leaderboard" component={Leaderboard} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
     </Router>
