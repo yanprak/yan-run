@@ -6,11 +6,11 @@
 .margin {
   @for $i from 1 through 10 {
     &_s-#{$i} {
-      margin: $step * $i;
+      margin: 4 * $i;
     }
     &-tb_s-#{$i} {
-      margin-top: $step * $i;
-      margin-bottom: $step * $i;
+      margin-top: 4 * $i;
+      margin-bottom: 4 * $i;
     }
   }
 }

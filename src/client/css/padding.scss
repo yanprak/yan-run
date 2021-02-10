@@ -6,11 +6,11 @@
 .padding {
   @for $i from 1 through 10 {
     &_s-#{$i} {
-      padding: $step * $i;
+      padding: 4 * $i;
     }
     &-tb_s-#{$i} {
-      padding-top: $step * $i;
-      padding-bottom: $step * $i;
+      padding-top: 4 * $i;
+      padding-bottom: 4 * $i;
     }
   }
 }
