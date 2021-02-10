@@ -1,4 +1,4 @@
-@import "var";
+$step: 0.4;
 
 // .margin_s-[size],
 // size = $step*N, N = [1..10]
@@ -6,11 +6,11 @@
 .margin {
   @for $i from 1 through 10 {
     &_s-#{$i} {
-      margin: 4 * $i;
+      margin: #{$step * $i}rem;
     }
-    &-tb_s-#{$i} {
-      margin-top: 4 * $i;
-      margin-bottom: 4 * $i;
+    &_tb_s-#{$i} {
+      margin-top: #{$step * $i}rem;
+      margin-bottom: #{$step * $i}rem;
     }
   }
 }

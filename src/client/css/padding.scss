@@ -1,16 +1,15 @@
-@import "var";
-
+$step: 0.4;
 // .padding_s-[size],
 // size = $step*N, N = [1..10]
 
 .padding {
   @for $i from 1 through 10 {
     &_s-#{$i} {
-      padding: 4 * $i;
+      padding: #{$step * $i}rem;
     }
-    &-tb_s-#{$i} {
-      padding-top: 4 * $i;
-      padding-bottom: 4 * $i;
+    &_tb_s-#{$i} {
+      padding-top: #{$step * $i}rem;
+      padding-bottom: #{$step * $i}rem;
     }
   }
 }
