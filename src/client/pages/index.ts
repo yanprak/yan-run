@@ -5,8 +5,9 @@ import SignUp from './signup';
 import Profile from './profile';
 import Leaderboard from './leaderboard';
 import Forum from './forum';
-import NotFound from './NotFound';
-import ServerError from './ServerError';
+import NotFound from './not-found';
+import ServerError from './server-error';
+import Topic from './topic';
 
 export {
   Home,
@@ -18,4 +19,5 @@ export {
   Forum,
   NotFound,
   ServerError,
+  Topic,
 };
