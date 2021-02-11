@@ -8,7 +8,7 @@ export default function ErrorPage({ code, description }: OwnProps) {
     <div className="page error-page container container_is-column container_center-items container_size-auto">
       <h1 className="h1 error-page__code">{code}</h1>
       <h3 className="h3 error-page__description margin-tb_s-6">{description}</h3>
-      <Link className="header__logo" to="/">
+      <Link to="/">
         <Button size="small" styleType="primary">Главная</Button>
       </Link>
     </div>
