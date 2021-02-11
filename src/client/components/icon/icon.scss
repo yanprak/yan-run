@@ -1,0 +1,11 @@
+.material-icons {
+  &.icon {
+    &_size {
+      @for $i from 1 through 4 {
+        &-#{$i} {
+          font-size: #{1.2 * $i}rem;
+        }
+      }
+    }
+  }
+}
