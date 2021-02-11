@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import Avatar from './ThreadLink';
+import ThreadLink from './ThreadLink';
 import { OwnProps } from './types';
 
-export default memo<OwnProps>(Avatar);
+export default memo<OwnProps>(ThreadLink);
