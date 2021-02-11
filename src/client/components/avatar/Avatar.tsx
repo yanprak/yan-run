@@ -1,8 +1,8 @@
-import React from 'react';
-import { Props, OwnProps } from './types';
+import React, { FC } from 'react';
+import { OwnProps } from './types';
 import './avatar.scss';
 
-const Avatar: Props = (props: OwnProps) => {
+const Avatar: FC<OwnProps> = (props: OwnProps) => {
   const { url, size, ...otherProps } = props;
   const avatarStyle = url ? { backgroundImage: `url(${url})` } : {};
   return (
