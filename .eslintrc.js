@@ -30,6 +30,9 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'linebreak-style': 'off',
+    'no-case-declarations': 'off',
+    'no-useless-escape': 'off',
+    'object-curly-newline': 'off',
 
     'max-len': ['error', { 'code': 120 }],
     'arrow-parens': [
@@ -39,6 +42,7 @@ module.exports = {
 
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off'
   }
 };
