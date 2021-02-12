@@ -2,9 +2,7 @@ import React from 'react';
 import { Props } from './types';
 import './input.scss';
 
-export default function Input({ title, error, ...props }: Props) {
-  const { name } = props;
-  const errorMessage: string = error ? error[name] : '';
+export default function Input({ title, errorMessage, ...props }: Props) {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className="input">

@@ -10,16 +10,14 @@ export type ResultCheckField = {
 };
 
 export type Field = {
+  value: string,
   type: string,
-  value: string
+  name?: string
+  errorMessage?: string
 };
 
 export type State = {
-  [key in string]: string[]
-};
-
-export type UseProps = {
-  [key in string]: string
+  [key in string]: Field
 };
 
 export type FormProps = {

@@ -49,14 +49,14 @@ export function checkField(field: Field): ResultCheckField {
   return { test, message };
 }
 
-export function getProps(children: ReactChild[]) {
+export function getPropsField(children: ReactChild[]) {
   const state: State = {};
 
   children.forEach(child => {
     if (React.isValidElement(child)) {
-      const { name, type } = child.props;
+      const { name, type } = child.props as Field;
       if (name) {
-        state[name] = [type as string, ''];
+        state[name] = { type, value: '', name, errorMessage: '' };
       }
     }
   });

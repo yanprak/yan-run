@@ -6,7 +6,7 @@ export type Indexed = {
 
 export type InputProps = {
   name: string,
-  error?: Indexed
+  errorMessage?: string
   title?: string,
 } & InputHTMLAttributes<HTMLInputElement>;
 
