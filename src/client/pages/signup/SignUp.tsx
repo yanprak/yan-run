@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './signin.scss';
 import Input from '../../components/input';
 import Button from '../../components/button';
 import { useForm } from '../../utils/form/useForm';
@@ -30,7 +29,10 @@ export default function SignUp() {
 
   return (
     <div className="container container_center container_center-start">
-      <div className="theme-bg-secondary sign round padding_s-3 margin_s-6">
+      <div
+        className="theme-bg-secondary sign round padding_s-3 margin_s-6"
+        style={{ width: '320px' }}
+      >
         <form onBlur={handleBlur} onChange={handleChange} onSubmit={onSubmit}>
           <Input
             type="email"
