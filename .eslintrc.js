@@ -33,6 +33,7 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-useless-escape': 'off',
     'object-curly-newline': 'off',
+    'import/prefer-default-export': 'off',
 
     'max-len': ['error', { 'code': 120 }],
     'arrow-parens': [

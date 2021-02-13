@@ -26,6 +26,7 @@ export const useForm = (initState: State, fun?:FormCB) => {
     },
     [
       state,
+      fun,
     ],
   );
 

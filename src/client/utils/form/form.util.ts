@@ -1,9 +1,6 @@
-import React from 'react';
 import {
   ResultCheckField,
   Field,
-  State,
-  ReactChild,
 } from './types';
 
 export function checkField(field: Field): ResultCheckField {
@@ -47,18 +44,4 @@ export function checkField(field: Field): ResultCheckField {
       break;
   }
   return { test, message };
-}
-
-export function getPropsField(children: ReactChild[]) {
-  const state: State = {};
-
-  children.forEach(child => {
-    if (React.isValidElement(child)) {
-      const { name, type } = child.props as Field;
-      if (name) {
-        state[name] = { type, value: '', name, errorMessage: '' };
-      }
-    }
-  });
-  return state;
 }

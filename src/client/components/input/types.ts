@@ -11,5 +11,3 @@ export type InputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export type Props = InputProps;
-
-
