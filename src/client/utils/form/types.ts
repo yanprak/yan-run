@@ -1,5 +1,5 @@
-import { FormHTMLAttributes, ReactElement } from 'react';
-import { Props } from '../input/types';
+import { ReactElement } from 'react';
+import { Props } from '../../components/input/types';
 
 export type ReactText = string | number;
 export type ReactChild = ReactElement<Props> | ReactText;
@@ -20,7 +20,4 @@ export type State = {
   [key in string]: Field
 };
 
-export type FormProps = {
-  cb?: (prop: unknown) => void,
-  children: ReactChild[];
-} & FormHTMLAttributes<HTMLFormElement>;
+export type FormCB = (data:State) => void;
