@@ -37,7 +37,7 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
         [name]: { type, value },
       }));
     },
-    [state],
+    [],
   );
 
   const handleBlur = useCallback(
@@ -52,7 +52,7 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
         }));
       }
     },
-    [state],
+    [],
   );
   const getErrorMessage = useCallback(
     (name: string) => (state[name] ? state[name].errorMessage : ''),
