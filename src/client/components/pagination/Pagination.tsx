@@ -1,49 +1,50 @@
 import React, { FC, ReactNode } from 'react';
 import { OwnProps } from './types';
 import './pagination.scss';
-import PageLinkButton from '../page-link-button';
+import PaginationButton from './PaginationButton';
+
+function createArrayOfNumbers(n: number): number[] {
+  return Array(n).fill(0).map((_, index) => index + 1);
+}
+
+function prepareRelevantPageIndexes(currentPageIndex: number, totalPages: number): number[] {
+  if (totalPages < 4) {
+    return createArrayOfNumbers(totalPages);
+  }
+
+  if (currentPageIndex === 1) {
+    return createArrayOfNumbers(3);
+  }
+
+  if (currentPageIndex === totalPages) {
+    return [totalPages - 2, totalPages - 1, totalPages];
+  }
+
+  return [currentPageIndex - 1, currentPageIndex, currentPageIndex + 1];
+}
 
 const Pagination: FC<OwnProps> = (props: OwnProps) => {
   const {
     current,
     total,
+    path,
     ...otherProps
   } = props;
-
-  function createArrayOfNumbers(n: number): number[] {
-    return Array.from(Array(n).keys()).map((index: number) => index + 1);
-  }
-
-  function prepareRelevantPageIndexes(currentPageIndex: number, totalPages: number): number[] {
-    if (totalPages < 4) {
-      return createArrayOfNumbers(totalPages);
-    }
-
-    if (currentPageIndex === 1) {
-      return createArrayOfNumbers(3);
-    }
-
-    if (currentPageIndex === totalPages) {
-      return [totalPages - 2, totalPages - 1, totalPages];
-    }
-
-    return [currentPageIndex - 1, currentPageIndex, currentPageIndex + 1];
-  }
 
   function createPageLinks(currentPageIndex: number, totalPages: number): ReactNode[] {
     const allLinks = [];
 
     if (totalPages > 3 && currentPageIndex !== 1) {
-      allLinks.push(<PageLinkButton isSelected={false} text="&laquo;" path="/topic/1" />);
-      allLinks.push(<PageLinkButton isSelected={false} text="&lsaquo;" path={`/topic/${currentPageIndex - 1}`} />);
+      allLinks.push(<PaginationButton isSelected={false} text="&laquo;" path={`${path}/1`} />);
+      allLinks.push(<PaginationButton isSelected={false} text="&lsaquo;" path={`${path}/${currentPageIndex - 1}`} />);
     }
 
     const pageIndexes = prepareRelevantPageIndexes(currentPageIndex, totalPages);
     const pageLinks = pageIndexes.map((pageIndex: number) => (
-      <PageLinkButton
+      <PaginationButton
         isSelected={currentPageIndex === pageIndex}
         text={pageIndex}
-        path={`/topic/${pageIndex}`}
+        path={`${path}/${pageIndex}`}
         key={pageIndex}
       />
     ));
@@ -51,8 +52,8 @@ const Pagination: FC<OwnProps> = (props: OwnProps) => {
     allLinks.push(pageLinks);
 
     if (totalPages > 3 && currentPageIndex !== totalPages) {
-      allLinks.push(<PageLinkButton isSelected={false} text="&rsaquo;" path={`/topic/${currentPageIndex + 1}`} />);
-      allLinks.push(<PageLinkButton isSelected={false} text="&raquo;" path={`/topic/${totalPages}`} />);
+      allLinks.push(<PaginationButton isSelected={false} text="&rsaquo;" path={`${path}/${currentPageIndex + 1}`} />);
+      allLinks.push(<PaginationButton isSelected={false} text="&raquo;" path={`${path}/${totalPages}`} />);
     }
 
     return allLinks;
