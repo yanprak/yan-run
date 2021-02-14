@@ -1,0 +1,11 @@
+.game {
+  position: relative;
+  &-toolBar {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: stretch;
+    justify-content: space-between;
+  }
+}

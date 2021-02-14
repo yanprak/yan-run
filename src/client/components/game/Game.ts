@@ -35,7 +35,7 @@ export class Game {
       this.state.player = player;
 
       // create Box
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 100; i++) {
         const box = new Box(this.state, this.ctx);
         this.state.box.push(box);
         this.state.box_x += Math.floor(Math.random() * 500) + 300;

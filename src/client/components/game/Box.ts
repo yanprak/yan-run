@@ -1,5 +1,5 @@
 import { PropsGameObject, Config, CTX } from './type';
-import {Player} from "./Player";
+import { Player } from './Player';
 
 export class Box {
   ctx: CTX;

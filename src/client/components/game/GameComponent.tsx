@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Game } from './Game';
 import Button from '../button/Button';
+import './game.scss';
 
 export default class GameComponent extends Component {
   game: Game | undefined = undefined;
@@ -33,10 +34,12 @@ export default class GameComponent extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container padding_tb_s-2">
-          <Button onClick={this.startGame} size="small" className="margin_s-2" styleType="secondary">Start</Button>
-          <Button onClick={this.stopGame} size="small" className="margin_s-2" styleType="secondary">Stop</Button>
+      <div className="game">
+        <div className="game-toolBar padding_s-3">
+          <div>
+            <Button onClick={this.startGame} size="small" className="margin_s-2" styleType="secondary">Start</Button>
+            <Button onClick={this.stopGame} size="small" className="margin_s-2" styleType="secondary">Stop</Button>
+          </div>
           <h3 id="gameScore" className="h3">0</h3>
         </div>
         <canvas
