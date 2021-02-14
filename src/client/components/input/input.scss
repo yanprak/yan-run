@@ -20,7 +20,7 @@
     padding: 0 1.2rem;
     color: inherit;
 
-    &:focus {
+    &_focus {
       box-shadow: 0 0 0 1px var(--focus-border-color);
     }
   }

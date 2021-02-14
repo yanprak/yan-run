@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm } from '../../utils/form/useForm';
+import { useForm } from '../../hooks/form/useForm';
 
 const initState = {
   login: { value: '', type: 'text' },
@@ -10,7 +10,7 @@ const initState = {
 };
 
 // function for working with form data
-function fun<T>(data:T) {
+function submitHandler<T>(data:T) {
   console.log(data);
 }
 
@@ -19,8 +19,8 @@ export default function SignIn() {
     onSubmit,
     handleChange,
     handleBlur,
-    errorMessage,
-  } = useForm(initState, fun);
+    getErrorMessage,
+  } = useForm(initState, submitHandler);
 
   return (
     <div className="container container_center container_center-start">
@@ -34,14 +34,14 @@ export default function SignIn() {
             name="login"
             title="Логин"
             placeholder="Ваш логин"
-            errorMessage={errorMessage('login')}
+            errorMessage={getErrorMessage('login')}
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
             placeholder="@#)**^_!~"
-            errorMessage={errorMessage('password')}
+            errorMessage={getErrorMessage('password')}
           />
           <div className="container container_stretch container_is-column container_center-items padding_tb_s-3">
             <Button type="submit" size="large" styleType="primary">Войти</Button>

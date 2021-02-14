@@ -1,6 +1,6 @@
 import Home from './home';
 import Game from './game';
-import SignIn from './sign';
+import SignIn from './signIn';
 import SignUp from './signup';
 import Profile from './profile';
 import Leaderboard from './leaderboard';

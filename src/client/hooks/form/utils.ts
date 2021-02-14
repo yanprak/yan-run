@@ -3,19 +3,24 @@ import {
   Field,
 } from './types';
 
+class TmplRegExp {
+  static readonly EMAIL = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  static readonly PHONE = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+}
+
 export function checkField(field: Field): ResultCheckField {
   let test = false;
   let message = '';
   switch (field.type) {
     case 'email':
-      const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const emailRegExp = TmplRegExp.EMAIL;
       if (field.value.length === 0 || !emailRegExp.test(field.value)) {
         test = true;
         message = 'Не верный формат почты';
       }
       break;
     case 'tel':
-      const phoneRegExp = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+      const phoneRegExp = TmplRegExp.PHONE;
       if (field.value.length === 0 || !phoneRegExp.test(field.value)) {
         test = true;
         message = 'Не верный формат телефона или пустое поле';

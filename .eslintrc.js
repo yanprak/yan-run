@@ -33,7 +33,10 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-useless-escape': 'off',
     'object-curly-newline': 'off',
+
     'import/prefer-default-export': 'off',
+
+    'jsx-a11y/label-has-associated-control': 'off',
 
     'max-len': ['error', { 'code': 120 }],
     'arrow-parens': [
@@ -44,6 +47,7 @@ module.exports = {
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off'
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/lines-between-class-members': 'off'
   }
 };

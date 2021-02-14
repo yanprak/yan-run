@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { FormCB, ResultCheckField, State } from './types';
-import { checkField } from './form.util';
+import { FormSubmitHandler, ResultCheckField, FormState } from './types';
+import { checkField } from './utils';
 
 // fun: for working with form data
 // checkField: for validation Input field
 
-export const useForm = (initState: State, fun?:FormCB) => {
-  const [state, setState] = useState<State>(initState);
+export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
+  const [state, setState] = useState<FormState>(initState);
   const onSubmit = useCallback(
     (event: FormEvent) => {
       let isValid = true;
@@ -16,29 +16,28 @@ export const useForm = (initState: State, fun?:FormCB) => {
         const result: ResultCheckField = checkField({ type, value });
         if (result.test) {
           isValid = false;
-          state[name] = { type, value, errorMessage: result.message };
-          setState({ ...state });
+          setState((prevState: FormState) => ({
+            ...prevState,
+            [name]: { type, value, errorMessage: result.message },
+          }));
         }
       });
-      if (isValid && fun) {
-        fun(state);
+      if (isValid && submitHandler) {
+        submitHandler(state);
       }
     },
-    [
-      state,
-      fun,
-    ],
+    [state, submitHandler],
   );
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLFormElement>) => {
       const { name, type, value } = event.target;
-      state[name] = { type, value };
-      setState({ ...state });
+      setState((prevState: FormState) => ({
+        ...prevState,
+        [name]: { type, value },
+      }));
     },
-    [
-      state,
-    ],
+    [state],
   );
 
   const handleBlur = useCallback(
@@ -47,15 +46,15 @@ export const useForm = (initState: State, fun?:FormCB) => {
       const result: ResultCheckField = checkField({ type, value });
 
       if (result.test) {
-        state[name] = { type, value, errorMessage: result.message };
-        setState({ ...state });
+        setState((prevState: FormState) => ({
+          ...prevState,
+          [name]: { type, value, errorMessage: result.message },
+        }));
       }
     },
-    [
-      state,
-    ],
+    [state],
   );
-  const errorMessage = useCallback(
+  const getErrorMessage = useCallback(
     (name: string) => (state[name] ? state[name].errorMessage : ''),
     [state],
   );
@@ -65,6 +64,6 @@ export const useForm = (initState: State, fun?:FormCB) => {
     onSubmit,
     handleChange,
     handleBlur,
-    errorMessage,
+    getErrorMessage,
   };
 };

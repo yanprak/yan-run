@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm } from '../../utils/form/useForm';
+import { useForm } from '../../hooks/form/useForm';
 
 const initState = {
   email: { value: '', type: 'email' },
@@ -11,11 +11,10 @@ const initState = {
   second_name: { value: '', type: 'text' },
   login: { value: '', type: 'text' },
   password: { value: '', type: 'password' },
-  passwordRepl: { value: '', type: 'password' },
 };
 
 // function for working with form data
-function fun<T>(data:T) {
+function submitHandler<T>(data:T) {
   console.log(data);
 }
 
@@ -24,8 +23,8 @@ export default function SignUp() {
     onSubmit,
     handleChange,
     handleBlur,
-    errorMessage,
-  } = useForm(initState, fun);
+    getErrorMessage,
+  } = useForm(initState, submitHandler);
 
   return (
     <div className="container container_center container_center-start">
@@ -39,49 +38,42 @@ export default function SignUp() {
             name="email"
             title="Почта"
             placeholder="mail@box.xxx"
-            errorMessage={errorMessage('email')}
+            errorMessage={getErrorMessage('email')}
           />
           <Input
             type="tel"
             name="phone"
             title="Телефон"
             placeholder="Номер вашего телефона"
-            errorMessage={errorMessage('phone')}
+            errorMessage={getErrorMessage('phone')}
           />
           <Input
             type="text"
             name="first_name"
             title="Имя"
             placeholder="Как тебя звать?"
-            errorMessage={errorMessage('first_name')}
+            errorMessage={getErrorMessage('first_name')}
           />
           <Input
             type="text"
             name="second_name"
             title="Фамилия"
             placeholder="Ну как в школе"
-            errorMessage={errorMessage('second_name')}
+            errorMessage={getErrorMessage('second_name')}
           />
           <Input
             type="text"
             name="login"
             title="Login"
             placeholder="Ваш логин"
-            errorMessage={errorMessage('login')}
+            errorMessage={getErrorMessage('login')}
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
             placeholder="@#)**^_!~"
-            errorMessage={errorMessage('password')}
-          />
-          <Input
-            type="password"
-            name="passwordRepl"
-            title="Повторить пароль"
-            placeholder="@#)**^_!~"
-            errorMessage={errorMessage('passwordRepl')}
+            errorMessage={getErrorMessage('password')}
           />
           <div className="container container_stretch container_is-column container_center-items padding_tb_s-3">
             <Button type="submit" size="large" styleType="primary">Зарегистрироваться</Button>
