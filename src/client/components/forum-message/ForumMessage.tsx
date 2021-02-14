@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { OwnProps } from './types';
 import './forum-message.scss';
 import Avatar from '../avatar';
-import { formatDate, getTime } from '../../utils';
+import { formatDate, getTime } from '../../utils/datetime';
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const {
@@ -20,15 +20,13 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const time = getTime(date);
   return (
     <div {...otherProps} className={className}>
-      <div className="message__user-info user-info">
-        <h4 className="user-info__username">{user.username}</h4>
-        <Avatar url={user.avatar} className="user-info__avatar margin_tb_s-4" />
-        <time dateTime={`${formatDate(date)} ${time}`} className="user-info__datetime">
-          <span className="user-info__date">{shortDate}</span>
-          <span className="user-info__time margin_tb_s-1">{time}</span>
+      <div className="message__user">
+        <h4 className="message__username">{user.login}</h4>
+        <Avatar url={user.avatar} className="message__avatar margin_tb_s-4" />
+        <time dateTime={`${formatDate(date)} ${time}`} className="message__datetime">
+          <span className="message__date">{shortDate}</span>
+          <span className="message__time margin_tb_s-1">{time}</span>
         </time>
-        <div />
-        <time />
       </div>
       <div className="message__post">{message}</div>
     </div>

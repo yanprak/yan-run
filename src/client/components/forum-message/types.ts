@@ -4,7 +4,7 @@ export type OwnProps = {
   message: string;
   createdAt: string;
   user: {
-    username: string;
+    login: string;
     avatar: string | undefined;
   }
 } & HTMLAttributes<HTMLDivElement>;
