@@ -1,14 +1,14 @@
 import React from 'react';
-import ThreadLink from '../../components/thread-link';
+import TopicLink from '../../components/topic-link';
 
 export default function Forum() {
   return (
     <div className="page container container_is-column container_size-auto container_center">
-      <ThreadLink title="Новые игры" messagesCounter={333} />
-      <ThreadLink title="Геймдизайнеры" messagesCounter={222} />
-      <ThreadLink title="Технологии" messagesCounter={111} />
-      <ThreadLink title="Cyperpunk 2077" messagesCounter={2048} />
-      <ThreadLink title="Tetris" messagesCounter={5} />
+      <TopicLink title="Новые игры" messagesCounter={333} />
+      <TopicLink title="Геймдизайнеры" messagesCounter={222} />
+      <TopicLink title="Технологии" messagesCounter={111} />
+      <TopicLink title="Cyperpunk 2077" messagesCounter={2048} />
+      <TopicLink title="Tetris" messagesCounter={5} />
     </div>
   );
 }
