@@ -1,9 +1,13 @@
 import React from 'react';
+import GameComponent from '../../components/game';
 
 export default function Game() {
   return (
-    <div>
-      <h1>Game Start</h1>
+    <div
+      className="container container_center-items margin_s-3"
+      style={{ height: 'auto' }}
+    >
+      <GameComponent />
     </div>
   );
 }
