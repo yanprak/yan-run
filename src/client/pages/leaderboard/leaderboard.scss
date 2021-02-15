@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 3rem;
 
   min-width: 320px;
   max-width: 1024px;
@@ -22,7 +22,7 @@
   }
 
   &__row:last-child {
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
   }
 
   &__user-rank {
@@ -35,7 +35,6 @@
     flex-direction: row;
     flex-grow: 1;
     align-items: center;
-    padding: 5px;
 
     max-width: 640px;
 
@@ -48,5 +47,4 @@
     width: 100px;
     text-align: center;
   }
-
 }

@@ -1,4 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {
+  memo, useCallback, useEffect, useState,
+} from 'react';
 
 import './leaderboard.scss';
 import LeaderboardRow from './LeaderboardRow';
@@ -27,10 +29,6 @@ const fakeData: LeaderboardRowProps[] = new Array(5).fill(0).map((_, index) => (
   score: Math.floor(Math.random() * 99999),
 }));
 
-function createRows(data: LeaderboardRowProps[]) {
-  return data.map(item => (<LeaderboardRow key={item.rank} {...item} />));
-}
-
 function Leaderboard() {
   const [data, setData] = useState<LeaderboardRowProps[]>([]);
 
@@ -39,10 +37,14 @@ function Leaderboard() {
     setTimeout(setData, 700, fakeData);
   }, []);
 
+  const createRows = useCallback(() => data.map(item => (
+    <LeaderboardRow key={item.rank} {...item} />
+  )), [data]);
+
   return (
     <div className="container container_center container_center-items">
       <div className="leaderboard">
-        {data.length ? createRows(data) : 'Loading'}
+        {data.length ? createRows() : 'Loading'}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ function Row(props: LeaderboardRowProps) {
   return (
     <div className="leaderboard__row">
       <div className="leaderboard__user-rank">{rank}</div>
-      <div className="leaderboard__user-info">
+      <div className="leaderboard__user-info padding_s-1">
         <Avatar url={user.avatar} />
         <div>{user.name}</div>
       </div>
