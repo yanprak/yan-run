@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import React, { FC, HTMLAttributes, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 export type OwnProps = {
@@ -23,4 +23,4 @@ const PaginationButton: FC<OwnProps> = (props: OwnProps) => {
   );
 };
 
-export default PaginationButton;
+export default memo<OwnProps>(PaginationButton);
