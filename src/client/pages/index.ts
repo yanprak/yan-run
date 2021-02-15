@@ -1,7 +1,7 @@
 import Home from './home';
 import Game from './game';
-import SignIn from './signIn';
-import SignUp from './signup';
+import Signin from './signin';
+import Signup from './signup';
 import Profile from './profile';
 import Leaderboard from './leaderboard';
 import Forum from './forum';
@@ -12,8 +12,8 @@ import Topic from './topic';
 export {
   Home,
   Game,
-  SignIn,
-  SignUp,
+  Signin,
+  Signup,
   Profile,
   Leaderboard,
   Forum,

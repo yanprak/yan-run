@@ -1,14 +1,11 @@
-import {
-  ResultCheckField,
-  Field,
-} from './types';
+import { ResultCheckField, Field } from './types';
 
-class TmplRegExp {
-  static readonly EMAIL = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  static readonly PHONE = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
-}
+const TmplRegExp = {
+  EMAIL: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+  PHONE: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
+};
 
-export function checkField(field: Field): ResultCheckField {
+export default function checkField(field: Field): ResultCheckField {
   let test = false;
   let message = '';
   switch (field.type) {
@@ -32,12 +29,6 @@ export function checkField(field: Field): ResultCheckField {
         message = 'Пароль должен содержать более 6 символов';
       }
       break;
-    case 'avatar':
-      test = false;
-      break;
-    case 'submit':
-      test = false;
-      break;
     case 'text':
       if (field.value.length === 0) {
         test = true;
@@ -45,7 +36,6 @@ export function checkField(field: Field): ResultCheckField {
       }
       break;
     default:
-      test = false;
       break;
   }
   return { test, message };

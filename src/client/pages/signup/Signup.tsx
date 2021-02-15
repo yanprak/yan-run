@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm } from '../../hooks/form/useForm';
+import useForm from '../../hooks';
 
 const initState = {
   email: { value: '', type: 'email' },
@@ -13,14 +13,14 @@ const initState = {
   password: { value: '', type: 'password' },
 };
 
-// function for working with form data
+// function for working with useForm data
 function submitHandler<T>(data:T) {
   console.log(data);
 }
 
-export default function SignUp() {
+export default function Signup() {
   const {
-    onSubmit,
+    handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
@@ -32,7 +32,11 @@ export default function SignUp() {
         className="theme-bg-secondary sign round padding_s-3 margin_s-6"
         style={{ width: '320px' }}
       >
-        <form onBlur={handleBlur} onChange={handleChange} onSubmit={onSubmit}>
+        <form
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        >
           <Input
             type="email"
             name="email"

@@ -20,13 +20,9 @@
     padding: 0 1.2rem;
     color: inherit;
 
-    &_focus {
+    &:focus {
       box-shadow: 0 0 0 1px var(--focus-border-color);
     }
-  }
-
-  &__text_focus {
-    box-shadow: 0 0 0 1px var(--focus-border-color);
   }
 
   &__error {

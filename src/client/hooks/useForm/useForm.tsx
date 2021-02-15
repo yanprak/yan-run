@@ -1,17 +1,18 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { FormSubmitHandler, ResultCheckField, FormState } from './types';
-import { checkField } from './utils';
+import checkField from './checkField';
 
-// fun: for working with form data
+// fun: for working with useForm data
 // checkField: for validation Input field
 
-export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
+const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
   const [state, setState] = useState<FormState>(initState);
-  const onSubmit = useCallback(
+
+  const handleSubmit = useCallback(
     (event: FormEvent) => {
       let isValid = true;
       event.preventDefault();
-      const newState: FormState = {};
+      const newState: FormState = { ...state };
       Object.keys(state).forEach(name => {
         const { type, value } = state[name];
         const result: ResultCheckField = checkField({ type, value });
@@ -20,7 +21,7 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
           newState[name] = { type, value, errorMessage: result.message };
         }
       });
-      setState({ ...newState });
+      setState(newState);
       if (isValid && submitHandler) {
         submitHandler(state);
       }
@@ -43,7 +44,6 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
     (event: ChangeEvent<HTMLFormElement>) => {
       const { name, type, value } = event.target;
       const result: ResultCheckField = checkField({ type, value });
-
       if (result.test) {
         setState({
           ...state,
@@ -53,6 +53,7 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
     },
     [state],
   );
+
   const getErrorMessage = useCallback(
     (name: string) => (state[name] ? state[name].errorMessage : ''),
     [state],
@@ -60,9 +61,11 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
 
   return {
     state,
-    onSubmit,
+    handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
   };
 };
+
+export default useForm;

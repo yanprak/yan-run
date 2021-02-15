@@ -34,8 +34,6 @@ module.exports = {
     'no-useless-escape': 'off',
     'object-curly-newline': 'off',
 
-    'import/prefer-default-export': 'off',
-
     'jsx-a11y/label-has-associated-control': 'off',
 
     'max-len': ['error', { 'code': 120 }],
