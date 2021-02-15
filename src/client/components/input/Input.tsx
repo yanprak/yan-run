@@ -2,7 +2,7 @@ import React from 'react';
 import { Props } from './types';
 import './input.scss';
 
-export default function Input({ title, errorMessage, ...props }: Props) {
+function Input({ title, errorMessage, ...props }: Props) {
   return (
     <label className="input">
       {title && <h6 className="input__title">{title}</h6>}
@@ -15,3 +15,4 @@ export default function Input({ title, errorMessage, ...props }: Props) {
     </label>
   );
 }
+export default Input;
