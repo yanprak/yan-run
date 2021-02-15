@@ -1,11 +1,17 @@
 import { Config, CTX } from './type';
-import { Player } from './Player';
-import { Box } from './Box';
+import Player from './Player';
+import Box from './Box';
 
 type TimerId = ReturnType<typeof setTimeout> | undefined | null | number;
 
-export class Game {
-  state: Config = {
+export default class Game {
+  private ctx: CTX;
+
+  private scoreView: HTMLElement | null = null;
+
+  private uiView: HTMLElement | null = null;
+
+  private config: Config = {
     gravity: 0.1,
     canJump: true,
     box: [],
@@ -16,69 +22,64 @@ export class Game {
     height: 400,
   };
 
+  score = 0;
+
   timerId: TimerId = null;
 
-  ctx: CTX;
-
-  score: number = 0;
-
-  private scoreView: HTMLElement | null = null;
-
-  constructor() {
+  constructor(config?: Config) {
+    // this.config = config;
     const canvas = document.getElementById('canvas');
     const ctx = (canvas as HTMLCanvasElement).getContext('2d');
     this.ctx = ctx;
     if (this.ctx) {
       // create Player
-      const player = new Player(this.state, this.ctx);
+      const player = new Player(this.config, this.ctx);
       player.xSpeed = 5;
-      this.state.player = player;
+      this.config.player = player;
 
       // create Box
       for (let i = 0; i < 100; i++) {
-        const box = new Box(this.state, this.ctx);
-        this.state.box.push(box);
-        this.state.box_x += Math.floor(Math.random() * 500) + 300;
+        const box = new Box(this.config, this.ctx);
+        this.config.box.push(box);
+        this.config.box_x += Math.floor(Math.random() * 500) + 300;
       }
     }
-    this.scoreView = document.getElementById('gameScore');
+    this.scoreView = document.getElementById('game-score');
+    this.uiView = document.getElementById('game-ui');
   }
 
-  keyDown(k:number) {
+  private keyDown(k:number) {
     const key = +k;
-    const player = this.state.player as Player;
-    if (key === 38 && this.state.canJump) {
-      player.ySpeed = -4;
+    if (typeof this.timerId === 'number') {
+      const player = this.config.player as Player;
+      if (key === 38 && this.config.canJump) {
+        player.ySpeed = -4;
+      }
     }
     // pause press key "space"
     if (key === 32) {
-      if (this.state.isRun) {
-        // clearTimeout(timerId);
-        this.state.isRun = false;
-      } else {
-        this.state.isRun = true;
-        // timerId = setInterval(update, 10);
-      }
+      this.pause();
     }
   }
 
-  update() {
+  private update() {
     // console.log('-= START RENDER GAME =-');
     if (!this.ctx) return;
     this.ctx.clearRect(0, 0, 800, 400);
 
-    // ground
+    // create and show ground
+    // если не анимировать то лучше убрать его в отдельный слой (другой canvas)
     this.ctx.fillStyle = '#404040';
-    this.ctx.fillRect(0, this.state.height - 50, this.state.width, 100);
+    this.ctx.fillRect(0, this.config.height - 50, this.config.width, 100);
 
-    // player
-    const player = this.state.player as Player;
+    // show player
+    const player = this.config.player as Player;
     player.show();
     player.update();
 
-    // box
-    for (let i = 0; i < this.state.box.length; i++) {
-      const box = this.state.box[i] as Box;
+    // show box
+    for (let i = 0; i < this.config.box.length; i++) {
+      const box = this.config.box[i] as Box;
       box.show();
       const isBlow = box.update();
       if (isBlow) {
@@ -91,21 +92,38 @@ export class Game {
     this.scoreView!.innerHTML = `$ = ${this.score}`;
   }
 
-  public start() {
+  private timerStart() {
     this.timerId = setInterval(() => {
       this.update();
     }, 10);
-
-    document.onkeydown = (event: KeyboardEvent) => {
-      const { keyCode } = event;
-      this.keyDown(keyCode);
-    };
   }
 
-  public stop() {
+  public start() {
+    if (!this.timerId) {
+      this.timerStart();
+      document.onkeydown = (event: KeyboardEvent) => {
+        const { keyCode } = event;
+        this.keyDown(keyCode);
+      };
+      this.uiView!.classList.toggle('hidden');
+    }
+  }
+
+  public stop(): number {
     if (typeof this.timerId === 'number') {
       clearTimeout(this.timerId);
+      document.onkeydown = null;
+      this.uiView!.classList.toggle('hidden');
     }
-    document.onkeydown = null;
+    return this.score;
+  }
+
+  private pause() {
+    if (typeof this.timerId === 'number') {
+      clearTimeout(this.timerId);
+      this.timerId = null;
+    } else {
+      this.timerStart();
+    }
   }
 }

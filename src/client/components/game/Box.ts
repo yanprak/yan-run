@@ -1,7 +1,7 @@
 import { PropsGameObject, Config, CTX } from './type';
-import { Player } from './Player';
+import Player from './Player';
 
-export class Box {
+export default class Box {
   ctx: CTX;
 
   public state: PropsGameObject = {
@@ -33,6 +33,8 @@ export class Box {
   public update() {
     const p = (this.config.player as Player).state;
     const { x, y, w, h } = this.state;
+
+    // Эту проверку потом вытащу
     const isUpdate = (
       x < (p.x + p.w)
       && (x + w) > p.x

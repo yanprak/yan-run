@@ -1,6 +1,6 @@
 import { PropsGameObject, Config, CTX } from './type';
 
-export class Player {
+export default class Player {
   ctx: CTX;
 
   public state: PropsGameObject = {
