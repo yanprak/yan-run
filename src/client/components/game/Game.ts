@@ -1,15 +1,13 @@
-import { Config, CTX } from './type';
+import { Config, CTX, TimerId } from './type';
 import Player from './Player';
 import Box from './Box';
 
-type TimerId = ReturnType<typeof setTimeout> | undefined | null | number;
-
 export default class Game {
-  private ctx: CTX;
+  private readonly ctx: CTX;
 
-  private scoreView: HTMLElement | null = null;
+  private readonly scoreView: HTMLElement | null = null;
 
-  private uiView: HTMLElement | null = null;
+  private readonly uiView: HTMLElement | null = null;
 
   private config: Config = {
     gravity: 0.1,
@@ -26,11 +24,9 @@ export default class Game {
 
   timerId: TimerId = null;
 
-  constructor(config?: Config) {
-    // this.config = config;
+  constructor() {
     const canvas = document.getElementById('canvas');
-    const ctx = (canvas as HTMLCanvasElement).getContext('2d');
-    this.ctx = ctx;
+    this.ctx = (canvas as HTMLCanvasElement).getContext('2d');
     if (this.ctx) {
       // create Player
       const player = new Player(this.config, this.ctx);
@@ -89,7 +85,7 @@ export default class Game {
       box.state.x -= player.xSpeed;
     }
     this.score++;
-    this.scoreView!.innerHTML = `$ = ${this.score}`;
+    if (this.scoreView) this.scoreView.innerHTML = `$ = ${this.score}`;
   }
 
   private timerStart() {
@@ -105,7 +101,7 @@ export default class Game {
         const { keyCode } = event;
         this.keyDown(keyCode);
       };
-      this.uiView!.classList.toggle('hidden');
+      if (this.uiView) this.uiView.classList.toggle('hidden');
     }
   }
 
@@ -113,7 +109,7 @@ export default class Game {
     if (typeof this.timerId === 'number') {
       clearTimeout(this.timerId);
       document.onkeydown = null;
-      this.uiView!.classList.toggle('hidden');
+      if (this.uiView) this.uiView.classList.toggle('hidden');
     }
     return this.score;
   }

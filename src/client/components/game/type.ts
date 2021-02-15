@@ -4,15 +4,16 @@ export type PropsGameObject = {
 
 export type CTX = CanvasRenderingContext2D | null | undefined;
 
+export type TimerId = ReturnType<typeof setTimeout> | undefined | null | number;
+
 export type Config = {
-  player?: unknown,
   gravity: number,
   canJump: boolean,
   box: unknown[];
   box_x: number,
   score: number,
-  isRun?: boolean,
-  timerId?: ReturnType<typeof setTimeout>,
   height: number,
   width: number,
+  player?: unknown,
+  isRun?: boolean,
 };
