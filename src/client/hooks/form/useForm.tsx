@@ -11,17 +11,16 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
     (event: FormEvent) => {
       let isValid = true;
       event.preventDefault();
+      const newState: FormState = {};
       Object.keys(state).forEach(name => {
         const { type, value } = state[name];
         const result: ResultCheckField = checkField({ type, value });
         if (result.test) {
           isValid = false;
-          setState((prevState: FormState) => ({
-            ...prevState,
-            [name]: { type, value, errorMessage: result.message },
-          }));
+          newState[name] = { type, value, errorMessage: result.message };
         }
       });
+      setState({ ...newState });
       if (isValid && submitHandler) {
         submitHandler(state);
       }
@@ -32,12 +31,12 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLFormElement>) => {
       const { name, type, value } = event.target;
-      setState((prevState: FormState) => ({
-        ...prevState,
+      setState({
+        ...state,
         [name]: { type, value },
-      }));
+      });
     },
-    [],
+    [state],
   );
 
   const handleBlur = useCallback(
@@ -46,13 +45,13 @@ export const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) 
       const result: ResultCheckField = checkField({ type, value });
 
       if (result.test) {
-        setState((prevState: FormState) => ({
-          ...prevState,
+        setState({
+          ...state,
           [name]: { type, value, errorMessage: result.message },
-        }));
+        });
       }
     },
-    [],
+    [state],
   );
   const getErrorMessage = useCallback(
     (name: string) => (state[name] ? state[name].errorMessage : ''),
