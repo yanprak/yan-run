@@ -1,0 +1,33 @@
+.message {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  background-color: var(--secondary-bg-color);
+  white-space: pre-wrap;
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 12rem;
+    text-align: center;
+  }
+
+  &__username {
+    font-size: 1.6rem;
+  }
+
+  &__avatar {
+    margin: 0 auto;
+  }
+
+  &__datetime {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__post {
+    display: flex;
+    flex: 1;
+    font-size: 1.2rem;
+  }
+}

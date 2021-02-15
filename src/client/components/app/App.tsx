@@ -14,6 +14,7 @@ import {
   Forum,
   Leaderboard,
   NotFound,
+  Topic,
 } from '../../pages';
 import Header from '../header';
 
@@ -28,7 +29,8 @@ export default function App() {
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/profile" component={Profile} />
-          <Route path="/forum" component={Forum} />
+          <Route path="/topic" component={Topic} />
+          <Route path="/forum" component={Forum} exact />
           <Route path="/leaderboard" component={Leaderboard} />
           <Route path="*" component={NotFound} />
         </Switch>
