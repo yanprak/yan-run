@@ -1,0 +1,10 @@
+.topic-page {
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__pagination {
+    flex: 1;
+  }
+}
