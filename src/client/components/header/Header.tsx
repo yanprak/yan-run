@@ -20,9 +20,7 @@ export default function Header() {
           <Link className="header__logo" to="/">Yan Run</Link>
           <HeaderMenu />
           <Link to="/profile">
-            <div className="container">
-              <HeaderUserInfo {...user} />
-            </div>
+            <HeaderUserInfo {...user} />
           </Link>
         </div>
       </div>
