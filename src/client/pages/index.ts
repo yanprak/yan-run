@@ -8,6 +8,7 @@ import Forum from './forum';
 import NotFound from './not-found';
 import ServerError from './server-error';
 import Topic from './topic';
+import Contact from './contact';
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   NotFound,
   ServerError,
   Topic,
+  Contact,
 };

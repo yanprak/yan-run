@@ -15,7 +15,9 @@ import {
   Leaderboard,
   NotFound,
   Topic,
+  Contact,
 } from '../../pages';
+
 import Header from '../header';
 import ErrorBoundary from '../error-boundary';
 
@@ -34,6 +36,7 @@ export default function App() {
             <Route path="/topic" component={Topic} />
             <Route path="/forum" component={Forum} exact />
             <Route path="/leaderboard" component={Leaderboard} />
+            <Route path="/contact" component={Contact} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

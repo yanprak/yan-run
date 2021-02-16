@@ -30,6 +30,7 @@ export default function checkField(field: Field): ResultCheckField {
       }
       break;
     case 'text':
+    case 'textarea':
       if (field.value.length === 0) {
         test = true;
         message = 'Поле не должно быть пустым';
