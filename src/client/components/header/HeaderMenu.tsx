@@ -17,6 +17,9 @@ export default function HeaderMenu() {
         <li className="header__menu-list-item">
           <Link className="header__menu-list-link" to="/contact">Обратная связь</Link>
         </li>
+        <li className="header__menu-list-item">
+          <Link className="header__menu-list-link" to="/signin">Enter</Link>
+        </li>
       </ul>
     </nav>
   );

@@ -50,6 +50,8 @@ body {
   background: var(--default-bg-color);
   color: var(--default-color);
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .page {
@@ -64,4 +66,26 @@ fieldset {
 .link {
   color: inherit;
   font-size: 1.6rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.round {
+  border-radius: var(--base-radius);
+}
+
+.theme {
+  &-bg-secondary {
+    background-color: var(--secondary-bg-color);
+  }
+
+  &-bg-default {
+    background-color: var(--default-bg-color);
+  }
+
+  &-bg-primary {
+    background-color: var(--primary-bg-color);
+  }
 }
