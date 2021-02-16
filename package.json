@@ -11,7 +11,8 @@
     "lint:code": "eslint ./src --ext .ts,.tsx",
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
-    "lint:cssfix": "stylelint src/client/css/*.scss --fix"
+    "lint:cssfix": "stylelint src/client/css/*.scss --fix",
+    "server": "npx tsc src/server/server.ts --outFile app.js && node app.js"
   },
   "repository": {
     "type": "git",
