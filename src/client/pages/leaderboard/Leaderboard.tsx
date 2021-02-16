@@ -24,7 +24,7 @@ const fakeData: LeaderboardRowProps[] = new Array(5).fill(0).map((_, index) => (
   rank: index + 1,
   user: {
     avatar: 'https://yastatic.net/q/praktikum/v0.169.7/static/favicon.png',
-    name: getRandomName(),
+    login: getRandomName(),
   },
   score: Math.floor(Math.random() * 99999),
 }));

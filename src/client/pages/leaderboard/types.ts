@@ -2,7 +2,7 @@ export type LeaderboardRowProps = {
   rank: number,
   user: {
     avatar: string,
-    name: string
+    login: string
   }
   score: number
 };
