@@ -17,24 +17,27 @@ import {
   Topic,
 } from '../../pages';
 import Header from '../header';
+import ErrorBoundary from '../error-boundary';
 
 export default function App() {
   return (
-    <Router>
-      <div className="main">
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/game" component={Game} />
-          <Route path="/signin" component={Signin} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/topic" component={Topic} />
-          <Route path="/forum" component={Forum} exact />
-          <Route path="/leaderboard" component={Leaderboard} />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <div className="main">
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/game" component={Game} />
+            <Route path="/signin" component={Signin} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/topic" component={Topic} />
+            <Route path="/forum" component={Forum} exact />
+            <Route path="/leaderboard" component={Leaderboard} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </div>
+      </Router>
+    </ErrorBoundary>
   );
 }
