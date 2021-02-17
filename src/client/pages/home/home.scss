@@ -1,0 +1,38 @@
+.home {
+  background-color: var(--secondary-bg-color);
+  width: 90%;
+  margin: 3rem auto 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  font-size: 2rem;
+
+  &__intro {
+    background-color: var(--dark-bg-color);
+    //font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    justify-content: center;
+
+    margin: 0.7rem;
+    padding: 1rem;
+    font-size: 3rem;
+
+    width: 60%;
+  }
+
+  &__ranking {
+    text-align: center;
+    background-color: var(--dark-bg-color);
+    padding: 1rem 1rem 0;
+    margin: 0.7rem;
+
+    width: 40%;
+    font-size: 3rem;
+  }
+
+  &__into-paragraph {
+    margin-bottom: 2rem;
+  }
+}

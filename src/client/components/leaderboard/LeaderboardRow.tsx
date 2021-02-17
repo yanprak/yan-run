@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Avatar from '../../components/avatar/Avatar';
+import Avatar from '../avatar/Avatar';
 import { LeaderboardRowProps } from './types';
 
 function Row(props: LeaderboardRowProps) {

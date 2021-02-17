@@ -12,7 +12,7 @@ import {
   Signin,
   Signup,
   Forum,
-  Leaderboard,
+  LeaderboardPage,
   NotFound,
   Topic,
   Contact,
