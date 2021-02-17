@@ -32,6 +32,7 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
       if (!form) {
         return;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       form.requestSubmit();
     }
   }
