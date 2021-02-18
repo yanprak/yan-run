@@ -4,7 +4,7 @@ import React, {
 
 import './leaderboard.scss';
 import LeaderboardRow from './LeaderboardRow';
-import { LeaderboardRowProps } from './types';
+import { LeaderboardProps, LeaderboardRowProps } from './types';
 
 /*
     todo(anton.kagakin)
@@ -20,22 +20,24 @@ function getRandomName(): string {
   return [...newArray].map(() => Math.random().toString(36)[2]).join('');
 }
 
-const fakeData: LeaderboardRowProps[] = new Array(5).fill(0).map((_, index) => ({
-  rank: index + 1,
-  user: {
-    avatar: 'https://yastatic.net/q/praktikum/v0.169.7/static/favicon.png',
-    login: getRandomName(),
-  },
-  score: Math.floor(Math.random() * 99999),
-}));
+function generateFakeData(count: number): LeaderboardRowProps[] {
+  return new Array(count).fill(0).map((_, index) => ({
+    rank: index + 1,
+    user: {
+      avatar: 'https://yastatic.net/q/praktikum/v0.169.7/static/favicon.png',
+      login: getRandomName(),
+    },
+    score: Math.floor(Math.random() * 99999),
+  }));
+}
 
-function Leaderboard() {
+function Leaderboard({ count } : LeaderboardProps) {
   const [data, setData] = useState<LeaderboardRowProps[]>([]);
 
   // componentDidMount
   useEffect(() => {
-    setTimeout(setData, 700, fakeData);
-  }, []);
+    setTimeout(setData, 700, generateFakeData(count));
+  }, [count]);
 
   const createRows = useCallback(() => data.map(item => (
     <LeaderboardRow key={item.rank} {...item} />
@@ -50,4 +52,4 @@ function Leaderboard() {
   );
 }
 
-export default memo(Leaderboard);
+export default memo<LeaderboardProps>(Leaderboard);
