@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import { TopicPageProps } from './types';
 import './topic.scss';
 import sampleMessages from './sampleMessages';
+import NewMessageForm from '../../components/new-message-form/NewMessageForm';
 
 export default function Topic(props: TopicPageProps) {
   return (
@@ -17,6 +18,8 @@ export default function Topic(props: TopicPageProps) {
       <div className="topic-page__messages">
         { sampleMessages.map(messageObj => <ForumMessage {...messageObj} />) }
       </div>
+      <hr className="margin_tb_s-7 " />
+      <NewMessageForm placeholder="Сообщение" />
     </div>
   );
 }
