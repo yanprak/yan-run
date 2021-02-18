@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
 import Input from '../../components/input';
 import Button from '../../components/button';
-import useForm from '../../hooks';
+
+import { useForm, useAuthApi } from '../../hooks';
+import { FormState } from '../../hooks/useForm/types';
 
 const initState = {
   email: { value: '', type: 'email' },
@@ -13,12 +16,32 @@ const initState = {
   password: { value: '', type: 'password' },
 };
 
-// function for working with useForm data
-function submitHandler<T>(data:T) {
-  console.log(data);
-}
-
 export default function Signup() {
+  const { signup } = useAuthApi();
+
+  const submitHandler = useCallback((data: FormState) => {
+    const {
+      login: { value: login },
+      password: { value: password },
+      email: { value: email },
+      phone: { value: phone },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      first_name: { value: first_name },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      second_name: { value: second_name },
+    } = data;
+
+    signup({ login, password, email, phone, first_name, second_name })
+      .then(r => {
+        window.console.log(typeof r);
+        window.console.dir(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as { status: string, message: string };
+        window.console.log(error.status, error.message);
+      });
+  }, [signup]);
+
   const {
     handleSubmit,
     handleChange,

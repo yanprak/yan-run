@@ -1,20 +1,46 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
 import Input from '../../components/input';
 import Button from '../../components/button';
-import useForm from '../../hooks';
+
+import { useForm, useAuthApi } from '../../hooks';
+import { FormState } from '../../hooks/useForm/types';
+import { RequestError } from '../../hooks/useRequest/types';
 
 const initState = {
   login: { value: '', type: 'text' },
   password: { value: '', type: 'password' },
 };
 
-// function for working with useForm data
-function submitHandler<T>(data:T) {
-  console.log(data);
-}
-
 export default function Signin() {
+  const { signin, fetchUserInfo } = useAuthApi();
+
+  const submitHandler = useCallback((data: FormState) => {
+    const {
+      login: { value: login },
+      password: { value: password },
+    } = data;
+    signin({ login, password })
+      .then(r => {
+        window.console.log('Successful signin');
+        window.console.dir(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as RequestError;
+        window.console.log(error.status, error.message);
+      })
+      .then(() => fetchUserInfo())
+      .then(r => {
+        window.console.log('User info');
+        window.console.log(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as RequestError;
+        window.console.log(error.status, error.message);
+      });
+  }, [signin, fetchUserInfo]);
+
   const {
     handleSubmit,
     handleChange,
