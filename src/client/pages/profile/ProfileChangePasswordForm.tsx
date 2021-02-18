@@ -1,19 +1,35 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import Input from '../../components/input';
-import useForm from '../../hooks';
+import { useForm, useUsersApi } from '../../hooks';
 import Button from '../../components/button/Button';
 import { FormProps } from './types';
+import { FormState } from '../../hooks/useForm/types';
 
 const initState = {
   oldPassword: { value: '', type: 'password' },
   newPassword: { value: '', type: 'password' },
 };
 
-function submitHandler<T>(data:T): void {
-  console.log(data);
-}
-
 const ProfileChangePasswordForm: FC<FormProps> = () => {
+  const { changePassword } = useUsersApi();
+
+  const submitHandler = useCallback((data: FormState) => {
+    const {
+      oldPassword: { value: oldPassword },
+      newPassword: { value: newPassword },
+    } = data;
+
+    changePassword({ oldPassword, newPassword })
+      .then(r => {
+        window.console.log(typeof r);
+        window.console.dir(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as { status: string, message: string };
+        window.console.log(error.status, error.message);
+      });
+  }, [changePassword]);
+
   const {
     handleSubmit,
     handleChange,

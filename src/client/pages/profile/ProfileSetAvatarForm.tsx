@@ -1,18 +1,33 @@
 import React, { FC, memo } from 'react';
 import Input from '../../components/input';
 import { AvatarProps } from './types';
+import { useUsersApi } from '../../hooks';
 
 const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
   const { image } = props;
+  const { changeAvatar } = useUsersApi();
 
   function handleChange(event: React.FormEvent<HTMLInputElement>): void {
     const element = event.target as HTMLInputElement;
     const { files } = element;
 
-    if (files && files.length !== undefined) {
-      const newAvatarImage = files[0];
-      window.console.info('Uploaded image', newAvatarImage);
+    if (!files || files.length === undefined) {
+      return;
     }
+
+    const avatar = files[0];
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+
+    changeAvatar(formData)
+      .then(r => {
+        window.console.log(typeof r);
+        window.console.dir(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as { status: string, message: string };
+        window.console.log(error.status, error.message);
+      });
   }
 
   return (

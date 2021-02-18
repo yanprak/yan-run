@@ -1,22 +1,46 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import Input from '../../components/input';
-import useForm from '../../hooks';
+import { useForm, useUsersApi } from '../../hooks';
 import Button from '../../components/button/Button';
 import { FormProps } from './types';
+import { FormState } from '../../hooks/useForm/types';
 
 const initState = {
   email: { value: '', type: 'email' },
   phone: { value: '', type: 'tel' },
   first_name: { value: '', type: 'text' },
   second_name: { value: '', type: 'text' },
+  display_name: { value: '', type: 'text' },
   login: { value: '', type: 'text' },
 };
 
-function submitHandler<T>(data:T) {
-  console.log(data);
-}
-
 const ProfileEditInfoForm: FC<FormProps> = () => {
+  const { editProfile } = useUsersApi();
+
+  const submitHandler = useCallback((data: FormState) => {
+    const {
+      login: { value: login },
+      email: { value: email },
+      phone: { value: phone },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      first_name: { value: first_name },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      second_name: { value: second_name },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      display_name: { value: display_name },
+    } = data;
+
+    editProfile({ login, email, phone, first_name, second_name, display_name })
+      .then(r => {
+        window.console.log(typeof r);
+        window.console.dir(r);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as { status: string, message: string };
+        window.console.log(error.status, error.message);
+      });
+  }, [editProfile]);
+
   const {
     handleSubmit,
     handleChange,
@@ -57,6 +81,13 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         name="second_name"
         title="Фамилия"
         placeholder="Ну как в школе"
+        errorMessage={getErrorMessage('second_name')}
+      />
+      <Input
+        type="text"
+        name="display_name"
+        title="Никнейм"
+        placeholder="Например 1337_H@ck3r"
         errorMessage={getErrorMessage('second_name')}
       />
       <Input
