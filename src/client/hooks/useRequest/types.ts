@@ -3,7 +3,7 @@ import { Nullable } from '../../types';
 /*
   Type describes the result of request (see below) function,
  */
-export type RequestResponse = Promise<Record<string, unknown> | string>;
+export type RequestResponse = Promise<Record<string, unknown> | Record<string, unknown>[] | string>;
 
 /*
   Type describes error that would be thrown in case of non-2xx statuses.
