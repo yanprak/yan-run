@@ -24,4 +24,4 @@ export type RequestHandler = (url: string, options: RequestInit) => RequestRespo
 /*
   Type describes data, that can be passed with a request.
  */
-export type RequestData = Nullable<Record<string, unknown>>;
+export type RequestData = Nullable<Record<string, unknown> | FormData>;

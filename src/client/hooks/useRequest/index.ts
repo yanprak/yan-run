@@ -41,7 +41,7 @@ function createRequester(
   options: RequestInit,
 ): RequestResponse {
   if (data) {
-    options.body = JSON.stringify(data);
+    options.body = data instanceof FormData ? data : JSON.stringify(data);
   }
   return request(url, { method, ...options });
 }
