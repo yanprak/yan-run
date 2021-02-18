@@ -1,0 +1,15 @@
+.text-area {
+  background-color: inherit;
+  font-family: inherit;
+  border: 0;
+  color: #fff;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &_resizable {
+    resize: both;
+  }
+}
