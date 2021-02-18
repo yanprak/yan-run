@@ -3,7 +3,7 @@ import React from 'react';
 import './contact.scss';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import useForm from '../../hooks';
+import { useForm } from '../../hooks';
 import { FormState, FormSubmitHandler } from '../../hooks/useForm/types';
 
 const initState: FormState = {
