@@ -11,3 +11,7 @@ export type UpdatePasswordOptions = {
   oldPassword: string,
   newPassword: string,
 };
+
+export type SearchUserByLoginOptions = {
+  login: string;
+};
