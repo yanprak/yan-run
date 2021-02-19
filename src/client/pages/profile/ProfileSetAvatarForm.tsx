@@ -2,6 +2,7 @@ import React, { FC, memo } from 'react';
 import Input from '../../components/input';
 import { AvatarProps } from './types';
 import { useUsersApi } from '../../hooks';
+import { API_URL } from '../../constants';
 
 const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
   const { image } = props;
@@ -33,7 +34,7 @@ const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
   return (
     <div className="profile__avatar-form">
       <div className="profile-pic">
-        {image && <img className="profile-pic__image" src={image} alt="profile-pic" />}
+        {image && <img className="profile-pic__image" src={`${API_URL}${image}`} alt="profile-pic" />}
         <div className="profile-pic__edit">
           <span className="profile-pic__label">Загрузить аватар</span>
           <Input

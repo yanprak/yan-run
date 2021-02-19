@@ -59,12 +59,18 @@ const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
     [state],
   );
 
+  const getFieldValue = useCallback(
+    (name: string) => (state[name] ? state[name].value : ''),
+    [state],
+  );
+
   return {
     state,
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
+    getFieldValue,
   };
 };
 

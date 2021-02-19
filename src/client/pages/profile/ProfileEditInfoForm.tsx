@@ -2,19 +2,11 @@ import React, { FC, memo, useCallback } from 'react';
 import Input from '../../components/input';
 import { useForm, useUsersApi } from '../../hooks';
 import Button from '../../components/button/Button';
-import { FormProps } from './types';
+import { UserDetailsFormProps } from './types';
 import { FormState } from '../../hooks/useForm/types';
+import { prepareStringValue } from '../../utils/nullable';
 
-const initState = {
-  email: { value: '', type: 'email' },
-  phone: { value: '', type: 'tel' },
-  first_name: { value: '', type: 'text' },
-  second_name: { value: '', type: 'text' },
-  display_name: { value: '', type: 'text' },
-  login: { value: '', type: 'text' },
-};
-
-const ProfileEditInfoForm: FC<FormProps> = () => {
+const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormProps) => {
   const { editProfile } = useUsersApi();
 
   const submitHandler = useCallback((data: FormState) => {
@@ -41,11 +33,22 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
       });
   }, [editProfile]);
 
+  const { user } = props;
+  const initState = {
+    email: { value: user.email, type: 'email' },
+    phone: { value: user.phone, type: 'tel' },
+    first_name: { value: user.first_name, type: 'text' },
+    second_name: { value: user.second_name, type: 'text' },
+    display_name: { value: prepareStringValue(user.display_name), type: 'text' },
+    login: { value: user.login, type: 'text' },
+  };
+
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
+    getFieldValue,
   } = useForm(initState, submitHandler);
 
   return (
@@ -61,6 +64,7 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         title="Почта"
         placeholder="mail@box.xxx"
         errorMessage={getErrorMessage('email')}
+        value={getFieldValue('email')}
       />
       <Input
         type="tel"
@@ -68,6 +72,7 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         title="Телефон"
         placeholder="Номер вашего телефона"
         errorMessage={getErrorMessage('phone')}
+        value={getFieldValue('phone')}
       />
       <Input
         type="text"
@@ -75,6 +80,7 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         title="Имя"
         placeholder="Как тебя звать?"
         errorMessage={getErrorMessage('first_name')}
+        value={getFieldValue('first_name')}
       />
       <Input
         type="text"
@@ -82,13 +88,15 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         title="Фамилия"
         placeholder="Ну как в школе"
         errorMessage={getErrorMessage('second_name')}
+        value={getFieldValue('second_name')}
       />
       <Input
         type="text"
         name="display_name"
         title="Никнейм"
         placeholder="Например 1337_H@ck3r"
-        errorMessage={getErrorMessage('second_name')}
+        errorMessage={getErrorMessage('display_name')}
+        value={getFieldValue('display_name')}
       />
       <Input
         type="text"
@@ -96,10 +104,11 @@ const ProfileEditInfoForm: FC<FormProps> = () => {
         title="Login"
         placeholder="Ваш логин"
         errorMessage={getErrorMessage('login')}
+        value={getFieldValue('login')}
       />
       <Button type="submit" size="large" styleType="secondary" className="margin_t_s-5">Обновить профиль</Button>
     </form>
   );
 };
 
-export default memo<FormProps>(ProfileEditInfoForm);
+export default memo<UserDetailsFormProps>(ProfileEditInfoForm);
