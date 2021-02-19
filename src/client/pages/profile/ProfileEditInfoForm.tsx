@@ -64,7 +64,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Почта"
         placeholder="mail@box.xxx"
         errorMessage={getErrorMessage('email')}
-        value={getFieldValue('email')}
+        defaultValue={getFieldValue('email')}
       />
       <Input
         type="tel"
@@ -72,7 +72,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Телефон"
         placeholder="Номер вашего телефона"
         errorMessage={getErrorMessage('phone')}
-        value={getFieldValue('phone')}
+        defaultValue={getFieldValue('phone')}
       />
       <Input
         type="text"
@@ -80,7 +80,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Имя"
         placeholder="Как тебя звать?"
         errorMessage={getErrorMessage('first_name')}
-        value={getFieldValue('first_name')}
+        defaultValue={getFieldValue('first_name')}
       />
       <Input
         type="text"
@@ -88,7 +88,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Фамилия"
         placeholder="Ну как в школе"
         errorMessage={getErrorMessage('second_name')}
-        value={getFieldValue('second_name')}
+        defaultValue={getFieldValue('second_name')}
       />
       <Input
         type="text"
@@ -96,7 +96,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Никнейм"
         placeholder="Например 1337_H@ck3r"
         errorMessage={getErrorMessage('display_name')}
-        value={getFieldValue('display_name')}
+        defaultValue={getFieldValue('display_name')}
       />
       <Input
         type="text"
@@ -104,7 +104,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         title="Login"
         placeholder="Ваш логин"
         errorMessage={getErrorMessage('login')}
-        value={getFieldValue('login')}
+        defaultValue={getFieldValue('login')}
       />
       <Button type="submit" size="large" styleType="secondary" className="margin_t_s-5">Обновить профиль</Button>
     </form>
