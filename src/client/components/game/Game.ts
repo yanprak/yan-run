@@ -1,4 +1,4 @@
-import { Config, CTX, TimerId } from './type';
+import { CTX, ResultGame, Config } from './type';
 import Player from './Player';
 import Box from './Box';
 
@@ -9,117 +9,152 @@ export default class Game {
 
   private readonly uiView: HTMLElement | null = null;
 
+  // структуру config необходимо переработать: разбить на ветки
+  // в аналогии с background
   private config: Config = {
     gravity: 0.1,
     canJump: true,
     box: [],
+    box_max: 4,
+    box_speed: 6,
     box_x: 800,
     score: 0,
     isRun: false,
     width: 800,
     height: 400,
+    background: {
+      fillStyle: '#404040',
+      x: 0,
+      y: 350,
+      width: 800,
+      height: 100,
+    },
   };
 
   score = 0;
 
-  timerId: TimerId = null;
+  private idAnimate:number|null = null;
 
-  constructor() {
-    const canvas = document.getElementById('canvas');
-    this.ctx = (canvas as HTMLCanvasElement).getContext('2d');
-    if (this.ctx) {
-      // create Player
-      const player = new Player(this.config, this.ctx);
-      player.xSpeed = 5;
-      this.config.player = player;
+  private pause = false;
 
-      // create Box
-      for (let i = 0; i < 100; i++) {
-        const box = new Box(this.config, this.ctx);
-        this.config.box.push(box);
-        this.config.box_x += Math.floor(Math.random() * 500) + 300;
-      }
+  constructor(canvas: CanvasRenderingContext2D | null) {
+    this.ctx = canvas;
+    // create Player
+    const player = new Player(this.config, this.ctx);
+    this.config.player = player;
+
+    // create Box
+    for (let i = 0; i < this.config.box_max; i++) {
+      const box = new Box(this.config, this.ctx);
+      this.config.box.push(box);
+      this.config.box_x += Math.floor(Math.random() * 500) + 300;
     }
+
     this.scoreView = document.getElementById('game-score');
     this.uiView = document.getElementById('game-ui');
   }
 
   private keyDown(k:number) {
     const key = +k;
-    if (typeof this.timerId === 'number') {
-      const player = this.config.player as Player;
-      if (key === 38 && this.config.canJump) {
-        player.ySpeed = -4;
-      }
+    const player = this.config.player as Player;
+    if (key === 38 && this.config.canJump) {
+      player.ySpeed = -4;
     }
     // pause press key "space"
     if (key === 32) {
-      this.pause();
+      this.handlePause();
     }
   }
 
-  private update() {
-    // console.log('-= START RENDER GAME =-');
-    if (!this.ctx) return;
-    this.ctx.clearRect(0, 0, 800, 400);
+  private updateBackground() {
+    const { x, y, width, height, fillStyle } = this.config.background;
+    // this.update() уже проверено!
+    this.ctx!.fillStyle = fillStyle;
+    this.ctx!.fillRect(x, y, width, height);
+  }
 
-    // create and show ground
-    // если не анимировать то лучше убрать его в отдельный слой (другой canvas)
-    this.ctx.fillStyle = '#404040';
-    this.ctx.fillRect(0, this.config.height - 50, this.config.width, 100);
-
-    // show player
+  private updatePlayer() {
     const player = this.config.player as Player;
     player.show();
     player.update();
-
-    // show box
-    for (let i = 0; i < this.config.box.length; i++) {
-      const box = this.config.box[i] as Box;
-      box.show();
-      const isBlow = box.update();
-      if (isBlow) {
-        this.stop();
-        break;
-      }
-      box.state.x -= player.xSpeed;
-    }
-    this.score++;
-    if (this.scoreView) this.scoreView.innerHTML = `$ = ${this.score}`;
   }
 
-  private timerStart() {
-    this.timerId = setInterval(() => {
-      this.update();
-    }, 10);
+  private updateBox(): ResultGame {
+    let resultGame: ResultGame = 'continued';
+    const lastBox = this.config.box[this.config.box.length - 1] as Box;
+    if (lastBox.state.x <= 0) {
+      resultGame = 'win';
+    } else {
+      for (let i = 0; i < this.config.box.length; i++) {
+        const box = this.config.box[i] as Box;
+        box.show();
+        const isCrash = box.update();
+        if (isCrash) {
+          resultGame = 'losing';
+          break;
+        }
+        box.state.x -= this.config.box_speed;
+      }
+    }
+    return resultGame;
+  }
+
+  private update() {
+    if (!this.ctx) return;
+    if (this.pause) return;
+    const { width, height } = this.config;
+    this.ctx.clearRect(0, 0, width, height);
+
+    // create and show ground
+    // если не анимировать то лучше убрать его в отдельный слой (другой canvas)
+    this.updateBackground();
+
+    // show player
+    this.updatePlayer();
+
+    // show box
+    const resultGame:ResultGame = this.updateBox();
+
+    // collision
+    switch (resultGame) {
+      case 'losing':
+        this.stop();
+        break;
+      case 'win':
+        this.stop(true);
+        break;
+      default:
+        this.score++;
+        if (this.scoreView) this.scoreView.innerHTML = `$ = ${this.score}`;
+        this.startAnimate();
+    }
   }
 
   public start() {
-    if (!this.timerId) {
-      this.timerStart();
-      document.onkeydown = (event: KeyboardEvent) => {
-        const { keyCode } = event;
-        this.keyDown(keyCode);
-      };
-      if (this.uiView) this.uiView.classList.toggle('hidden');
-    }
+    document.onkeydown = (event: KeyboardEvent) => {
+      const { keyCode } = event;
+      this.keyDown(keyCode);
+    };
+    if (this.uiView) this.uiView.classList.toggle('hidden');
+    this.startAnimate();
   }
 
-  public stop(): number {
-    if (typeof this.timerId === 'number') {
-      clearTimeout(this.timerId);
-      document.onkeydown = null;
-      if (this.uiView) this.uiView.classList.toggle('hidden');
-    }
+  public stop(isWin?: boolean): number {
+    document.onkeydown = null;
+    if (this.uiView) this.uiView.classList.toggle('hidden');
+    if (this.scoreView && isWin) this.scoreView.innerHTML = `Вы победили! $ = ${this.score}`;
+    if (this.idAnimate) window.cancelAnimationFrame(this.idAnimate);
     return this.score;
   }
 
-  private pause() {
-    if (typeof this.timerId === 'number') {
-      clearTimeout(this.timerId);
-      this.timerId = null;
-    } else {
-      this.timerStart();
-    }
+  private startAnimate() {
+    this.idAnimate = window.requestAnimationFrame(() => this.update());
+  }
+
+  private handlePause() {
+    if (this.pause) {
+      this.startAnimate();
+      this.pause = false;
+    } else this.pause = true;
   }
 }

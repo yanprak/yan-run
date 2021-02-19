@@ -1,20 +1,23 @@
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, memo, useRef } from 'react';
 import Game from './Game';
 import Button from '../button/Button';
 import './game.scss';
 
 const GameComponent = () => {
   let game: Game;
+  const refCanvas = useRef(null);
 
   const startGame = () => {
-    game = new Game();
-    game.start();
-    console.log('-= Game Start! =-');
+    const canvas = refCanvas.current as unknown as HTMLCanvasElement;
+    if (canvas) {
+      game = new Game(canvas.getContext('2d'));
+      game.start();
+    }
   };
 
   const stopGame = () => {
     game.stop();
-    console.log('Exit. Game over!');
+    window.console.log('Exit. Game over!');
   };
 
   useEffect(() => stopGame);
@@ -26,6 +29,7 @@ const GameComponent = () => {
       </div>
       <div id="game-score" className="h3 game__score">0</div>
       <canvas
+        ref={refCanvas}
         id="canvas"
         width="800"
         height="400"
