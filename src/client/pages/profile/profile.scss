@@ -16,82 +16,82 @@
     align-self: flex-start;
     flex-direction: column;
   }
+}
 
-  &-pic {
-    display: flex;
+.profile-pic {
+  display: flex;
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  overflow: hidden;
+  background-color: var(--primary-bg-color);
+  border-radius: var(--base-radius);
+
+  &:before {
+    display: block;
+    content: "N";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--avatar-color);
+    font-size: 2rem;
+  }
+
+  &:hover:before {
+    visibility: hidden;
+  }
+
+  &:hover &__edit {
+    opacity: 1;
     position: relative;
-    width: 15rem;
-    height: 15rem;
-    overflow: hidden;
-    background-color: var(--primary-bg-color);
-    border-radius: var(--base-radius);
+    cursor: pointer;
+  }
 
-    &:before {
+  &__image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+  }
+
+  &__edit {
+    opacity: 0;
+    height: 180%;
+    margin-top: -40%;
+    z-index: 1;
+    background-color: var(--dark-overflow-bg-color);
+    border: 0;
+
+    & > .input {
       display: block;
-      content: "N";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--avatar-color);
-      font-size: 2rem;
-    }
-
-    &:hover:before {
-      visibility: hidden;
-    }
-
-    &:hover &__edit {
-      opacity: 1;
-      position: relative;
-      cursor: pointer;
-    }
-
-    &__image {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 100%;
-    }
-
-    &__edit {
-      opacity: 0;
-      height: 180%;
-      margin-top: -40%;
-      z-index: 1;
-      background-color: var(--dark-overflow-bg-color);
-      border: 0;
-
-      & > .input {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-
-      & > .input__title {
-        display: none;
-      }
-    }
-
-    &__label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-size: 1.4rem;
-      color: var(--primary-color);
-      pointer-events: none;
-    }
-
-    &__input {
-      height: 100%;
       width: 100%;
-      display: block;
-      cursor: pointer;
-      position: relative;
-      z-index: 999;
+      height: 100%;
     }
+
+    & > .input__title {
+      display: none;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    pointer-events: none;
+  }
+
+  &__input {
+    height: 100%;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    z-index: 999;
   }
 }
