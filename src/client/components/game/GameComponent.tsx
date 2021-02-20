@@ -5,10 +5,10 @@ import './game.scss';
 
 const GameComponent = () => {
   let game: Game;
-  const refCanvas = useRef(null);
+  const refCanvas = useRef<HTMLCanvasElement>(null);
 
   const startGame = () => {
-    const canvas = refCanvas.current as unknown as HTMLCanvasElement;
+    const canvas = refCanvas.current;
     if (canvas) {
       game = new Game(canvas.getContext('2d'));
       game.start();

@@ -1,10 +1,12 @@
+import { Nullable } from '../../types';
+
 export type PropsGameObject = {
   [key in string]: number
 };
 
-export type ResultGame = 'continued' | 'losing' | 'win';
+export type GameResult = 'continued' | 'losing' | 'win';
 
-export type CTX = CanvasRenderingContext2D | null;
+export type CTX = Nullable<CanvasRenderingContext2D>;
 
 export type Background = {
   fillStyle: string,

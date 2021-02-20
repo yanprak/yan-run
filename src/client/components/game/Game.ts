@@ -1,6 +1,7 @@
-import { CTX, ResultGame, Config } from './type';
+import { Config, CTX, GameResult } from './type';
 import Player from './Player';
 import Box from './Box';
+import { Nullable } from '../../types';
 
 export default class Game {
   private readonly ctx: CTX;
@@ -33,15 +34,14 @@ export default class Game {
 
   score = 0;
 
-  private idAnimate:number|null = null;
+  private idAnimate:Nullable<number> = null;
 
   private pause = false;
 
   constructor(canvas: CanvasRenderingContext2D | null) {
     this.ctx = canvas;
     // create Player
-    const player = new Player(this.config, this.ctx);
-    this.config.player = player;
+    this.config.player = new Player(this.config, this.ctx);
 
     // create Box
     for (let i = 0; i < this.config.box_max; i++) {
@@ -68,9 +68,9 @@ export default class Game {
 
   private updateBackground() {
     const { x, y, width, height, fillStyle } = this.config.background;
-    // this.update() уже проверено!
-    this.ctx!.fillStyle = fillStyle;
-    this.ctx!.fillRect(x, y, width, height);
+    if (!this.ctx) return;
+    this.ctx.fillStyle = fillStyle;
+    this.ctx.fillRect(x, y, width, height);
   }
 
   private updatePlayer() {
@@ -79,8 +79,8 @@ export default class Game {
     player.update();
   }
 
-  private updateBox(): ResultGame {
-    let resultGame: ResultGame = 'continued';
+  private updateBox(): GameResult {
+    let resultGame: GameResult = 'continued';
     const lastBox = this.config.box[this.config.box.length - 1] as Box;
     if (lastBox.state.x <= 0) {
       resultGame = 'win';
@@ -113,10 +113,10 @@ export default class Game {
     this.updatePlayer();
 
     // show box
-    const resultGame:ResultGame = this.updateBox();
+    const gameResult:GameResult = this.updateBox();
 
     // collision
-    switch (resultGame) {
+    switch (gameResult) {
       case 'losing':
         this.stop();
         break;
@@ -141,9 +141,15 @@ export default class Game {
 
   public stop(isWin?: boolean): number {
     document.onkeydown = null;
-    if (this.uiView) this.uiView.classList.toggle('hidden');
-    if (this.scoreView && isWin) this.scoreView.innerHTML = `Вы победили! $ = ${this.score}`;
-    if (this.idAnimate) window.cancelAnimationFrame(this.idAnimate);
+    if (this.uiView) {
+      this.uiView.classList.toggle('hidden');
+    }
+    if (this.scoreView && isWin) {
+      this.scoreView.innerHTML = `Вы победили! $ = ${this.score}`;
+    }
+    if (this.idAnimate) {
+      window.cancelAnimationFrame(this.idAnimate);
+    }
     return this.score;
   }
 
