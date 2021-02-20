@@ -11,10 +11,6 @@ export default class Box {
     h: 40,
   };
 
-  ySpeed = 0;
-
-  xSpeed = 0;
-
   config: Config;
 
   constructor(config: Config, ctx: CTX) {

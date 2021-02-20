@@ -21,7 +21,7 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
 
   function handleNewMessageSubmit(event: FormEvent): void {
     event.preventDefault();
-    console.info('Submitting new message', message);
+    window.console.info('Submitting new message', message);
   }
 
   function handleTextAreaKeyChange(event: KeyboardEvent): void {

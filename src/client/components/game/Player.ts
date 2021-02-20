@@ -10,9 +10,7 @@ export default class Player {
     h: 80,
   };
 
-  ySpeed = 3;
-
-  xSpeed = 0;
+  ySpeed = 5;
 
   config: Config;
 
@@ -23,20 +21,17 @@ export default class Player {
 
   public show() {
     if (!this.ctx) return;
+    // цвет и размеры будут переработаны после анимации персонажа и заключены в конфиг
     this.ctx.fillStyle = '#5b8a20';
     const { x, y, w, h } = this.state;
     this.ctx.fillRect(x, y, w, h);
   }
 
-  setState = (nextProps: PropsGameObject) => {
-    Object.assign(this.state, nextProps);
-  };
-
   public update() {
     this.state.y += this.ySpeed;
     this.ySpeed += this.config.gravity;
-
-    if (this.state.y >= 350 - 80) {
+    const bg = this.config.background;
+    if (this.state.y >= bg.y - this.state.h) {
       this.ySpeed = 0;
       this.config.canJump = true;
     } else {
