@@ -1,0 +1,37 @@
+@import '../../css/var';
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap');
+
+.button {
+  border-radius: var(--base-radius);
+  border: 1px solid transparent;
+  padding: 1.2rem;
+  cursor: pointer;
+  font-family: 'Balsamiq Sans', cursive;
+
+  &:focus {
+    border-color: var(--focus-border-color);
+  }
+
+  &_primary {
+    color: var(--primary-color);
+    background-color: var(--primary-bg-color);
+
+    &:hover {
+      background-color: var(--primary-bg-hover-color);
+    }
+  }
+
+  &_secondary {
+    color: var(--secondary-color);
+    background-color: var(--secondary-bg-color);
+
+    &:hover {
+      background-color: var(--secondary-bg-hover-color);
+    }
+  }
+
+  &_large {
+    width: 100%;
+    max-width: 30rem;
+  }
+}

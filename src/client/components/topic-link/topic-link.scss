@@ -1,0 +1,33 @@
+.topic-link {
+  background-color: var(--dark-bg-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 3rem;
+
+  &:hover {
+    background-color: var(--default-bg-hover-color);
+  }
+
+  &__title {
+    display: flex;
+    flex: 1;
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__icon {
+    display: flex;
+    margin-right: 1rem;
+  }
+
+  &__counter {
+    display: flex;
+    font-size: 1.4rem;
+  }
+}

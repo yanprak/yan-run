@@ -1,0 +1,21 @@
+.game {
+  position: relative;
+
+  &__intro {
+    position: absolute;
+    width: 802px;
+    height: 402px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  &__score {
+    color: var(--primary-color);
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+}

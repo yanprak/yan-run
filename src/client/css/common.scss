@@ -1,0 +1,92 @@
+@import "typo";
+@import "var";
+@import "fun-color";
+@import "var-color";
+@import "container";
+@import "margin";
+@import "padding";
+
+* {
+  &,
+  &::before,
+  &::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-bg-color);
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.show-flex {
+  display: flex;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: var(--default-bg-color);
+  color: var(--default-color);
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  background: var(--default-bg-color);
+  color: var(--default-color);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+}
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+.link {
+  color: inherit;
+  font-size: 1.6rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.round {
+  border-radius: var(--base-radius);
+}
+
+.theme {
+  &-bg-secondary {
+    background-color: var(--secondary-bg-color);
+  }
+
+  &-bg-default {
+    background-color: var(--default-bg-color);
+  }
+
+  &-bg-primary {
+    background-color: var(--primary-bg-color);
+  }
+}

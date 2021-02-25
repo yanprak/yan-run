@@ -1,0 +1,15 @@
+$step: 0.4;
+// .padding_s-[size],
+// size = $step*N, N = [1..10]
+
+.padding {
+  @for $i from 1 through 10 {
+    &_s-#{$i} {
+      padding: #{$step * $i}rem;
+    }
+    &_tb_s-#{$i} {
+      padding-top: #{$step * $i}rem;
+      padding-bottom: #{$step * $i}rem;
+    }
+  }
+}

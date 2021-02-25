@@ -1,0 +1,44 @@
+.header {
+  background-color: var(--dark-bg-color);
+
+  &__inner {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 2rem;
+  }
+
+  &__logo {
+    color: var(--default-color);
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--primary-bg-color);
+    }
+  }
+
+  &__menu-list {
+    font-size: 1.4rem;
+    list-style: none;
+    display: flex;
+  }
+
+  &__menu-list-item + &__menu-list-item {
+    margin-left: 1.4rem;
+  }
+
+  &__menu-list-link {
+    text-decoration: none;
+    color: var(--default-color);
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--primary-bg-color);
+    }
+  }
+}

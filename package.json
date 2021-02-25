@@ -1,0 +1,66 @@
+{
+  "name": "yan-run",
+  "version": "1.0.0",
+  "description": "Yandex Praktikum Module 2 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "check:code": "tsc --noEmit",
+    "lint:code": "eslint ./src --ext .ts,.tsx",
+    "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
+    "lint:css": "stylelint src/client/css/*.scss",
+    "lint:cssfix": "stylelint src/client/css/*.scss --fix",
+    "server": "npx tsc src/server/server.ts --outFile app.js && node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanprak/yan-run.git"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yanprak/yan-run/issues"
+  },
+  "homepage": "https://github.com/yanprak/yan-run#readme",
+  "devDependencies": {
+    "@types/express": "4.17.11",
+    "@types/node": "14.14.25",
+    "@types/react": "17.0.1",
+    "@types/react-dom": "17.0.0",
+    "@types/react-router-dom": "5.1.7",
+    "@typescript-eslint/eslint-plugin": "4.14.2",
+    "@typescript-eslint/parser": "4.14.2",
+    "css-loader": "5.0.1",
+    "eslint": "7.19.0",
+    "eslint-config-airbnb-typescript": "12.0.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "html-webpack-plugin": "5.0.0",
+    "jest": "26.6.3",
+    "sass": "1.32.6",
+    "sass-loader": "11.0.0",
+    "style-loader": "2.0.0",
+    "stylelint": "13.9.0",
+    "stylelint-config-standard": "20.0.0",
+    "ts-loader": "8.0.15",
+    "typescript": "4.1.3",
+    "webpack": "5.20.2",
+    "webpack-cli": "4.5.0",
+    "webpack-dev-server": "3.11.2"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-redux": "7.2.2",
+    "react-router-dom": "5.2.0",
+    "redux": "4.0.5"
+  }
+}
