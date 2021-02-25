@@ -20,7 +20,7 @@ export default function useProfileApi() {
     (data: FormData) => put('/profile/avatar', data, {
       headers: {},
       // 'content-type': 'multipart/form-data', // This header is expected to work, but returns 500 error
-    }) as Promise<{avatar: string}>,
+    }) as Promise<UserInfo>,
     [put],
   );
 
