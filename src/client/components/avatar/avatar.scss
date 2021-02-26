@@ -6,21 +6,23 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  &_small {
-    $size: 36px;
-    height: $size;
-    width: $size;
-  }
+  &_size {
+    &_small {
+      $size: 36px;
+      height: $size;
+      width: $size;
+    }
 
-  &_medium {
-    $size: 48px;
-    height: $size;
-    width: $size;
-  }
+    &_medium {
+      $size: 48px;
+      height: $size;
+      width: $size;
+    }
 
-  &_large {
-    $size: 156px;
-    height: $size;
-    width: $size;
+    &_large {
+      $size: 156px;
+      height: $size;
+      width: $size;
+    }
   }
 }

@@ -9,7 +9,7 @@ const TopicLink: FC<OwnProps> = (props: OwnProps) => {
     messagesCounter,
     ...otherProps
   } = props;
-  const className = `topic-link padding_s-6 ${props.className ? props.className : ''}`;
+  const className = `topic-link padding_s-6 ${props.className || ''}`;
   return (
     <div className={className} {...otherProps}>
       <h4 className="topic-link__title h4">{title}</h4>

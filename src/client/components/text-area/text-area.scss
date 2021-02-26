@@ -2,14 +2,14 @@
   background-color: inherit;
   font-family: inherit;
   border: 0;
-  color: #fff;
+  color: var(--primary-color);
   resize: none;
-
-  &:focus {
-    outline: none;
-  }
 
   &_resizable {
     resize: both;
+  }
+
+  &:focus {
+    outline: none;
   }
 }

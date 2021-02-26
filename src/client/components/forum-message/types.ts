@@ -5,6 +5,6 @@ export type OwnProps = {
   createdAt: string;
   user: {
     login: string;
-    avatar: string | undefined;
+    avatar?: string;
   }
 } & HTMLAttributes<HTMLDivElement>;

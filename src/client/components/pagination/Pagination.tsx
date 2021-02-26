@@ -59,7 +59,7 @@ const Pagination: FC<OwnProps> = (props: OwnProps) => {
     return allLinks;
   }
 
-  const className = `pagination ${props.className ? props.className : ''}`;
+  const className = `pagination ${props.className || ''}`;
 
   return (
     <div {...otherProps} className={className}>
