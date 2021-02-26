@@ -6,7 +6,6 @@ import { useForm, useUsersApi } from '../../hooks';
 import Button from '../../components/button/Button';
 import { UserDetailsFormProps } from './types';
 import { FormState } from '../../hooks/useForm/types';
-import { prepareStringValue } from '../../utils/nullable';
 
 import { setUser } from '../../store/user/actions';
 import { User } from '../../store/user/types';
@@ -51,7 +50,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
     phone: { value: user.phone, type: 'tel' },
     first_name: { value: user.first_name, type: 'text' },
     second_name: { value: user.second_name, type: 'text' },
-    display_name: { value: prepareStringValue(user.display_name), type: 'text' },
+    display_name: { value: user.display_name || '', type: 'text' },
     login: { value: user.login, type: 'text' },
   };
 
