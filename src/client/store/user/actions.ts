@@ -5,8 +5,10 @@ import {
   User,
 } from './types';
 
+const SET_USER = 'SET_USER';
+
 export const setUser: ActionCreator<SetUserAction> = (user: User) => ({
-  type: 'SET_USER',
+  type: SET_USER,
   payload: {
     user,
   },

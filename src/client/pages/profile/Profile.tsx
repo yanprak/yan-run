@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import ProfileEditInfoForm from './ProfileEditInfoForm';
 import ProfileSetAvatarForm from './ProfileSetAvatarForm';
 import ProfileChangePasswordForm from './ProfileChangePasswordForm';
-import { UserState } from '../../store/user/types';
+import { UserState, User } from '../../store/user/types';
 import './profile.scss';
 
 export default function Profile() {
-  const user = useSelector<UserState, UserState['user']>(
+  const user = useSelector<UserState, User>(
     state => state.user,
   );
 
