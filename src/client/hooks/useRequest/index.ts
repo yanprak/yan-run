@@ -33,17 +33,17 @@ const DEFAULT_OPTS: RequestInit = {
 /*
   Fabric that creates request functions depending on method, because signature are the same.
  */
-function createRequester(
+function createRequester<T>(
   request: RequestHandler,
   method: string,
   url: string,
   data: RequestData,
   options: RequestInit,
-): RequestResponse {
+): RequestResponse<T> {
   if (data) {
     options.body = data instanceof FormData ? data : JSON.stringify(data);
   }
-  return request(url, { method, ...options });
+  return request<T>(url, { method, ...options });
 }
 
 /**
@@ -51,7 +51,7 @@ function createRequester(
  * @param {string} baseURL - Base URL for api server.
  */
 export default function useRequest(baseURL: string) {
-  const request = useCallback(async (url: string, options: RequestInit) => {
+  const request = useCallback(async <T>(url: string, options: RequestInit) => {
     const response = await fetch(`${baseURL}${url}`, { ...DEFAULT_OPTS, ...options });
     /*
       We are using .text() here, because .json() is just JSON.parse over .text()
@@ -59,10 +59,10 @@ export default function useRequest(baseURL: string) {
         we are doing this kind of trick
      */
     const text = await response.text();
-    let data;
+    let data: T | string;
     try {
       // If we get string here (something like "OK") JSON.parse will throw an error
-      data = JSON.parse(text) as Record<string, unknown>;
+      data = JSON.parse(text);
     } catch (e) {
       data = text;
     }
@@ -83,38 +83,38 @@ export default function useRequest(baseURL: string) {
   }, [baseURL]);
 
   const get = useCallback(
-    (
+    <T>(
       url: string,
       data: RequestData = null,
       options: RequestInit = {},
-    ) => createRequester(request, 'GET', url, data, options),
+    ) => createRequester<T>(request, 'GET', url, data, options),
     [request],
   );
 
   const post = useCallback(
-    (
+    <T>(
       url: string,
       data: RequestData = null,
       options: RequestInit = {},
-    ) => createRequester(request, 'POST', url, data, options),
+    ) => createRequester<T>(request, 'POST', url, data, options),
     [request],
   );
 
   const put = useCallback(
-    (
+    <T>(
       url: string,
       data: RequestData = null,
       options: RequestInit = {},
-    ) => createRequester(request, 'PUT', url, data, options),
+    ) => createRequester<T>(request, 'PUT', url, data, options),
     [request],
   );
 
   const del = useCallback(
-    (
+    <T>(
       url: string,
       data: RequestData = null,
       options: RequestInit = {},
-    ) => createRequester(request, 'DELETE', url, data, options),
+    ) => createRequester<T>(request, 'DELETE', url, data, options),
     [request],
   );
 
