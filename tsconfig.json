@@ -2,7 +2,8 @@
   "compilerOptions": {
     "lib": [
       "dom",
-      "es2017"
+      "es2017",
+      "webworker"
     ],
     "module": "esnext",
     "moduleResolution": "node",

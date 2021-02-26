@@ -1,4 +1,4 @@
 *.spec.ts
 webpack.config.js
 .eslintrc.js
-src/server/*
+src/client/sw.js

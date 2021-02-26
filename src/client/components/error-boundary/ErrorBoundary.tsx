@@ -11,7 +11,7 @@ export default class ErrorBoundary extends PureComponent<unknown, ErrorBoundaryS
   }
 
   static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: false };
+    return { hasError: true };
   }
 
   render() {
