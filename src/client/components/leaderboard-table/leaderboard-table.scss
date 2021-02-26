@@ -1,4 +1,4 @@
-.leaderboard {
+.leaderboard-table {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,7 +17,7 @@
     border: 2px solid transparent;
   }
 
-  &__row + &__row {
+  &__row:not(:first-child) {
     border-top-color: var(--default-border-color);
   }
 

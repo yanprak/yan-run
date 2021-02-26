@@ -12,7 +12,7 @@ import {
   Signin,
   Signup,
   Forum,
-  LeaderboardPage,
+  Leaderboard,
   NotFound,
   Topic,
   Contact,
@@ -35,7 +35,7 @@ export default function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/topic" component={Topic} />
             <Route path="/forum" component={Forum} exact />
-            <Route path="/leaderboard" component={LeaderboardPage} />
+            <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/contact" component={Contact} />
             <Route path="*" component={NotFound} />
           </Switch>

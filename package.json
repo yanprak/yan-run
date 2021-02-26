@@ -12,7 +12,7 @@
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
     "lint:cssfix": "stylelint src/client/css/*.scss --fix",
-    "server": "npx tsc src/server/server.ts --outFile app.js && node app.js"
+    "server": "npx tsc -p server.tsconfig.json && node server.js"
   },
   "repository": {
     "type": "git",

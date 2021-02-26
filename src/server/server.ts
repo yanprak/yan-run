@@ -1,15 +1,14 @@
-const express = require('express')
-const path = require('path');
+import express from 'express';
+import path from 'path';
 
-const app = express();
 const PORT = process.env.PORT || 4100;
 
-type Res = ReturnType<typeof app.response>
-type Req = ReturnType<typeof app.request>
+const app = express();
 
 app.use(express.static(path.join(__dirname, 'dist')));
-app.get('*', (request: Req, response: Res) => {
-  response.sendFile(`${__dirname}/dist/index.html`);
+
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {

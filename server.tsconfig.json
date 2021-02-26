@@ -1,0 +1,46 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": [],
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "importHelpers": true,
+    "esModuleInterop": true,
+
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "declaration": false,
+
+    "sourceMap": false,
+    "outDir": "./",
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+
+    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/server/server.ts",
+    "typings/**/*.d.ts",
+    "./node_modules/@types"
+  ],
+  "exclude": [
+    "**/*.js"
+  ]
+}

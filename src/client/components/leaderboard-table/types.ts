@@ -1,8 +1,8 @@
-export type LeaderboardProps = {
+export type LeaderboardTableProps = {
   count: number;
 };
 
-export type LeaderboardRowProps = {
+export type LeaderboardTableRowProps = {
   rank: number,
   user: {
     avatar: string,

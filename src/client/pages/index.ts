@@ -3,7 +3,7 @@ import Game from './game';
 import Signin from './signin';
 import Signup from './signup';
 import Profile from './profile';
-import LeaderboardPage from './leaderboard';
+import Leaderboard from './leaderboard';
 import Forum from './forum';
 import NotFound from './not-found';
 import ServerError from './server-error';
@@ -16,7 +16,7 @@ export {
   Signin,
   Signup,
   Profile,
-  LeaderboardPage,
+  Leaderboard,
   Forum,
   NotFound,
   ServerError,
