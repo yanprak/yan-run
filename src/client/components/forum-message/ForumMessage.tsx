@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { OwnProps } from './types';
 import './forum-message.scss';
 import Avatar from '../avatar';
-import { formatDate, getTime } from '../../utils/datetime';
+import { formatDate, getTime, isDateValid, createShortDate } from '../../utils/datetime';
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const {
@@ -11,13 +11,11 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     user,
     ...otherProps
   } = props;
-  const className = `message padding_s-6 ${props.className ? props.className : ''}`;
+  const className = `message padding_s-6 ${props.className || ''}`;
   const date = new Date(createdAt);
-  const shortDate = date.toLocaleString('ru', {
-    month: 'long',
-    day: 'numeric',
-  });
-  const time = getTime(date);
+  const isValidDate = isDateValid(date);
+  const shortDate = isValidDate ? createShortDate(date) : '';
+  const time = isValidDate ? getTime(date) : '';
   return (
     <div {...otherProps} className={className}>
       <div className="message__user">
