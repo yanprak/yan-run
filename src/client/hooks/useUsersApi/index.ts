@@ -17,7 +17,7 @@ export default function useProfileApi() {
   );
 
   const changeAvatar = useCallback(
-    (data: FormData) => put<{ avatar: string }>('/profile/avatar', data, {
+    (data: FormData) => put<UserInfo>('/profile/avatar', data, {
       headers: {},
       // 'content-type': 'multipart/form-data', // This header is expected to work, but returns 500 error
     }),
