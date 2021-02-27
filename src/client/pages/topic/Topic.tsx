@@ -12,8 +12,9 @@ export default function Topic(props: TopicPageProps) {
     <div className="page topic-page container container_is-column container_center">
       <div className="margin_tb_s-7 topic-page__header">
         <Pagination path="/topic" current={1} total={5} className="topic-page__pagination" />
-        {/* eslint-disable-next-line max-len */}
-        { props.isAuthor && <Button size="small" styleType="secondary" className="topic-page__button">Удалить тему</Button> }
+        { props.isAuthor && (
+          <Button size="small" styleType="secondary" className="topic-page__button">Удалить тему</Button>
+        ) }
       </div>
       <hr />
       <div className="topic-page__messages">

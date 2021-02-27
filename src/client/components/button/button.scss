@@ -8,30 +8,32 @@
   cursor: pointer;
   font-family: 'Balsamiq Sans', cursive;
 
-  &:focus {
-    border-color: var(--focus-border-color);
-  }
+  &_style {
+    &_primary {
+      color: var(--primary-color);
+      background-color: var(--primary-bg-color);
 
-  &_primary {
-    color: var(--primary-color);
-    background-color: var(--primary-bg-color);
+      &:hover {
+        background-color: var(--primary-bg-hover-color);
+      }
+    }
 
-    &:hover {
-      background-color: var(--primary-bg-hover-color);
+    &_secondary {
+      color: var(--secondary-color);
+      background-color: var(--secondary-bg-color);
+
+      &:hover {
+        background-color: var(--secondary-bg-hover-color);
+      }
     }
   }
 
-  &_secondary {
-    color: var(--secondary-color);
-    background-color: var(--secondary-bg-color);
-
-    &:hover {
-      background-color: var(--secondary-bg-hover-color);
-    }
-  }
-
-  &_large {
+  &_size_large {
     width: 100%;
     max-width: 30rem;
+  }
+
+  &:focus {
+    border-color: var(--focus-border-color);
   }
 }

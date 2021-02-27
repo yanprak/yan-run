@@ -1,13 +1,23 @@
 import React, { FC, memo, useCallback } from 'react';
+import { Dispatch, Action } from 'redux';
+import { useDispatch } from 'react-redux';
 import Input from '../../components/input';
 import { useForm, useUsersApi } from '../../hooks';
 import Button from '../../components/button/Button';
 import { UserDetailsFormProps } from './types';
 import { FormState } from '../../hooks/useForm/types';
-import { prepareStringValue } from '../../utils/nullable';
+
+import { setUser } from '../../store/user/actions';
+import { User } from '../../store/user/types';
 
 const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormProps) => {
   const { editProfile } = useUsersApi();
+  const dispatch: Dispatch<Action> = useDispatch();
+
+  const editUserWithDispatch = useCallback(
+    (user: User) => dispatch(setUser(user)),
+    [dispatch],
+  );
 
   const submitHandler = useCallback((data: FormState) => {
     const {
@@ -26,12 +36,13 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
       .then(r => {
         window.console.log(typeof r);
         window.console.dir(r);
+        editUserWithDispatch(r);
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
         window.console.log(error.status, error.message);
       });
-  }, [editProfile]);
+  }, [editProfile, editUserWithDispatch]);
 
   const { user } = props;
   const initState = {
@@ -39,7 +50,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
     phone: { value: user.phone, type: 'tel' },
     first_name: { value: user.first_name, type: 'text' },
     second_name: { value: user.second_name, type: 'text' },
-    display_name: { value: prepareStringValue(user.display_name), type: 'text' },
+    display_name: { value: user.display_name || '', type: 'text' },
     login: { value: user.login, type: 'text' },
   };
 

@@ -32,12 +32,11 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
       if (!form) {
         return;
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      form.requestSubmit();
+      handleNewMessageSubmit(event);
     }
   }
 
-  const className = `message-form ${props.className ? props.className : ''}`;
+  const className = `message-form ${props.className || ''}`;
   return (
     <form {...otherProps} className={className} onSubmit={handleNewMessageSubmit}>
       <TextArea
