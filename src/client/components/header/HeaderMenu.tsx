@@ -1,9 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useAuthApi } from '../../hooks';
+import { setUser } from '../../store/user/actions';
 
 export default function HeaderMenu() {
   const { signout } = useAuthApi();
+  const dispath = useDispatch();
+  const handleSignOut = () => {
+    signout()
+      .then(r => {
+        window.console.log('Successful signout');
+        window.console.dir(r);
+        const emptyUser = setUser({});
+        dispath(emptyUser);
+      })
+      .catch((e: Error) => {
+        const error = JSON.parse(e.message) as { status: string, message: string };
+        window.console.log(error.status, error.message);
+      });
+  };
   return (
     <nav className="header__menu">
       <ul className="header__menu-list">
@@ -29,17 +45,7 @@ export default function HeaderMenu() {
           <span
             aria-hidden
             className="header__menu-list-link"
-            onClick={() => {
-              signout()
-                .then(r => {
-                  window.console.log('Successful signout');
-                  window.console.dir(r);
-                })
-                .catch((e: Error) => {
-                  const error = JSON.parse(e.message) as { status: string, message: string };
-                  window.console.log(error.status, error.message);
-                });
-            }}
+            onClick={handleSignOut}
           >
             Logout
           </span>
