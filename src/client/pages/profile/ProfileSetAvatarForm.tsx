@@ -35,7 +35,9 @@ const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
       .then(r => {
         window.console.log(typeof r);
         window.console.dir(r);
-        changeAvatarWithDispatch(r);
+        if (typeof r !== 'string') {
+          changeAvatarWithDispatch(r);
+        }
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
