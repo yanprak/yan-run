@@ -51,6 +51,7 @@ export default class Player {
     const bg = this.config.background;
     const lowerBorder = Math.round(bg.y - this.state.h);
     if (this.state.y > lowerBorder) {
+      this.state.y = lowerBorder + 1;
       this.ySpeed = 0;
       this.config.canJump = true;
     } else {

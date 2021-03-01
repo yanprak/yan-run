@@ -3,6 +3,8 @@ import Player from './Player';
 import Box from './Box';
 import { Nullable } from '../../types';
 
+import backgroundImage from './textures/background.png';
+
 export default class Game {
   private readonly ctx: CTX;
 
@@ -24,17 +26,20 @@ export default class Game {
     width: 800,
     height: 400,
     background: {
-      fillStyle: '#404040',
+      fillStyle: '#F2F3E0',
       x: 0,
       y: 350,
       width: 800,
-      height: 100,
+      height: 50,
+      speed: 2,
     },
   };
 
+  bgImg: HTMLImageElement;
+
   score = 0;
 
-  private idAnimate:Nullable<number> = null;
+  private idAnimate: Nullable<number> = null;
 
   private pause = false;
 
@@ -50,11 +55,14 @@ export default class Game {
       this.config.box_x += Math.floor(Math.random() * 500) + 300;
     }
 
+    this.bgImg = new Image();
+    this.bgImg.src = backgroundImage;
+
     this.scoreView = document.getElementById('game-score');
     this.uiView = document.getElementById('game-ui');
   }
 
-  private keyDown(k:number) {
+  private keyDown(k: number) {
     const key = +k;
     const player = this.config.player as Player;
     if (key === 38 && this.config.canJump) {
@@ -67,10 +75,44 @@ export default class Game {
   }
 
   private updateBackground() {
-    const { x, y, width, height, fillStyle } = this.config.background;
     if (!this.ctx) return;
-    this.ctx.fillStyle = fillStyle;
-    this.ctx.fillRect(x, y, width, height);
+    const { background } = this.config;
+
+    background.x += background.speed;
+
+    /*
+      TODO(anton.kagakin):
+      1024 is the width of the background image
+      consider to use more wisely mechanism to
+      get the width of the image
+     */
+
+    if (background.x > 1024) {
+      background.x = 0;
+    }
+
+    let sourceWidth;
+    if (background.x < 1024 - 800) {
+      sourceWidth = 800;
+    } else {
+      sourceWidth = 1024 - background.x;
+    }
+
+    this.ctx.drawImage(
+      this.bgImg,
+      background.x, 768, sourceWidth, 256,
+      0, 144, sourceWidth, 256,
+    );
+    if (sourceWidth < 800) {
+      this.ctx.drawImage(
+        this.bgImg,
+        0, 768, 800 - sourceWidth, 256,
+        sourceWidth, 144, 800 - sourceWidth, 256,
+      );
+    }
+
+    this.ctx.fillStyle = background.fillStyle;
+    this.ctx.fillRect(0, 0, 800, 150);
   }
 
   private updatePlayer() {
@@ -113,7 +155,7 @@ export default class Game {
     this.updatePlayer();
 
     // show box
-    const gameResult:GameResult = this.updateBox();
+    const gameResult: GameResult = this.updateBox();
 
     // collision
     switch (gameResult) {
