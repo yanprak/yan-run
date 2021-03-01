@@ -20,7 +20,7 @@ export interface User {
 export interface SetUserAction extends Action {
   type: 'SET_USER';
   payload: {
-    user: User;
+    user: Nullable<User>;
   };
 }
 

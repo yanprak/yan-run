@@ -14,6 +14,13 @@ export const setUser: ActionCreator<SetUserAction> = (user: User) => ({
   },
 });
 
+export const removeUser: ActionCreator<SetUserAction> = () => ({
+  type: SET_USER,
+  payload: {
+    user: null,
+  },
+});
+
 // TODO: Additional actions can be:
 // const yandexPraktikumActions = {
 //   PENDING: 'PENDING',

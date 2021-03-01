@@ -5,13 +5,6 @@ import HeaderUserInfo from './HeaderUserInfo';
 
 import './header.scss';
 
-// remove sample
-const user = {
-  url: 'https://randomuser.me/api/portraits/women/44.jpg',
-  name: 'Радмила Григорьева',
-  score: 77,
-};
-
 export default function Header() {
   return (
     <header className="header">
@@ -20,7 +13,7 @@ export default function Header() {
           <Link className="header__logo" to="/">Yan Run</Link>
           <HeaderMenu />
           <Link to="/profile">
-            <HeaderUserInfo {...user} />
+            <HeaderUserInfo />
           </Link>
         </div>
       </div>

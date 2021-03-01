@@ -2,11 +2,19 @@ import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { FormSubmitHandler, ResultCheckField, FormState } from './types';
 import checkField from './checkField';
 
-// fun: for working with useForm data
+// submitHandler: for working with useForm data
 // checkField: for validation Input field
 
 const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
   const [state, setState] = useState<FormState>(initState);
+
+  const setError = useCallback((message:string) => {
+    const newState: FormState = { ...state };
+    Object.keys(state).forEach(name => {
+      newState[name] = { ...state[name], errorMessage: message };
+    });
+    setState(newState);
+  }, [state]);
 
   const handleSubmit = useCallback(
     (event: FormEvent) => {
@@ -66,6 +74,7 @@ const useForm = (initState: FormState, submitHandler?:FormSubmitHandler) => {
 
   return {
     state,
+    setError,
     handleSubmit,
     handleChange,
     handleBlur,
