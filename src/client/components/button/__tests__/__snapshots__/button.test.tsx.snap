@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`button test 1`] = `
+<button
+  className="button button_secondary button_small "
+  type="button"
+>
+  Кнопка
+</button>
+`;
