@@ -23,15 +23,3 @@ export const loadState = (): ApplicationState | undefined => {
     return undefined;
   }
 };
-
-export const checkOpenTabs = () => {
-  localStorage.setItem('lastActiveSession', `${Date.now()}`);
-  window.addEventListener('storage', (event: StorageEvent) => {
-    if (event.key === 'lastActiveSession') {
-      localStorage.setItem('tabSessionActive', `${Date.now()}`);
-    } else if (event.key === 'tabSessionActive') {
-      // TODO: What functionality do we expect from checking the open tabs? State sync?
-      alert('Game is opened in several tabs');
-    }
-  });
-};
