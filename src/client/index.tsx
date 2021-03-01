@@ -4,10 +4,17 @@ import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store';
 import './css/common.scss';
+import { saveState, loadState } from './utils/localStorage';
+import throttle from './utils/throttle';
 
-import initialState from './store/initialState';
-
+const initialState = loadState();
 const store = configureStore(initialState);
+
+store.subscribe(throttle(() => {
+  saveState({
+    user: store.getState().user,
+  });
+}, 1000));
 
 ReactDOM.render(
   <Provider store={store}>
