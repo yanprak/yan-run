@@ -35,10 +35,7 @@ export default function Signup() {
 
     signup({ login, password, email, phone, first_name, second_name })
       .then(() => fetchUserInfo())
-      .then(r => {
-        const userAction = setUser(r);
-        dispath(userAction);
-      })
+      .then(r => dispath(setUser(r)))
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
         window.console.log(error.status, error.message);

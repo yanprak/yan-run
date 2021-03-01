@@ -16,7 +16,7 @@ const initState = {
 };
 
 export default function Signin() {
-  const [errorSign, stateError] = useState<Nullable<string>>(null);
+  const [errorMessage, setErrorMessage] = useState<Nullable<string>>(null);
   const { signin, fetchUserInfo } = useAuthApi();
   const dispath = useDispatch();
 
@@ -31,15 +31,12 @@ export default function Signin() {
         window.console.dir(r);
         return fetchUserInfo();
       })
-      .then(r => {
-        const userAction = setUser(r);
-        dispath(userAction);
-      })
+      .then(r => dispath(setUser(r)))
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as RequestError;
         window.console.log(error.status, error.message);
         if (error.status === 401) {
-          stateError('некорректный логин или пароль');
+          setErrorMessage('некорректный логин или пароль');
         }
       });
   }, [signin, fetchUserInfo, dispath]);
@@ -60,7 +57,7 @@ export default function Signin() {
         <form
           onBlur={handleBlur}
           onChange={(e:ChangeEvent<HTMLFormElement>) => {
-            stateError(null);
+            setErrorMessage(null);
             handleChange(e);
           }}
           onSubmit={handleSubmit}
@@ -70,14 +67,14 @@ export default function Signin() {
             name="login"
             title="Логин"
             placeholder="Ваш логин"
-            errorMessage={errorSign || getErrorMessage('login')}
+            errorMessage={errorMessage || getErrorMessage('login')}
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
             placeholder="@#)**^_!~"
-            errorMessage={errorSign || getErrorMessage('password')}
+            errorMessage={errorMessage || getErrorMessage('password')}
           />
           <div className="container container_stretch container_is-column container_center-items padding_tb_s-3">
             <Button type="submit" size="large" styleType="primary">Войти</Button>

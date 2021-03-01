@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuthApi } from '../../hooks';
-import { setUser } from '../../store/user/actions';
+import { removeUser } from '../../store/user/actions';
 
 export default function HeaderMenu() {
   const { signout } = useAuthApi();
@@ -12,8 +12,7 @@ export default function HeaderMenu() {
       .then(r => {
         window.console.log('Successful signout');
         window.console.dir(r);
-        const emptyUser = setUser({});
-        dispath(emptyUser);
+        dispath(removeUser());
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
