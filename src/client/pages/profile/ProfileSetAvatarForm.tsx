@@ -8,6 +8,7 @@ import { API_URL } from '../../constants';
 
 import { setUser } from '../../store/user/actions';
 import { User } from '../../store/user/types';
+import showNotification from '../../utils/notification';
 
 const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
   const { image } = props;
@@ -38,10 +39,14 @@ const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
         // TODO(anton.kagkain) should gone with thunk implementation
         // TODO(anton.kagkain) cause no request hooks will be presented
         changeAvatarWithDispatch(r as User);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('success', 'Аватар обновлён');
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
         window.console.log(error.status, error.message);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('error', 'Ошибка: не удалось обновить аватар');
       });
   }, [changeAvatar, changeAvatarWithDispatch]);
 
