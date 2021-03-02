@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { selectUser } from '../../store/user/selectors';
 import ProfileEditInfoForm from './ProfileEditInfoForm';
 import ProfileSetAvatarForm from './ProfileSetAvatarForm';
 import ProfileChangePasswordForm from './ProfileChangePasswordForm';
-import { UserState, User } from '../../store/user/types';
 import './profile.scss';
 
 export default function Profile() {
-  const user = useSelector<UserState, User>(
-    state => state.user,
-  );
+  const user = useSelector(selectUser);
 
   return (
     <div className="page profile container container_center">
