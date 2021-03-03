@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Avatar from '../avatar';
-import { User, UserState } from '../../store/user/types';
+import { selectUser } from '../../store/user/selectors';
 
 function HeaderUserInfo() {
-  const user = useSelector<UserState, User>(
-    state => state.user,
-  );
+  const user = useSelector(selectUser);
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { avatar, login, first_name } = user;
   return (

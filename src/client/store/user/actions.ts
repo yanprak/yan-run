@@ -1,9 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { ActionCreator } from 'redux';
-import {
-  SetUserAction,
-  User,
-} from './types';
+import { SetUserAction, User } from './types';
 
 export const SET_USER = 'SET_USER';
 

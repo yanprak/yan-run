@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store';
-import './css/common.scss';
 import { saveState, loadState } from './utils/localStorage';
 import throttle from './utils/throttle';
+import './css/common.scss';
 
 const initialState = loadState();
 const store = configureStore(initialState);
