@@ -36,7 +36,9 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
       .then(r => {
         window.console.log(typeof r);
         window.console.dir(r);
-        editUserWithDispatch(r);
+        if (typeof r !== 'string') {
+          editUserWithDispatch(r);
+        }
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
