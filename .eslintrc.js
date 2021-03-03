@@ -46,6 +46,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
-    '@typescript-eslint/lines-between-class-members': 'off'
+    '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 };

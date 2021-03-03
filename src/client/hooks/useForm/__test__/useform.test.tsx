@@ -23,7 +23,7 @@ describe('Validation of input values', () => {
 
   function examin(arr: Field[], check: boolean) {
     arr.forEach(field => {
-      test(`Verification for "${field.type}" should be "${check}"`, () => {
+      test(`Verification for "${field.type}" should be "${String(check)}"`, () => {
         expect(checkField(field).test).toEqual(check);
       });
     });
