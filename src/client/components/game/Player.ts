@@ -1,10 +1,15 @@
 import { PropsGameObject, Config, CTX } from './type';
 
 import runImageSprite from './textures/sprite/frog/run.png';
+import jumpImageSprite from './textures/sprite/frog/jump.png';
+import fallImageSprite from './textures/sprite/frog/fall.png';
 
 export default class Player {
   ctx: CTX;
   img: HTMLImageElement = new Image();
+  runningImage: HTMLImageElement = new Image();
+  jumpingImage: HTMLImageElement = new Image();
+  fallingImage: HTMLImageElement = new Image();
 
   public state: PropsGameObject = {
     x: 100,
@@ -25,11 +30,18 @@ export default class Player {
   constructor(config: Config, ctx: CTX) {
     this.config = config;
     this.ctx = ctx;
-    this.img = new Image();
-    this.img.src = runImageSprite;
+
+    this.runningImage = new Image();
+    this.runningImage.src = runImageSprite;
+
+    this.jumpingImage = new Image();
+    this.jumpingImage.src = jumpImageSprite;
+
+    this.fallingImage = new Image();
+    this.fallingImage.src = fallImageSprite;
   }
 
-  public show() {
+  public showRunning() {
     if (!this.ctx) return;
     const { x, y, w, h } = this.state;
     this.tickCount++;
@@ -42,7 +54,16 @@ export default class Player {
       }
     }
     const sX = (this.frameIndex * this.maxWidthImage) / this.frame;
-    this.ctx.drawImage(this.img, sX, 0, w, h, x, y, w, h);
+    this.ctx.drawImage(this.runningImage, sX, 0, w, h, x, y, w, h);
+  }
+
+  public showInAction(sprite: HTMLImageElement) {
+    if (!this.ctx) return;
+    const { x, y, w, h } = this.state;
+    this.tickCount = 0;
+    this.frameIndex = 0;
+    this.ctx.drawImage(sprite, 0, 0, 32, 32, x, y, w, h);
+    // this.ctx.drawImage(sprite, 0, 0, 48, 48, x, y, 72, 72); // TODO: why is this equal?
   }
 
   public update() {
@@ -54,8 +75,16 @@ export default class Player {
       this.state.y = lowerBorder + 1;
       this.ySpeed = 0;
       this.config.canJump = true;
+      this.showRunning();
     } else {
       this.config.canJump = false;
+
+      const ySpeed = Math.floor(this.ySpeed);
+      if (ySpeed <= 0) {
+        this.showInAction(this.jumpingImage);
+      } else if (ySpeed > 0) {
+        this.showInAction(this.fallingImage);
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ export default class Game {
   // структуру config необходимо переработать: разбить на ветки
   // в аналогии с background
   private config: Config = {
-    gravity: 0.1,
+    gravity: 0.6,
     canJump: true,
     box: [],
     box_max: 4,
@@ -65,8 +65,8 @@ export default class Game {
   private keyDown(k: number) {
     const key = +k;
     const player = this.config.player as Player;
-    if (key === 38 && this.config.canJump) {
-      player.ySpeed = -4;
+    if ((key === 38 || key === 87) && this.config.canJump) {
+      player.ySpeed = -10;
     }
     // pause press key "space"
     if (key === 32) {
@@ -117,7 +117,6 @@ export default class Game {
 
   private updatePlayer() {
     const player = this.config.player as Player;
-    player.show();
     player.update();
   }
 
