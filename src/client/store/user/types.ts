@@ -2,8 +2,7 @@ import { Action } from 'redux';
 import { Nullable } from '../../types';
 
 export type UserState = {
-  // TODO replace with user: Nullable<User>; ?
-  user: User
+  user: Nullable<User>
 };
 
 export interface User {

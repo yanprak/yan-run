@@ -1,46 +1,19 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import {
-  Home,
-  Game,
-  Profile,
-  Signin,
-  Signup,
-  Forum,
-  Leaderboard,
-  NotFound,
-  Topic,
-  Contact,
-} from '../../pages';
-
+import { useAuth } from '../../hooks';
+import getRoutes from './routes';
 import Header from '../header';
-import ErrorBoundary from '../error-boundary';
 
 export default function App() {
+  const isAuthenticated = useAuth();
+  const routes = getRoutes(isAuthenticated);
   return (
-    <ErrorBoundary>
-      <Router>
-        <div className="main">
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/game" component={Game} />
-            <Route path="/signin" component={Signin} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/topic" component={Topic} />
-            <Route path="/forum" component={Forum} exact />
-            <Route path="/leaderboard" component={Leaderboard} />
-            <Route path="/contact" component={Contact} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </div>
-      </Router>
-    </ErrorBoundary>
+    <Router>
+      <div className="main">
+        <Header />
+        {routes}
+      </div>
+    </Router>
   );
 }

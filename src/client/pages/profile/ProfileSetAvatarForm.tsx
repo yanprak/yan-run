@@ -35,9 +35,9 @@ const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
       .then(r => {
         window.console.log(typeof r);
         window.console.dir(r);
-        if (typeof r !== 'string') {
-          changeAvatarWithDispatch(r);
-        }
+        // TODO(anton.kagkain) should gone with thunk implementation
+        // TODO(anton.kagkain) cause no request hooks will be presented
+        changeAvatarWithDispatch(r as User);
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };

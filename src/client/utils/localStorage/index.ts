@@ -5,7 +5,7 @@ export const saveState = (state: ApplicationState) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('state', serializedState);
   } catch (e) {
-    console.error('[ERROR] Could not save state to localStorage', e);
+    window.console.error('[ERROR] Could not save state to localStorage', e);
   }
 };
 
