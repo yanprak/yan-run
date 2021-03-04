@@ -76,6 +76,7 @@
   "dependencies": {
     "@bem-react/classname": "1.5.9",
     "classnames": "2.2.6",
+    "cogo-toast": "4.2.3",
     "express": "4.17.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",

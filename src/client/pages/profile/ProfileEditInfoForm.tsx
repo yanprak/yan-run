@@ -9,6 +9,7 @@ import { FormState } from '../../hooks/useForm/types';
 
 import { setUser } from '../../store/user/actions';
 import { User } from '../../store/user/types';
+import showNotification from '../../utils/notification';
 
 const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormProps) => {
   const { editProfile } = useUsersApi();
@@ -39,10 +40,14 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
         // TODO(anton.kagkain) should gone with thunk implementation
         // TODO(anton.kagkain) cause no request hooks will be presented
         editUserWithDispatch(r as User);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('success', 'Данные обновлены');
       })
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
         window.console.log(error.status, error.message);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('error', 'Ошибка: не удалось обновить данные');
       });
   }, [editProfile, editUserWithDispatch]);
 
