@@ -4,7 +4,7 @@ import GameComponent from '../../components/game';
 export default function Game() {
   return (
     <div
-      className="container container_center-items margin_s-3"
+      className="container container_center-items container_center margin_tb_s-3"
       style={{ height: 'auto' }}
     >
       <GameComponent />
