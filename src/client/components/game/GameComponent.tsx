@@ -29,7 +29,7 @@ const GameComponent = () => {
     startGame();
   };
 
-  useEffect(() => stopGame);
+  useEffect(() => stopGame, []);
 
   return (
     <div className="game">

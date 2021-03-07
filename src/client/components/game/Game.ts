@@ -18,7 +18,7 @@ export default class Game {
     gravity: 0.6,
     canJump: true,
     box: [],
-    box_max: 4,
+    box_max: 42,
     box_speed: 6,
     box_x: 800,
     score: 0,

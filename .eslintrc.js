@@ -44,6 +44,7 @@ module.exports = {
 
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
+    "react-hooks/exhaustive-deps": 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
