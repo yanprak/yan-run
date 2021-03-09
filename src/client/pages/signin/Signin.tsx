@@ -1,14 +1,9 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { setUser } from '../../store/user/actions';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm, useAuthApi } from '../../hooks';
-import { FormState } from '../../hooks/useForm/types';
-import { RequestError } from '../../hooks/useRequest/types';
-import { Nullable } from '../../types';
+import { useForm } from '../../hooks';
+import { useApi } from '../../hooks/useApi/useApi';
 
 const initState = {
   login: { value: '', type: 'text' },
@@ -16,37 +11,13 @@ const initState = {
 };
 
 export default function Signin() {
-  const [errorMessage, setErrorMessage] = useState<Nullable<string>>(null);
-  const { signin, fetchUserInfo } = useAuthApi();
-  const dispath = useDispatch();
-
-  const submitHandler = useCallback((data: FormState) => {
-    const {
-      login: { value: login },
-      password: { value: password },
-    } = data;
-    signin({ login, password })
-      .then(r => {
-        window.console.log('Successful signin');
-        window.console.dir(r);
-        return fetchUserInfo();
-      })
-      .then(r => dispath(setUser(r)))
-      .catch((e: Error) => {
-        const error = JSON.parse(e.message) as RequestError;
-        window.console.log(error.status, error.message);
-        if (error.status === 401) {
-          setErrorMessage('некорректный логин или пароль');
-        }
-      });
-  }, [signin, fetchUserInfo, dispath]);
-
+  const { submitHandlerLogin } = useApi();
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
-  } = useForm(initState, submitHandler);
+  } = useForm(initState, submitHandlerLogin);
 
   return (
     <div className="container container_center container_center-start">
@@ -56,10 +27,7 @@ export default function Signin() {
       >
         <form
           onBlur={handleBlur}
-          onChange={(e:ChangeEvent<HTMLFormElement>) => {
-            setErrorMessage(null);
-            handleChange(e);
-          }}
+          onChange={handleChange}
           onSubmit={handleSubmit}
         >
           <Input
@@ -67,14 +35,14 @@ export default function Signin() {
             name="login"
             title="Логин"
             placeholder="Ваш логин"
-            errorMessage={errorMessage || getErrorMessage('login')}
+            errorMessage={getErrorMessage('login')}
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
             placeholder="@#)**^_!~"
-            errorMessage={errorMessage || getErrorMessage('password')}
+            errorMessage={getErrorMessage('password')}
           />
           <div className="container container_stretch container_is-column container_center-items padding_tb_s-3">
             <Button type="submit" size="large" styleType="primary">Войти</Button>

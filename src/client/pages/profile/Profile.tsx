@@ -7,10 +7,9 @@ import { UserState, User } from '../../store/user/types';
 import './profile.scss';
 import Button from '../../components/button/Button';
 import { removeUser } from '../../store/user/actions';
-import { useAuthApi } from '../../hooks';
+import { signout } from '../../API/auth';
 
 export default function Profile() {
-  const { signout } = useAuthApi();
   const dispatch = useDispatch();
 
   const user = useSelector<UserState, User>(
@@ -19,7 +18,7 @@ export default function Profile() {
 
   const handleSignOut = () => {
     signout()
-      .then(() => {
+      .then(r => {
         dispatch(removeUser());
       })
       .catch((e: Error) => {
