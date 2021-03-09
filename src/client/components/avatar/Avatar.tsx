@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
+import { cn } from '@bem-react/classname';
 import { OwnProps } from './types';
 import './avatar.scss';
 
-const Avatar: FC<OwnProps> = (props: OwnProps) => {
-  const { url, size, ...otherProps } = props;
+const Avatar: FC<OwnProps> = ({ url, size, className, ...otherProps }: OwnProps) => {
   const avatarStyle = url ? { backgroundImage: `url(${url})` } : {};
-  const className = `avatar avatar_${size || 'medium'} ${props.className ? props.className : ''}`;
+  const avatar = cn('avatar');
+  const classNameValue = `${avatar({ size: size || 'medium' })} ${className || ''}`;
   return (
-    <div {...otherProps} className={className} style={avatarStyle} />
+    <div {...otherProps} className={classNameValue} style={avatarStyle} />
   );
 };
 

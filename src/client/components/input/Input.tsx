@@ -5,7 +5,7 @@ import './input.scss';
 function Input({ title, errorMessage, ...props }: Props) {
   return (
     <label className="input">
-      {title && <h6 className="input__title">{title}</h6>}
+      {title && <span className="input__title">{title}</span>}
       <input
         className="input__control"
         autoComplete="off"

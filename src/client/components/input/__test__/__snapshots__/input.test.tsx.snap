@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input test 1`] = `
+<label
+  className="input"
+>
+  <span
+    className="input__title"
+  >
+    Name
+  </span>
+  <input
+    autoComplete="off"
+    className="input__control"
+    name="name"
+  />
+  <span
+    className="input__error"
+  >
+    Error text
+  </span>
+</label>
+`;

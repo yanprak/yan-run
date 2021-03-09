@@ -9,7 +9,7 @@ const TextArea: FC<OwnProps> = (props: OwnProps) => {
     ...otherProps
   } = props;
   const resizableClass = resizable ? 'text-area_resizable' : '';
-  const className = `text-area ${resizableClass} ${props.className ? props.className : ''}`;
+  const className = `text-area ${resizableClass} ${props.className || ''}`;
   return (
     <textarea {...otherProps} className={className}>{children}</textarea>
   );

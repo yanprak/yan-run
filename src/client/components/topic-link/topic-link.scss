@@ -6,10 +6,6 @@
   cursor: pointer;
   margin-top: 3rem;
 
-  &:hover {
-    background-color: var(--default-bg-hover-color);
-  }
-
   &__title {
     display: flex;
     flex: 1;
@@ -29,5 +25,9 @@
   &__counter {
     display: flex;
     font-size: 1.4rem;
+  }
+
+  &:hover {
+    background-color: var(--default-bg-hover-color);
   }
 }

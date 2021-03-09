@@ -1,4 +1,6 @@
 *.spec.ts
 webpack.config.js
 .eslintrc.js
-src/server/*
+src/client/sw.js
+jest.config.js
+babel.config.js

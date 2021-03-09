@@ -14,6 +14,7 @@ export type Background = {
   y: number,
   width: number,
   height: number,
+  speed: number,
 };
 
 export type Config = {

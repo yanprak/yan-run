@@ -1,25 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Avatar from '../avatar';
+import { User, UserState } from '../../store/user/types';
+import { API_URL } from '../../constants';
 
-type HeaderUser = {
-  url: string,
-  name: string,
-  score: string | number,
-};
-
-function HeaderUserInfo(props: HeaderUser) {
-  const { url, name, score } = props;
+function HeaderUserInfo() {
+  const user = useSelector<UserState, User>(
+    state => state.user!,
+  );
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { avatar, login, first_name } = user;
   return (
-    <div className="container">
-      <Avatar size="small" url={url} />
-      <div className="container container_is-column h4 padding_s-1 header__menu-list-link">
-        {name}
-        <span className="text">
-          { `Лучший результат: ${score}` }
-        </span>
+    <Link to="/profile">
+      <div className="container">
+        <Avatar size="small" url={avatar ? `${API_URL}${avatar}` : avatar} />
+        <div className="container container_is-column h4 padding_s-1 header__menu-list-link">
+          {first_name}
+          <span className="text">
+            { `Логин: ${login}` }
+          </span>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
-export default React.memo<HeaderUser>(HeaderUserInfo);
+export default React.memo(HeaderUserInfo);

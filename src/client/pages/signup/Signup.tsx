@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-
+// import { Dispatch, Action } from 'redux';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/user/actions';
 import Input from '../../components/input';
 import Button from '../../components/button';
-
 import { useForm, useAuthApi } from '../../hooks';
 import { FormState } from '../../hooks/useForm/types';
 
@@ -17,7 +18,8 @@ const initState = {
 };
 
 export default function Signup() {
-  const { signup } = useAuthApi();
+  const { signup, fetchUserInfo } = useAuthApi();
+  const dispath = useDispatch();
 
   const submitHandler = useCallback((data: FormState) => {
     const {
@@ -32,15 +34,13 @@ export default function Signup() {
     } = data;
 
     signup({ login, password, email, phone, first_name, second_name })
-      .then(r => {
-        window.console.log(typeof r);
-        window.console.dir(r);
-      })
+      .then(() => fetchUserInfo())
+      .then(r => dispath(setUser(r)))
       .catch((e: Error) => {
         const error = JSON.parse(e.message) as { status: string, message: string };
         window.console.log(error.status, error.message);
       });
-  }, [signup]);
+  }, [dispath, fetchUserInfo, signup]);
 
   const {
     handleSubmit,

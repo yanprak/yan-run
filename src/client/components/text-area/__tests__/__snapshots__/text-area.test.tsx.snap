@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea tests Snapshot: 1`] = `
+<textarea
+  className="text-area text-area_resizable "
+  placeholder="Text"
+/>
+`;

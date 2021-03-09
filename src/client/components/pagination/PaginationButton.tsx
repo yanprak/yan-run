@@ -15,7 +15,7 @@ const PaginationButton: FC<OwnProps> = (props: OwnProps) => {
     ...otherProps
   } = props;
   const isSelectedClass = isSelected ? 'pagination__button_selected' : '';
-  const className = `pagination__button ${isSelectedClass} ${props.className ? props.className : ''}`;
+  const className = `pagination__button ${isSelectedClass} ${props.className || ''}`;
   return (
     <Link to={path}>
       <div {...otherProps} className={className}>{text}</div>

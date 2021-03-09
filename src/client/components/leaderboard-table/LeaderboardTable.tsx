@@ -2,9 +2,9 @@ import React, {
   memo, useCallback, useEffect, useState,
 } from 'react';
 
-import './leaderboard.scss';
-import LeaderboardRow from './LeaderboardRow';
-import { LeaderboardProps, LeaderboardRowProps } from './types';
+import './leaderboard-table.scss';
+import LeaderboardTableRow from './LeaderboardTableRow';
+import { LeaderboardTableProps, LeaderboardTableRowProps } from './types';
 
 /*
     todo(anton.kagakin)
@@ -20,7 +20,7 @@ function getRandomName(): string {
   return [...newArray].map(() => Math.random().toString(36)[2]).join('');
 }
 
-function generateFakeData(count: number): LeaderboardRowProps[] {
+function generateFakeData(count: number): LeaderboardTableRowProps[] {
   return new Array(count).fill(0).map((_, index) => ({
     rank: index + 1,
     user: {
@@ -31,25 +31,24 @@ function generateFakeData(count: number): LeaderboardRowProps[] {
   }));
 }
 
-function Leaderboard({ count } : LeaderboardProps) {
-  const [data, setData] = useState<LeaderboardRowProps[]>([]);
+function LeaderboardTable({ count } : LeaderboardTableProps) {
+  const [data, setData] = useState<LeaderboardTableRowProps[]>([]);
 
-  // componentDidMount
   useEffect(() => {
     setTimeout(setData, 700, generateFakeData(count));
   }, [count]);
 
   const createRows = useCallback(() => data.map(item => (
-    <LeaderboardRow key={item.rank} {...item} />
+    <LeaderboardTableRow key={item.rank} {...item} />
   )), [data]);
 
   return (
     <div className="container container_center container_center-items">
-      <div className="leaderboard">
+      <div className="leaderboard-table">
         {data.length ? createRows() : 'Loading'}
       </div>
     </div>
   );
 }
 
-export default memo<LeaderboardProps>(Leaderboard);
+export default memo<LeaderboardTableProps>(LeaderboardTable);

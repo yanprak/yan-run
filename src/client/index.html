@@ -5,8 +5,26 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    function startServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              window.console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              window.console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    }
+
+    // TODO(anton.kagakin): Turn off until development done
+    // startServiceWorker();
+  </script>
 </head>
 <body>
-  <div id="root"></div>
+<div id="root"></div>
 </body>
 </html>

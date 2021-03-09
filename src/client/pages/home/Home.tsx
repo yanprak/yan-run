@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Leaderboard from '../../components/leaderboard';
+import LeaderboardTable from '../../components/leaderboard-table';
 import Button from '../../components/button/Button';
 
 import './home.scss';
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home__intro">
-        <h3>Приветствую друг!</h3>
+        <h3>Приветствую, друг!</h3>
         <br />
         <p className="home__into-paragraph">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid, aperiam asperiores aut, beatae
@@ -21,7 +21,7 @@ export default function Home() {
       </div>
       <div className="home__ranking">
         <h3>Чемпионы</h3>
-        <Leaderboard count={5} />
+        <LeaderboardTable count={5} />
       </div>
     </div>
   );
