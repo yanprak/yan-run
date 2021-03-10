@@ -6,14 +6,17 @@
   "scripts": {
     "test": "jest",
     "test:update": "jest --updateSnapshot",
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production",
+    "clean": "rimraf dist",
     "check:code": "tsc --noEmit",
     "lint:code": "eslint ./src --ext .ts,.tsx",
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
     "lint:cssfix": "stylelint src/client/css/*.scss --fix",
-    "server": "npx tsc -p server.tsconfig.json && node server.js"
+    "start:webpack": "webpack --mode=development --watch",
+    "start:server": "nodemon index.js --watch dist/server.js",
+    "start": "NODE_ENV=development npm-run-all --print-label --parallel start:*",
+    "build": "NODE_ENV=production npm run clean && webpack --mode=production",
+    "server": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -45,6 +48,7 @@
     "@types/react-router-redux": "5.0.18",
     "@types/react-test-renderer": "17.0.1",
     "@types/redux": "3.6.0",
+    "@types/webpack-node-externals": "2.5.0",
     "@typescript-eslint/eslint-plugin": "4.14.2",
     "@typescript-eslint/parser": "4.14.2",
     "babel-jest": "26.6.3",
@@ -61,17 +65,23 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.3",
     "jest-fetch-mock": "3.0.3",
+    "nodemon": "2.0.7",
+    "npm-run-all": "4.1.5",
+    "null-loader": "4.0.1",
     "react-test-renderer": "17.0.1",
+    "rimraf": "3.0.2",
     "sass": "1.32.6",
     "sass-loader": "11.0.0",
     "style-loader": "2.0.0",
     "stylelint": "13.9.0",
     "stylelint-config-standard": "20.0.0",
     "ts-loader": "8.0.15",
+    "tsconfig-paths-webpack-plugin": "3.3.0",
     "typescript": "4.1.3",
     "webpack": "5.20.2",
     "webpack-cli": "4.5.0",
-    "webpack-dev-server": "3.11.2"
+    "webpack-dev-server": "3.11.2",
+    "webpack-node-externals": "2.5.2"
   },
   "dependencies": {
     "@bem-react/classname": "1.5.9",

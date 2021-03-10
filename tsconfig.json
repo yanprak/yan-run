@@ -5,6 +5,7 @@
       "es2017",
       "webworker"
     ],
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",

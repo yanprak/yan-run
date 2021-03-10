@@ -21,7 +21,7 @@ store.subscribe(throttle(() => {
   });
 }, 1000));
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <ErrorBoundary>
       <App />
