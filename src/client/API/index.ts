@@ -24,4 +24,10 @@ API.interceptors.response.use(undefined, (error: AxiosError) => {
   return Promise.reject();
 });
 
+API.interceptors.request.use(undefined, (error: AxiosError) => {
+  const { request } = error;
+  window.console.log(request);
+  return Promise.reject(error);
+});
+
 export default API;

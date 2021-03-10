@@ -6,7 +6,7 @@ import showNotification from '../../utils/notification';
 
 const thunkSignin = <T>(data:T) => (dispath: Dispatch) => {
   signin(data)
-    .then(r => {
+    .then(() => {
       window.console.log('Successful signin');
       return fetchUserInfo();
     })
@@ -16,7 +16,7 @@ const thunkSignin = <T>(data:T) => (dispath: Dispatch) => {
 
 const thunkSignup = <T>(data:T) => (dispath: Dispatch) => {
   signup(data)
-    .then(r => {
+    .then(() => {
       window.console.log('Successful signup');
       return fetchUserInfo();
     })
@@ -26,7 +26,7 @@ const thunkSignup = <T>(data:T) => (dispath: Dispatch) => {
 
 const thunkSignout = () => (dispath: Dispatch) => {
   signout()
-    .then(r => {
+    .then(() => {
       dispath(removeUser());
     })
     .catch(() => {});
@@ -34,7 +34,7 @@ const thunkSignout = () => (dispath: Dispatch) => {
 
 const thunkProfile = <T>(data:T) => (dispath: Dispatch) => {
   changeProfile(data)
-    .then(r => {
+    .then(() => {
       window.console.log('Successful save profile');
       return fetchUserInfo();
     })
@@ -44,7 +44,7 @@ const thunkProfile = <T>(data:T) => (dispath: Dispatch) => {
 
 const thunkPassword = <T>(data:T) => () => {
   changePassword(data)
-    .then(r => {
+    .then(() => {
       window.console.log('Successful update password');
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       showNotification('success', 'Update password');
@@ -54,7 +54,7 @@ const thunkPassword = <T>(data:T) => () => {
 
 const thunkAvatar = <T>(data:T) => (dispath: Dispatch) => {
   changeAvatar(data)
-    .then(r => {
+    .then(() => {
       window.console.log('Successful update avatar');
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       showNotification('success', 'Update Avatar');
