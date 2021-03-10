@@ -1,7 +1,6 @@
 import { combineReducers, createStore, Reducer, Store, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { UserState } from './user/types';
-
 import userReducer from './user/reducer';
 
 /*
