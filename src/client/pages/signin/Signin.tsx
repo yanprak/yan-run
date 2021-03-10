@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm } from '../../hooks';
-import { useApi } from '../../hooks/useApi/useApi';
+import { useForm, useApiAuth } from '../../hooks';
 
 const initState = {
   login: { value: '', type: 'text' },
@@ -11,13 +10,13 @@ const initState = {
 };
 
 export default function Signin() {
-  const { submitHandlerLogin } = useApi();
+  const { handleSignin } = useApiAuth();
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
-  } = useForm(initState, submitHandlerLogin);
+  } = useForm(initState, handleSignin);
 
   return (
     <div className="container container_center container_center-start">

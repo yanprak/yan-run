@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
-import { fetchUserInfo, signin } from '../../API/auth';
-import { RequestError } from '../../hooks/useRequest/types';
-import { setUser } from './actions';
+import { AxiosError } from 'axios';
+import { fetchUserInfo, signin, signup, signout } from '../../API/auth';
+import { removeUser, setUser } from './actions';
+import showNotification from '../../utils/notification';
 
-// eslint-disable-next-line import/prefer-default-export
-export const initLoginThunk = <T>(data:T) => (dispath: Dispatch) => {
+const thunkSignin = <T>(data:T) => (dispath: Dispatch) => {
   signin(data)
     .then(r => {
       window.console.log('Successful signin');
@@ -12,8 +12,55 @@ export const initLoginThunk = <T>(data:T) => (dispath: Dispatch) => {
       return fetchUserInfo();
     })
     .then(r => dispath(setUser(r.data)))
-    .catch((e: Error) => {
-      const error = JSON.parse(e.message) as RequestError;
-      window.console.log(error.status, error.message);
+    .catch((e: AxiosError) => {
+      const { response } = e;
+      window.console.log(response!.status, response!.data);
+      if (response && response.status === 409) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('warn', 'Некорректный логин или пароль');
+      }
     });
+};
+
+const thunkSignup = <T>(data:T) => (dispath: Dispatch) => {
+  signup(data)
+    .then(r => {
+      window.console.log('Successful signup');
+      window.console.dir(r.status);
+      return fetchUserInfo();
+    })
+    .then(r => dispath(setUser(r.data)))
+    .catch((e: AxiosError) => {
+      const { response } = e;
+      window.console.log(response);
+      window.console.log(response!.status, response!.data);
+      if (response && response.status === 409) {
+        const { reason } = response.data;
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('warn', reason);
+      }
+    });
+};
+
+const thunkSignout = () => (dispath: Dispatch) => {
+  signout()
+    .then(r => {
+      dispath(removeUser());
+    })
+    .catch((e: AxiosError) => {
+      const { response } = e;
+      window.console.log(response);
+      window.console.log(response!.status, response!.data);
+      if (response) {
+        const { reason } = response.data;
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        showNotification('warn', reason);
+      }
+    });
+};
+
+export {
+  thunkSignin,
+  thunkSignup,
+  thunkSignout,
 };

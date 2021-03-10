@@ -1,12 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Dispatch, Action } from 'redux';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/user/actions';
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { useForm, useAuthApi } from '../../hooks';
-import { FormState } from '../../hooks/useForm/types';
+import { useForm, useApiAuth } from '../../hooks';
 
 const initState = {
   email: { value: '', type: 'email' },
@@ -18,36 +14,14 @@ const initState = {
 };
 
 export default function Signup() {
-  const { signup, fetchUserInfo } = useAuthApi();
-  const dispath = useDispatch();
-
-  const submitHandler = useCallback((data: FormState) => {
-    const {
-      login: { value: login },
-      password: { value: password },
-      email: { value: email },
-      phone: { value: phone },
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      first_name: { value: first_name },
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      second_name: { value: second_name },
-    } = data;
-
-    signup({ login, password, email, phone, first_name, second_name })
-      .then(() => fetchUserInfo())
-      .then(r => dispath(setUser(r)))
-      .catch((e: Error) => {
-        const error = JSON.parse(e.message) as { status: string, message: string };
-        window.console.log(error.status, error.message);
-      });
-  }, [dispath, fetchUserInfo, signup]);
+  const { handleSignup } = useApiAuth();
 
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
-  } = useForm(initState, submitHandler);
+  } = useForm(initState, handleSignup);
 
   return (
     <div className="container container_center container_center-start">
