@@ -1,16 +1,12 @@
 import express from 'express';
 import path from 'path';
-
-const PORT = process.env.PORT || 4100;
+import serverRenderMiddleware from './serverRenderMiddleware';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+app.get('*', serverRenderMiddleware);
 
-app.listen(PORT, () => {
-  global.console.log(`Backend server listens on port: ${PORT}`);
-});
+// eslint-disable-next-line import/prefer-default-export
+export { app };
