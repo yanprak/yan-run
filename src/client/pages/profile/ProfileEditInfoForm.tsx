@@ -1,57 +1,16 @@
-import React, { FC, memo, useCallback } from 'react';
-import { Dispatch, Action } from 'redux';
-import { useDispatch } from 'react-redux';
+import React, { FC, memo } from 'react';
+import { useSelector } from 'react-redux';
 import Input from '../../components/input';
-import { useForm, useUsersApi } from '../../hooks';
+import { useApiUser, useForm } from '../../hooks';
 import Button from '../../components/button/Button';
 import { UserDetailsFormProps } from './types';
-import { FormState } from '../../hooks/useForm/types';
+import { User, UserState } from '../../store/user/types';
 
-import { setUser } from '../../store/user/actions';
-import { User } from '../../store/user/types';
-import showNotification from '../../utils/notification';
-
-const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormProps) => {
-  const { editProfile } = useUsersApi();
-  const dispatch: Dispatch<Action> = useDispatch();
-
-  const editUserWithDispatch = useCallback(
-    (user: User) => dispatch(setUser(user)),
-    [dispatch],
+const ProfileEditInfoForm: FC<UserDetailsFormProps> = () => {
+  const { handleProfile } = useApiUser();
+  const user = useSelector<UserState, User>(
+    state => state.user!,
   );
-
-  const submitHandler = useCallback((data: FormState) => {
-    const {
-      login: { value: login },
-      email: { value: email },
-      phone: { value: phone },
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      first_name: { value: first_name },
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      second_name: { value: second_name },
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      display_name: { value: display_name },
-    } = data;
-
-    editProfile({ login, email, phone, first_name, second_name, display_name })
-      .then(r => {
-        window.console.log(typeof r);
-        window.console.dir(r);
-        // TODO(anton.kagkain) should gone with thunk implementation
-        // TODO(anton.kagkain) cause no request hooks will be presented
-        editUserWithDispatch(r as User);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        showNotification('success', 'Данные обновлены');
-      })
-      .catch((e: Error) => {
-        const error = JSON.parse(e.message) as { status: string, message: string };
-        window.console.log(error.status, error.message);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        showNotification('error', 'Ошибка: не удалось обновить данные');
-      });
-  }, [editProfile, editUserWithDispatch]);
-
-  const { user } = props;
   const initState = {
     email: { value: user.email, type: 'email' },
     phone: { value: user.phone, type: 'tel' },
@@ -67,7 +26,7 @@ const ProfileEditInfoForm: FC<UserDetailsFormProps> = (props: UserDetailsFormPro
     handleBlur,
     getErrorMessage,
     getFieldValue,
-  } = useForm(initState, submitHandler);
+  } = useForm(initState, handleProfile);
 
   return (
     <form

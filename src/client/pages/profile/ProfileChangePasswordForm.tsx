@@ -1,9 +1,8 @@
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, memo } from 'react';
 import Input from '../../components/input';
-import { useForm, useUsersApi } from '../../hooks';
+import { useApiUser, useForm } from '../../hooks';
 import Button from '../../components/button/Button';
 import { FormProps } from './types';
-import { FormState } from '../../hooks/useForm/types';
 
 const initState = {
   oldPassword: { value: '', type: 'password' },
@@ -11,31 +10,14 @@ const initState = {
 };
 
 const ProfileChangePasswordForm: FC<FormProps> = () => {
-  const { changePassword } = useUsersApi();
-
-  const submitHandler = useCallback((data: FormState) => {
-    const {
-      oldPassword: { value: oldPassword },
-      newPassword: { value: newPassword },
-    } = data;
-
-    changePassword({ oldPassword, newPassword })
-      .then(r => {
-        window.console.log(typeof r);
-        window.console.dir(r);
-      })
-      .catch((e: Error) => {
-        const error = JSON.parse(e.message) as { status: string, message: string };
-        window.console.log(error.status, error.message);
-      });
-  }, [changePassword]);
+  const { handleChangePassword } = useApiUser();
 
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
-  } = useForm(initState, submitHandler);
+  } = useForm(initState, handleChangePassword);
 
   return (
     <form
