@@ -35,6 +35,12 @@ export default function getRoutes(isAuthenticated: boolean) {
         <Route path="/signup" exact>
           <Redirect to="/" />
         </Route>
+        {/* remove */}
+        <Route path="/cool" exact>
+          <div>
+            cool
+          </div>
+        </Route>
         <Route path="*" component={NotFound} />
       </Switch>
     );

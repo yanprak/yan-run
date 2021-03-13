@@ -1,8 +1,14 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Request, Response } from 'express';
+import { StaticRouter } from 'react-router-dom';
+import { StaticRouterContext } from 'react-router';
+import { Provider } from 'react-redux';
+import App from '../client/components/app';
+import { loadState } from '../client/utils/localStorage';
+import configureStore from '../client/store';
 
-function getHtml(reactHtml: string) {
+function getHtml(reactHtml: string, reduxState = {}) {
   return `
     <!doctype html>
     <html lang="en">
@@ -15,16 +21,36 @@ function getHtml(reactHtml: string) {
     </head>
     <body>
         <div id="root">${reactHtml}</div>
-<!--        uncomment when full SSR would be implemented -->
-<!--        <script src="./bundle.js"></script> -->
+    <script>
+    <!-- todo: resolve the issue with XSS -->
+        window.__INITIAL_STATE__ = ${JSON.stringify(reduxState)}
+    </script>
+    <script src="./bundle.js"></script>
     </body>
     </html>
   `;
 }
 
 export default (req: Request, res: Response) => {
-  const jsx = <div>Hello world</div>;
+  const location = req.url;
+  const context: StaticRouterContext = {};
+  const initialState = loadState();
+  const { store } = configureStore(initialState, location);
+  const reduxState = store.getState();
+
+  const jsx = (
+    <Provider store={store}>
+      <StaticRouter context={context} location={location}>
+        <App />
+      </StaticRouter>
+    </Provider>
+  );
   const reactHtml = renderToString(jsx);
 
-  res.send(getHtml(reactHtml));
+  if (context.url) {
+    res.redirect(context.url);
+    return;
+  }
+
+  res.send(getHtml(reactHtml, reduxState));
 };
