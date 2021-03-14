@@ -6,20 +6,14 @@ import showNotification from '../../utils/notification';
 
 const thunkSignin = <T>(data:T) => (dispath: Dispatch) => {
   signin(data)
-    .then(() => {
-      window.console.log('Successful signin');
-      return fetchUserInfo();
-    })
+    .then(() => fetchUserInfo())
     .then(r => dispath(setUser(r.data)))
     .catch(() => {});
 };
 
 const thunkSignup = <T>(data:T) => (dispath: Dispatch) => {
   signup(data)
-    .then(() => {
-      window.console.log('Successful signup');
-      return fetchUserInfo();
-    })
+    .then(() => fetchUserInfo())
     .then(r => dispath(setUser(r.data)))
     .catch(() => {});
 };
@@ -34,10 +28,7 @@ const thunkSignout = () => (dispath: Dispatch) => {
 
 const thunkProfile = <T>(data:T) => (dispath: Dispatch) => {
   changeProfile(data)
-    .then(() => {
-      window.console.log('Successful save profile');
-      return fetchUserInfo();
-    })
+    .then(() => fetchUserInfo())
     .then(r => dispath(setUser(r.data)))
     .catch(() => {});
 };
@@ -45,7 +36,6 @@ const thunkProfile = <T>(data:T) => (dispath: Dispatch) => {
 const thunkPassword = <T>(data:T) => () => {
   changePassword(data)
     .then(() => {
-      window.console.log('Successful update password');
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       showNotification('success', 'Update password');
     })

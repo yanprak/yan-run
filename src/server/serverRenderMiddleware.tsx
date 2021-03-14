@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Request, Response } from 'express';
+import { CookiesProvider } from 'react-cookie';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider } from 'react-redux';
@@ -39,11 +40,13 @@ export default (req: Request, res: Response) => {
   const reduxState = store.getState();
 
   const jsx = (
-    <Provider store={store}>
-      <StaticRouter context={context} location={location}>
-        <App />
-      </StaticRouter>
-    </Provider>
+    <CookiesProvider cookies={req.cookies}>
+      <Provider store={store}>
+        <StaticRouter context={context} location={location}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    </CookiesProvider>
   );
   const reactHtml = renderToString(jsx);
 
