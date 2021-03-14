@@ -21,7 +21,7 @@ export default function Home() {
       </div>
       <div className="home__ranking">
         <h3>Чемпионы</h3>
-        <LeaderboardTable count={5} />
+        <LeaderboardTable limit={5} />
       </div>
     </div>
   );

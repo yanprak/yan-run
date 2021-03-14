@@ -2,7 +2,8 @@ import axios, { AxiosError } from 'axios';
 import showNotification from '../utils/notification';
 import isServer from '../utils/isServer';
 
-const BASE_URL = 'https://ya-praktikum.tech/api/v2/';
+export const HOST_URL = 'https://ya-praktikum.tech';
+const BASE_URL = `${HOST_URL}/api/v2/`;
 
 const API = axios.create({
   baseURL: BASE_URL,
