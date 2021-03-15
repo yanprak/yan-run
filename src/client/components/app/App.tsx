@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-
 import { useAuth } from '../../hooks';
 import getRoutes from './routes';
 import Header from '../header';
@@ -8,12 +6,11 @@ import Header from '../header';
 export default function App() {
   const isAuthenticated = useAuth();
   const routes = getRoutes(isAuthenticated);
+  // const routes = getRoutes(true);
   return (
-    <Router>
-      <div className="main">
-        <Header />
-        {routes}
-      </div>
-    </Router>
+    <div className="main">
+      <Header />
+      {routes}
+    </div>
   );
 }
