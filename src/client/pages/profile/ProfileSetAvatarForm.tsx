@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Input from '../../components/input';
 import { AvatarProps } from './types';
 import { useApiUser } from '../../hooks';
-import { API_URL } from '../../constants';
+import { HOST_URL } from '../../API';
 import { User, UserState } from '../../store/user/types';
 
 const ProfileSetAvatarForm: FC<AvatarProps> = () => {
@@ -16,7 +16,7 @@ const ProfileSetAvatarForm: FC<AvatarProps> = () => {
   return (
     <div className="profile__avatar-form">
       <div className="profile-pic">
-        {user.avatar && <img className="profile-pic__image" src={`${API_URL}${user.avatar}`} alt="profile-pic" />}
+        {user.avatar && <img className="profile-pic__image" src={`${HOST_URL}${user.avatar}`} alt="profile-pic" />}
         <div className="profile-pic__edit">
           <span className="profile-pic__label">Загрузить аватар</span>
           <Input

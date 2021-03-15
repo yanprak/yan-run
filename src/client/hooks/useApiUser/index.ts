@@ -4,7 +4,7 @@ import { FormState } from '../useForm/types';
 import { thunkProfile, thunkPassword, thunkAvatar } from '../../store/user/thunks';
 
 export default function useApiUser() {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const handleProfile = useCallback((data: FormState) => {
     const {
@@ -15,16 +15,16 @@ export default function useApiUser() {
       second_name: { value: second_name },
       display_name: { value: display_name },
     } = data;
-    dispath(thunkProfile({ login, email, phone, first_name, second_name, display_name }));
-  }, [dispath]);
+    dispatch(thunkProfile({ login, email, phone, first_name, second_name, display_name }));
+  }, [dispatch]);
 
   const handleChangePassword = useCallback((data: FormState) => {
     const {
       oldPassword: { value: oldPassword },
       newPassword: { value: newPassword },
     } = data;
-    dispath(thunkPassword({ oldPassword, newPassword }));
-  }, [dispath]);
+    dispatch(thunkPassword({ oldPassword, newPassword }));
+  }, [dispatch]);
 
   const handleChangeAvatar = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const element = event.target as HTMLInputElement;
@@ -35,8 +35,8 @@ export default function useApiUser() {
     const avatar = files[0];
     const formData = new FormData();
     formData.append('avatar', avatar);
-    dispath(thunkAvatar(formData));
-  }, [dispath]);
+    dispatch(thunkAvatar(formData));
+  }, [dispatch]);
 
   return { handleProfile, handleChangePassword, handleChangeAvatar };
 }

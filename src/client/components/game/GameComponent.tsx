@@ -1,17 +1,30 @@
 import React, { useEffect, memo, useRef } from 'react';
+import { useSelector } from 'react-redux';
+
 import Game from './Game';
 import Button from '../button/Button';
-import './game.scss';
 import { toggleFullscreen } from '../../utils/fullscreen';
+import { useApiLeaderboard } from '../../hooks';
+import { User, UserState } from '../../store/user/types';
+import { RATING_FIELD_NAME } from '../../API/leaderboard';
+
+import './game.scss';
 
 const GameComponent = () => {
   let game: Game;
   const refCanvas = useRef<HTMLCanvasElement>(null);
+  const { updateLeaderboardData } = useApiLeaderboard();
+
+  const user = useSelector<UserState, User>(
+    state => state.user!,
+  );
 
   const startGame = () => {
     const canvas = refCanvas.current;
     if (canvas) {
-      game = new Game(canvas.getContext('2d'));
+      game = new Game(canvas.getContext('2d'), score => {
+        updateLeaderboardData({ yanrunUserId: user.id, [RATING_FIELD_NAME]: score });
+      });
       game.start();
     }
   };

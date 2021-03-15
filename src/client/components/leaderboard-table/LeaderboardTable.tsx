@@ -1,51 +1,48 @@
-import React, {
-  memo, useCallback, useEffect, useState,
-} from 'react';
+import React, { memo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import LeaderboardTableRow from './LeaderboardTableRow';
+import { LeaderboardTableProps } from './types';
+import { LeaderboardState } from '../../store/leaderboard/types';
+import { ApplicationState } from '../../store';
+import { useApiLeaderboard } from '../../hooks';
 
 import './leaderboard-table.scss';
-import LeaderboardTableRow from './LeaderboardTableRow';
-import { LeaderboardTableProps, LeaderboardTableRowProps } from './types';
 
-/*
-    todo(anton.kagakin)
-    мусор в виде getRandomInt, getRandomName, fakeData, setTimeout умрет при подключении API для leaderboard
- */
-
-function getRandomInt(min = 1, max: number): number {
-  return Math.floor(Math.random() * max + min);
-}
-
-function getRandomName(): string {
-  const newArray = new Array(getRandomInt(1, 25)) as [];
-  return [...newArray].map(() => Math.random().toString(36)[2]).join('');
-}
-
-function generateFakeData(count: number): LeaderboardTableRowProps[] {
-  return new Array(count).fill(0).map((_, index) => ({
-    rank: index + 1,
-    user: {
-      avatar: 'https://yastatic.net/q/praktikum/v0.169.7/static/favicon.png',
-      login: getRandomName(),
-    },
-    score: Math.floor(Math.random() * 99999),
-  }));
-}
-
-function LeaderboardTable({ count } : LeaderboardTableProps) {
-  const [data, setData] = useState<LeaderboardTableRowProps[]>([]);
+function LeaderboardTable({ cursor = 0, limit }: LeaderboardTableProps) {
+  const { fetchLeaderboardData } = useApiLeaderboard();
 
   useEffect(() => {
-    setTimeout(setData, 700, generateFakeData(count));
-  }, [count]);
+    fetchLeaderboardData({ cursor, limit });
+  }, [cursor, limit, fetchLeaderboardData]);
 
-  const createRows = useCallback(() => data.map(item => (
-    <LeaderboardTableRow key={item.rank} {...item} />
-  )), [data]);
+  const leaderboard = useSelector<ApplicationState, LeaderboardState>(state => state.leaderboard);
+
+  const { data, error, loading } = leaderboard;
+
+  let children;
+  if (error) {
+    children = 'Something went wrong';
+  } else if (loading) {
+    children = 'Loading...';
+  } else {
+    children = data.map((item, index) => (
+      <LeaderboardTableRow
+        key={item.id}
+        rank={index + 1}
+        score={item.score}
+        user={{
+          login: item.login,
+          avatar: item.avatar,
+        }}
+      />
+    ));
+  }
 
   return (
     <div className="container container_center container_center-items">
       <div className="leaderboard-table">
-        {data.length ? createRows() : 'Loading'}
+        {children}
       </div>
     </div>
   );

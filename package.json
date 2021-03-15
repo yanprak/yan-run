@@ -6,16 +6,23 @@
   "scripts": {
     "test": "jest",
     "test:update": "jest --updateSnapshot",
+
     "clean": "rimraf dist",
     "check:code": "tsc --noEmit",
     "lint:code": "eslint ./src --ext .ts,.tsx",
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
     "lint:cssfix": "stylelint src/client/css/*.scss --fix",
+
     "start:webpack": "webpack --mode=development --watch",
     "start:server": "nodemon index.js --watch dist/server.js",
-    "start": "NODE_ENV=development npm-run-all --print-label --parallel start:*",
-    "build": "NODE_ENV=production npm run clean && webpack --mode=production",
+
+    "csr": "cross-env NODE_ENV=development SR=client npm-run-all --print-label --parallel start:*",
+    "ssr": "cross-env NODE_ENV=development SR=server npm-run-all --print-label --parallel start:*",
+
+    "build": "cross-env NODE_ENV=production SR=server npm run clean && webpack --mode=production",
+    "build:server": "cross-env NODE_ENV=production SR=server webpack --mode=production --config webpack/server.config.js",
+
     "server": "node index.js"
   },
   "repository": {
@@ -91,6 +98,7 @@
     "cogo-toast": "4.2.3",
     "connected-react-router": "6.9.1",
     "cookie-parser": "1.4.5",
+    "cross-env": "7.0.3",
     "express": "4.17.1",
     "history": "5.0.0",
     "react": "17.0.1",

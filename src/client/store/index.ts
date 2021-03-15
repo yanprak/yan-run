@@ -1,21 +1,28 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { connectRouter } from 'connected-react-router';
+import { connectRouter, RouterState } from 'connected-react-router';
 import { createBrowserHistory, createMemoryHistory, History } from 'history';
 import thunk from 'redux-thunk';
-import { UserState } from './user/types';
-import userReducer from './user/reducer';
-import isServer from '../utils/isServer';
-import { State } from './type';
+import { Nullable } from '../types';
 
-/*
-  New states can be combined here, e.g. "... & OtherState", etc
-*/
-export type ApplicationState = UserState | State;
+import { User } from './user/types';
+import { LeaderboardState } from './leaderboard/types';
+
+import userReducer from './user/reducer';
+import leaderboardReducer from './leaderboard/reducer';
+
+import isServer from '../utils/isServer';
+
+export type ApplicationState = {
+  user: Nullable<User>,
+  router: RouterState,
+  leaderboard: LeaderboardState,
+};
 
 function getReducer(history: History) {
   return combineReducers<ApplicationState>({
     user: userReducer,
     router: connectRouter(history),
+    leaderboard: leaderboardReducer,
   });
 }
 

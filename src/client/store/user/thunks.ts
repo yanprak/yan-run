@@ -4,32 +4,41 @@ import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
 
-const thunkSignin = <T>(data:T) => (dispath: Dispatch) => {
+const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
   signin(data)
-    .then(() => fetchUserInfo())
-    .then(r => dispath(setUser(r.data)))
+    .then(() => {
+      window.console.log('Successful signin');
+      return fetchUserInfo();
+    })
+    .then(r => dispatch(setUser(r.data)))
     .catch(() => {});
 };
 
-const thunkSignup = <T>(data:T) => (dispath: Dispatch) => {
+const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
   signup(data)
-    .then(() => fetchUserInfo())
-    .then(r => dispath(setUser(r.data)))
+    .then(() => {
+      window.console.log('Successful signup');
+      return fetchUserInfo();
+    })
+    .then(r => dispatch(setUser(r.data)))
     .catch(() => {});
 };
 
-const thunkSignout = () => (dispath: Dispatch) => {
+const thunkSignout = () => (dispatch: Dispatch) => {
   signout()
     .then(() => {
-      dispath(removeUser());
+      dispatch(removeUser());
     })
     .catch(() => {});
 };
 
-const thunkProfile = <T>(data:T) => (dispath: Dispatch) => {
+const thunkProfile = <T>(data:T) => (dispatch: Dispatch) => {
   changeProfile(data)
-    .then(() => fetchUserInfo())
-    .then(r => dispath(setUser(r.data)))
+    .then(() => {
+      window.console.log('Successful save profile');
+      return fetchUserInfo();
+    })
+    .then(r => dispatch(setUser(r.data)))
     .catch(() => {});
 };
 
@@ -42,7 +51,7 @@ const thunkPassword = <T>(data:T) => () => {
     .catch(() => {});
 };
 
-const thunkAvatar = <T>(data:T) => (dispath: Dispatch) => {
+const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
   changeAvatar(data)
     .then(() => {
       window.console.log('Successful update avatar');
@@ -50,7 +59,7 @@ const thunkAvatar = <T>(data:T) => (dispath: Dispatch) => {
       showNotification('success', 'Update Avatar');
       return fetchUserInfo();
     })
-    .then(r => dispath(setUser(r.data)))
+    .then(r => dispatch(setUser(r.data)))
     .catch(() => {});
 };
 
