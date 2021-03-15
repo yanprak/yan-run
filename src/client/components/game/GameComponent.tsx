@@ -30,6 +30,9 @@ const GameComponent = () => {
   };
 
   const stopGame = () => {
+    if (!game) {
+      return;
+    }
     game.stop();
     window.console.log('Exit. Game over!');
   };
