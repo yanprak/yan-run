@@ -16,9 +16,12 @@ import './css/common.scss';
 const initialState = loadState();
 const { store } = configureStore(initialState);
 
-const state = store.getState();
 store.subscribe(throttle(() => {
-  saveState(state);
+  saveState({
+    user: store.getState().user,
+    leaderboard: store.getState().leaderboard,
+    router: store.getState().router,
+  });
 }, 1000));
 
 ReactDOM.render(
