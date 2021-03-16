@@ -1,30 +1,10 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { connectRouter, RouterState } from 'connected-react-router';
-import { createBrowserHistory, createMemoryHistory, History } from 'history';
-import thunk from 'redux-thunk';
-import { Nullable } from '../types';
-
-import { User } from './user/types';
-import { LeaderboardState } from './leaderboard/types';
-
-import userReducer from './user/reducer';
-import leaderboardReducer from './leaderboard/reducer';
-
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createBrowserHistory, createMemoryHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
 import isServer from '../utils/isServer';
-
-export type ApplicationState = {
-  user: Nullable<User>,
-  router: RouterState,
-  leaderboard: LeaderboardState,
-};
-
-function getReducer(history: History) {
-  return combineReducers<ApplicationState>({
-    user: userReducer,
-    router: connectRouter(history),
-    leaderboard: leaderboardReducer,
-  });
-}
+import { ApplicationState } from './types';
+import createRootReducer from './reducers';
+import middlewares from './middlewares';
 
 /*
   Initial state can be 'undefined' in case the user visits for the first time (there is no localStorage record yet).
@@ -35,9 +15,14 @@ export default function configureStore(initialState: ApplicationState | undefine
     ? createMemoryHistory({ initialEntries: [url] })
     : createBrowserHistory();
   const store = createStore(
-    getReducer(history),
+    createRootReducer(history),
     initialState,
-    applyMiddleware(thunk),
+    compose(
+      applyMiddleware(
+        routerMiddleware(history),
+        ...middlewares,
+      ),
+    ),
   );
 
   return { store, history };

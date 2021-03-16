@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import LeaderboardTableRow from './LeaderboardTableRow';
 import { LeaderboardTableProps } from './types';
 import { LeaderboardState } from '../../store/leaderboard/types';
-import { ApplicationState } from '../../store';
+import { ApplicationState } from '../../store/types';
 import { useApiLeaderboard } from '../../hooks';
 
 import './leaderboard-table.scss';

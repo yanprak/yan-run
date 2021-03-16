@@ -6,12 +6,10 @@ import {
   Leaderboard,
   NotFound,
   Profile,
-  Signin,
-  Signup,
   Topic,
 } from '../pages';
 
-const routes2 = [
+const routes = [
   {
     path: '/',
     component: Home,
@@ -49,19 +47,17 @@ const routes2 = [
   },
   {
     path: '/signin',
-    component: Signin,
     exact: true,
   },
   {
     path: '/signup',
-    component: Signup,
     exact: true,
   },
   {
     path: '*',
     component: NotFound,
-    exact: true,
+    exact: false,
   },
 ];
 
-export default routes2;
+export default routes;

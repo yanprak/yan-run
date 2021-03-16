@@ -1,26 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 import { CookiesProvider } from 'react-cookie';
 import ErrorBoundary from './components/error-boundary';
 import App from './components/app';
-import configureStore, { ApplicationState } from './store';
+import configureStore from './store';
 import { saveState } from './utils/localStorage';
 import throttle from './utils/throttle';
 import './css/common.scss';
 
-declare global {
-  interface Window {
-    __INITIAL_STATE__: ApplicationState;
-  }
-}
-
 const initialState = window.__INITIAL_STATE__;
-const { store } = configureStore(initialState);
+delete window.__INITIAL_STATE__;
+const { store, history } = configureStore(initialState);
 
-const state = store.getState();
 store.subscribe(throttle(() => {
+  const state = store.getState();
   saveState(state);
 }, 1000));
 
@@ -28,9 +23,9 @@ ReactDOM.hydrate(
   <CookiesProvider>
     <Provider store={store}>
       <ErrorBoundary>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <App />
-        </BrowserRouter>
+        </ConnectedRouter>
       </ErrorBoundary>
     </Provider>
   </CookiesProvider>,

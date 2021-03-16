@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../hooks';
-import getRoutes from './routes';
+import getRoutes from '../../routes';
 import Header from '../header';
 
 export default function App() {
