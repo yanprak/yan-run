@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { fetchUserInfo, signin, signup, signout } from '../../API/auth';
+import { fetchUserInfo, signin, signup, signout, fetchUserInfoWithCookies } from '../../API/auth';
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
@@ -63,6 +63,10 @@ const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
     .catch(() => {});
 };
 
+const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInfoWithCookies(cookies)
+  .then(r => dispatch(setUser(r.data)))
+  .catch(() => {});
+
 export {
   thunkSignin,
   thunkSignup,
@@ -70,4 +74,5 @@ export {
   thunkProfile,
   thunkPassword,
   thunkAvatar,
+  thunkFetchUser,
 };

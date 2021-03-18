@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { CookiesProvider } from 'react-cookie';
 import ErrorBoundary from './components/error-boundary';
 import App from './components/app';
 import configureStore from './store';
@@ -20,14 +19,12 @@ store.subscribe(throttle(() => {
 }, 1000));
 
 ReactDOM.hydrate(
-  <CookiesProvider>
-    <Provider store={store}>
-      <ErrorBoundary>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </ErrorBoundary>
-    </Provider>
-  </CookiesProvider>,
+  <Provider store={store}>
+    <ErrorBoundary>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </ErrorBoundary>
+  </Provider>,
   document.getElementById('root'),
 );

@@ -11,7 +11,7 @@ export default function getRoutes(isAuthenticated: boolean) {
   if (isAuthenticated) {
     return (
       <Switch>
-        {routes.map(({ ...routeProps }) => {
+        {routes.map(({ fetchData, ...routeProps }) => {
           if (routeProps.component) {
             return (
               <Route key={routeProps.path} {...routeProps} />
