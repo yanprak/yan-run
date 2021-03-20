@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { FormState } from '../useForm/types';
-import { thunkSignin, thunkSignup, thunkSignout } from '../../store/user/thunks';
+import { thunkSignin, thunkSignup, thunkSignout, thunkSignYa } from '../../store/user/thunks';
+import {signYaGetId} from "../../API/auth";
+import {AxiosResponse} from "axios";
 
 export default function useApiAuth() {
   const dispatch = useDispatch();
@@ -32,9 +34,25 @@ export default function useApiAuth() {
     dispatch(thunkSignout());
   }, [dispatch]);
 
+  const handleSignYa = useCallback((code: string) => {
+    dispatch(thunkSignYa({ code }));
+  }, [dispatch]);
+
+  const handleGetIdYa = useCallback((code: string) => {
+    signYaGetId()
+      .then((r:AxiosResponse) => {
+        const { service_id } = r.data;
+        const urlYa = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=`;
+        window.location.replace(urlYa);
+      })
+      .catch(() => {});
+  }, []);
+
   return {
     handleSignin,
     handleSignup,
     handleSignout,
+    handleSignYa,
+    handleGetIdYa,
   };
 }

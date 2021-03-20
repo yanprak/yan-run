@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
 import { useForm, useApiAuth } from '../../hooks';
+// import {signYagetId} from "../../API/authYa";
 
 const initState = {
   login: { value: '', type: 'text' },
@@ -10,13 +11,22 @@ const initState = {
 };
 
 export default function Signin() {
-  const { handleSignin } = useApiAuth();
+  const { handleSignin, handleGetIdYa } = useApiAuth();
   const {
     handleSubmit,
     handleChange,
     handleBlur,
     getErrorMessage,
   } = useForm(initState, handleSignin);
+
+  // let serviceId = '243f5d3b0fa04e5aa9b8ff6508db3a64';
+  // const REDIRECT_URI = 'https://yanrun.herokuapp.com/';
+  // eslint-disable-next-line max-len
+  // const urlYa = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=`;
+  // const redirectYa = () => {
+  //
+  //   window.location.replace(urlYa);
+  // };
 
   return (
     <div className="container container_center container_center-start">
@@ -50,6 +60,7 @@ export default function Signin() {
             </Link>
           </div>
         </form>
+        <Button type="submit" onClick={handleGetIdYa} size="large" styleType="primary">Войти через Ya</Button>
       </div>
     </div>
   );
