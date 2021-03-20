@@ -38,10 +38,11 @@ export default function useApiAuth() {
     dispatch(thunkSignYa({ code }));
   }, [dispatch]);
 
-  const handleGetIdYa = useCallback((code: string) => {
+  const handleRedirectYa = useCallback(() => {
     signYaGetId()
       .then((r:AxiosResponse) => {
         const { service_id } = r.data;
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const urlYa = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=`;
         window.location.replace(urlYa);
       })
@@ -53,6 +54,6 @@ export default function useApiAuth() {
     handleSignup,
     handleSignout,
     handleSignYa,
-    handleGetIdYa,
+    handleRedirectYa,
   };
 }

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/button';
 import { useForm, useApiAuth } from '../../hooks';
-// import {signYagetId} from "../../API/authYa";
 
 const initState = {
   login: { value: '', type: 'text' },
@@ -11,7 +10,7 @@ const initState = {
 };
 
 export default function Signin() {
-  const { handleSignin, handleGetIdYa } = useApiAuth();
+  const { handleSignin, handleRedirectYa } = useApiAuth();
   const {
     handleSubmit,
     handleChange,
@@ -19,19 +18,10 @@ export default function Signin() {
     getErrorMessage,
   } = useForm(initState, handleSignin);
 
-  // let serviceId = '243f5d3b0fa04e5aa9b8ff6508db3a64';
-  // const REDIRECT_URI = 'https://yanrun.herokuapp.com/';
-  // eslint-disable-next-line max-len
-  // const urlYa = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=`;
-  // const redirectYa = () => {
-  //
-  //   window.location.replace(urlYa);
-  // };
-
   return (
-    <div className="container container_center container_center-start">
+    <div className="container container_is-column container_center container_center-start padding_s-6">
       <div
-        className="theme-bg-secondary sign round padding_s-3 margin_s-6"
+        className="theme-bg-secondary sign round padding_s-3"
         style={{ width: '320px' }}
       >
         <form
@@ -60,7 +50,23 @@ export default function Signin() {
             </Link>
           </div>
         </form>
-        <Button type="submit" onClick={handleGetIdYa} size="large" styleType="primary">Войти через Ya</Button>
+      </div>
+      <div
+        className="theme-bg-secondary sign round padding_s-3 margin_tb_s-3"
+        style={{ width: '320px' }}
+      >
+        <Button
+          type="submit"
+          onClick={handleRedirectYa}
+          size="large"
+          styleType="primary"
+          style={{
+            background: '#ffdb4d',
+            color: '#000',
+          }}
+        >
+          Войти через <span style={{color:'red'}}>Y</span>andex
+        </Button>
       </div>
     </div>
   );
