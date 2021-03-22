@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { fetchUserInfo, signin, signup, signout } from '../../API/auth';
+import { fetchUserInfo, signin, signup, signout, signinYa, fetchUserInfoWithCookies } from '../../API/auth';
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
@@ -70,7 +70,7 @@ const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInf
 const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
   signinYa(data)
     .then(() => {
-      window.console.log('Successful signin');
+      console.info('Successful signin');
       return fetchUserInfo();
     })
     .then(r => dispatch(setUser(r.data)))

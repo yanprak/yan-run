@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
+import { AxiosResponse } from 'axios';
 import { FormState } from '../useForm/types';
 import { thunkSignin, thunkSignup, thunkSignout, thunkSignYa } from '../../store/user/thunks';
-import {signYaGetId} from "../../API/auth";
-import {AxiosResponse} from "axios";
+import { signYaGetId } from '../../API/auth';
 
 export default function useApiAuth() {
   const dispatch = useDispatch();

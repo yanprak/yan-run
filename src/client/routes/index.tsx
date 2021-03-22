@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { Signin, Signup } from '../pages';
 import routes from './routes';
+import AuthYa from '../components/authYa/AuthYa';
 
 export default function getRoutes(isAuthenticated: boolean) {
   if (isAuthenticated) {
@@ -29,6 +30,7 @@ export default function getRoutes(isAuthenticated: boolean) {
 
   return (
     <Switch>
+      <Route path="/" component={AuthYa} exact />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
       <Redirect to="/signin" />
