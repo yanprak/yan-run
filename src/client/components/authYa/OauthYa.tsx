@@ -8,7 +8,7 @@ type PropsAuth = {
   }
 };
 
-export default function AuthYa(props: PropsAuth) {
+export default function OauthYa(props: PropsAuth) {
   const { handleSignYa } = useApiAuth();
   const params = new URLSearchParams(props.location.search);
   const code = params.get('code');

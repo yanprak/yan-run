@@ -17,7 +17,7 @@ import {
   Signup,
   Topic,
 } from '../../pages';
-import AuthYa from '../authYa/AuthYa';
+import OauthYa from '../authYa/OauthYa';
 
 export default function getRoutes(isAuthenticated: boolean) {
   if (isAuthenticated) {
@@ -43,7 +43,7 @@ export default function getRoutes(isAuthenticated: boolean) {
 
   return (
     <Switch>
-      <Route path="/" component={AuthYa} exact />
+      <Route path="/" component={OauthYa} exact />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
       <Redirect to="/signin" />
