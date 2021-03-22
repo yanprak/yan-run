@@ -8,4 +8,12 @@ const signup = <T>(data:T) => API.post('auth/signup', JSON.stringify(data));
 
 const fetchUserInfo = () => API.get('auth/user');
 
-export { signin, signout, fetchUserInfo, signup };
+const fetchUserInfoWithCookies = (cookies: string) => API.get('auth/user', {
+  withCredentials: true,
+  headers: {
+    'content-type': 'application/json',
+    Cookie: cookies,
+  },
+});
+
+export { signin, signout, fetchUserInfo, signup, fetchUserInfoWithCookies };

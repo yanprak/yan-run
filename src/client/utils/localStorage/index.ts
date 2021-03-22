@@ -1,4 +1,4 @@
-import { ApplicationState } from '../../store';
+import { ApplicationState } from '../../store/types';
 
 export const saveState = (state: ApplicationState) => {
   try {
