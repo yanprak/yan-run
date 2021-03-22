@@ -3,8 +3,8 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { Request, Response } from 'express';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
+import { Dispatch } from 'redux';
 import { Provider } from 'react-redux';
-import { ThunkAction } from 'redux-thunk';
 import App from '../../client/components/app';
 import configureStore from '../../client/store';
 import safelyRenderObject from '../../client/utils/safelyRenderObject';
@@ -42,7 +42,7 @@ type Cookies = {
   [key: string]: string;
 };
 
-function getRelevantThunk(cookies: Cookies): ThunkAction<any, any, any, any> {
+function selectAuthThunk(cookies: Cookies): (dispatch: Dispatch) => Promise<unknown> | void {
   if (cookies) {
     const cookiesString = Object
       .entries(cookies)
@@ -71,7 +71,6 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
     const reduxState = store.getState();
 
     if (context.url) {
-      console.log('Context URL', context.url);
       res.redirect(context.url);
       return;
     }
@@ -81,27 +80,7 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
       .send(getHtml(reactHtml, reduxState));
   }
 
-  const relevantThunk = getRelevantThunk(req.cookies);
-  store.dispatch(relevantThunk)
+  const thunk = selectAuthThunk(req.cookies);
+  store.dispatch(thunk)
     .then(() => renderApp());
-
-  // TODO (Ilya): Pre-requisites need to be collected for Leaderboard and Forum here
-  // const dataRequirements: (Promise<void> | void)[] = [];
-  //
-  // routes.some(route => {
-  //   const { fetchData: fetchMethod } = route;
-  //   const match = matchPath<{ slug: string }>(location, route);
-  //
-  //   if (match && fetchMethod) {
-  //     dataRequirements.push(
-  //       fetchMethod(store.dispatch, cookies),
-  //     );
-  //   }
-  //
-  //   return Boolean(match);
-  // });
-  //
-  // return Promise.all(dataRequirements)
-  //   .then(() => console.info('[SUCCESS] Requirements collected'))
-  //   .catch(error => console.error('[ERROR] Server render prerequisites collection error', error));
 }
