@@ -4,7 +4,7 @@ const { resolve } = require('path');
 const { app } = require('./dist/server.js');
 
 const IS_DEV = process.env.NODE_ENV === 'development';
-const PORT = Number(process.env.PORT || 4100);
+const PORT = Number(process.env.PORT || 5000);
 
 if (IS_DEV) {
   const key = readFileSync(resolve('cert', 'key.pem'), 'utf8');

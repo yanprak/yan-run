@@ -10,7 +10,7 @@ const initState = {
 };
 
 export default function Signin() {
-  const { handleSignin } = useApiAuth();
+  const { handleSignin, handleRedirectYa } = useApiAuth();
   const {
     handleSubmit,
     handleChange,
@@ -19,9 +19,9 @@ export default function Signin() {
   } = useForm(initState, handleSignin);
 
   return (
-    <div className="container container_center container_center-start">
+    <div className="container container_is-column container_center container_center-start padding_s-6">
       <div
-        className="theme-bg-secondary sign round padding_s-3 margin_s-6"
+        className="theme-bg-secondary sign round padding_s-3"
         style={{ width: '320px' }}
       >
         <form
@@ -50,6 +50,25 @@ export default function Signin() {
             </Link>
           </div>
         </form>
+      </div>
+      <div
+        className="theme-bg-secondary sign round padding_s-3 margin_tb_s-3"
+        style={{ width: '320px' }}
+      >
+        <Button
+          type="submit"
+          onClick={handleRedirectYa}
+          size="large"
+          styleType="primary"
+          style={{
+            background: '#ffdb4d',
+            color: '#000',
+          }}
+        >
+          Войти через
+          <span style={{ color: 'red' }}>Y</span>
+          andex
+        </Button>
       </div>
     </div>
   );
