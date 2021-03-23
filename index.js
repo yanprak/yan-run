@@ -3,7 +3,7 @@ const { readFileSync } = require('fs');
 const { resolve } = require('path');
 const { app } = require('./dist/server.js');
 
-const IS_DEV = process.env.NODE_ENV === 'development';
+const IS_DEV = process.env.NODE_ENV !== 'production';
 const PORT = Number(process.env.PORT || 5000);
 
 if (IS_DEV) {

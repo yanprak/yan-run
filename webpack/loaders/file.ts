@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   client: {
     test: /\.(png|jpe?g|gif)$/i,
     loader: 'file-loader',

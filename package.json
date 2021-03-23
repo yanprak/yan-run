@@ -6,24 +6,34 @@
   "scripts": {
     "test": "jest",
     "test:update": "jest --updateSnapshot",
-
-    "clean": "rimraf dist",
     "check:code": "tsc --noEmit",
     "lint:code": "eslint ./src --ext .ts,.tsx",
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
     "lint:cssfix": "stylelint src/client/css/*.scss --fix",
 
-    "start:webpack": "webpack --mode=development --watch",
-    "start:server": "nodemon index.js --watch dist/server.js",
+    "clean": "rimraf dist",
 
-    "csr": "cross-env NODE_ENV=development SR=client npm-run-all --print-label --parallel start:*",
-    "ssr": "cross-env NODE_ENV=development SR=server npm-run-all --print-label --parallel start:*",
+    "build:dev-ssr-server": "cross-env NODE_ENV=development SR=server webpack --config webpack/server.config.ts",
+    "build:dev-csr-server": "cross-env NODE_ENV=development SR=client webpack --config webpack/server.config.ts",
 
-    "build": "cross-env NODE_ENV=production SR=server npm run clean && webpack --mode=production",
-    "build:server": "cross-env NODE_ENV=production SR=server webpack --mode=production --config webpack/server.config.js",
+    "watch:ssr-client": "cross-env NODE_ENV=development SR=server webpack --watch --config webpack/client.config.ts",
+    "watch:csr-client": "cross-env NODE_ENV=development SR=client webpack --watch --config webpack/client.config.ts",
 
-    "server": "node index.js"
+    "server:dev-ssr": "cross-env NODE_ENV=development SR=server node index.js",
+    "server:dev-csr": "cross-env NODE_ENV=development SR=client node index.js",
+
+    "server:ssr": "cross-env NODE_ENV=production SR=server node index.js",
+    "server:csr": "cross-env NODE_ENV=production SR=client node index.js",
+
+    "start:ssr-watch": "npm-run-all --print-label --parallel server:dev-ssr watch:ssr-client",
+    "start:csr-watch": "npm-run-all --print-label --parallel server:dev-csr watch:csr-client",
+
+    "start:ssr": "npm-run-all clean build:dev-ssr-server start:ssr-watch --print-label",
+    "start:csr": "npm-run-all clean build:dev-csr-server start:csr-watch --print-label",
+
+    "build:ssr": "cross-env NODE_ENV=production SR=server npm run clean && webpack",
+    "build:csr": "cross-env NODE_ENV=production SR=client npm run clean && webpack"
   },
   "repository": {
     "type": "git",
@@ -51,12 +61,15 @@
     "@types/node": "14.14.25",
     "@types/react": "17.0.1",
     "@types/react-dom": "17.0.0",
+    "@types/react-hot-loader": "4.1.1",
     "@types/react-redux": "7.1.16",
     "@types/react-router-dom": "5.1.7",
     "@types/react-router-redux": "5.0.18",
     "@types/react-test-renderer": "17.0.1",
     "@types/redux": "3.6.0",
     "@types/serialize-javascript": "5.0.0",
+    "@types/webpack-dev-middleware": "4.1.0",
+    "@types/webpack-hot-middleware": "2.25.3",
     "@types/webpack-node-externals": "2.5.0",
     "@typescript-eslint/eslint-plugin": "4.14.2",
     "@typescript-eslint/parser": "4.14.2",
@@ -77,6 +90,7 @@
     "nodemon": "2.0.7",
     "npm-run-all": "4.1.5",
     "null-loader": "4.0.1",
+    "react-hot-loader": "4.13.0",
     "react-test-renderer": "17.0.1",
     "rimraf": "3.0.2",
     "sass": "1.32.6",
@@ -89,10 +103,13 @@
     "typescript": "4.1.3",
     "webpack": "5.20.2",
     "webpack-cli": "4.5.0",
+    "webpack-dev-middleware": "3.7.3",
     "webpack-dev-server": "3.11.2",
+    "webpack-hot-middleware": "2.25.0",
     "webpack-node-externals": "2.5.2"
   },
   "dependencies": {
+    "@babel/register": "7.13.8",
     "@bem-react/classname": "1.5.9",
     "axios": "0.21.1",
     "classnames": "2.2.6",

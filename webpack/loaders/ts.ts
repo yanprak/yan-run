@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   client: {
     test: /\.tsx?$/,
     exclude: /node_modules/,
