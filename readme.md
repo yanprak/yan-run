@@ -13,4 +13,8 @@
 1. Находим файл `/etc/hosts` на Mac OS / Linux, `C:\Windows\System32\Drivers\etc\hosts` на Windows.
 2. Добавляем в найденный `hosts` строчку `127.0.0.1 local.ya-praktikum.tech`.
 3. Генерируем SSL сертификаты в папку `./cert` с помощью команды `openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem`.
-4. Открываем проект по адресу [https://local.ya-praktikum.tech:4100](https://local.ya-praktikum.tech:4100)
+4. Открываем проект по адресу [https://local.ya-praktikum.tech:5000](https://local.ya-praktikum.tech:5000)
+
+## RUN
+1. Запуск в режиме SSR `npm run start:ssr`
+2. Запуск в режиме CSR `npm run start:csr`
