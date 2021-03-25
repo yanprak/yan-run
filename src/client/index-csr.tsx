@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { hot } from 'react-hot-loader/root';
 
 import ErrorBoundary from './components/error-boundary';
 import App from './components/app';
@@ -24,13 +25,17 @@ store.subscribe(throttle(() => {
   });
 }, 1000));
 
-ReactDOM.render(
+const HotApp = hot(() => (
   <Provider store={store}>
     <ErrorBoundary>
       <Router>
         <App />
       </Router>
     </ErrorBoundary>
-  </Provider>,
+  </Provider>
+));
+
+ReactDOM.render(
+  <HotApp />,
   document.getElementById('root'),
 );

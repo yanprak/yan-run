@@ -1,33 +1,33 @@
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+import path from 'path';
+import nodeExternals from 'webpack-node-externals';
 
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
-const tsLoader = require('./loaders/ts.js');
-const fileLoader = require('./loaders/file.js');
-const cssLoader = require('./loaders/css.js');
+import { SRC_DIR, IS_DEV, DIST_DIR } from './env';
+import tsLoader from './loaders/ts';
+import fileLoader from './loaders/file';
+import cssLoader from './loaders/css';
 
-const IS_DEV = process.env.NODE_ENV !== 'production';
-
-module.exports = {
+export default {
+  mode: IS_DEV ? 'development' : 'production',
   name: 'server',
   target: 'node',
   node: { __dirname: false },
 
-  entry: path.join(__dirname, '..', 'src', 'server', 'server.ts'),
+  entry: path.join(SRC_DIR, 'server', 'server.ts'),
 
   module: {
     rules: [
       tsLoader.server,
       cssLoader.server,
-      fileLoader.server
+      fileLoader.server,
     ],
   },
 
   output: {
     filename: 'server.js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist'),
+    path: DIST_DIR,
     publicPath: '/static/',
   },
 

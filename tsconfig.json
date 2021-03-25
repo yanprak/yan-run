@@ -46,6 +46,8 @@
   "include": [
     "src",
     "src/types/**/*.d.ts",
+    "webpack",
+    "webpack.config.ts",
     "./node_modules/@types"
   ],
   "exclude": [

@@ -24,13 +24,17 @@ const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
     .catch(() => {});
 };
 
-const thunkSignout = () => (dispatch: Dispatch) => {
-  signout()
-    .then(() => {
-      dispatch(removeUser());
-    })
-    .catch(() => {});
+const thunkCheckLogin = () => (dispatch: Dispatch) => {
+  fetchUserInfo()
+    .then(r => dispatch(setUser(r.data)))
+    .catch(() => dispatch(removeUser()));
 };
+
+const thunkSignout = () => (dispatch: Dispatch) => signout()
+  .then(() => {
+    dispatch(removeUser());
+  })
+  .catch(() => {});
 
 const thunkProfile = <T>(data:T) => (dispatch: Dispatch) => {
   changeProfile(data)
@@ -82,6 +86,7 @@ export {
   thunkSignup,
   thunkSignout,
   thunkProfile,
+  thunkCheckLogin,
   thunkPassword,
   thunkAvatar,
   thunkSignYa,

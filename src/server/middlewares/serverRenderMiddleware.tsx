@@ -3,8 +3,9 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { Request, Response } from 'express';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
-import { Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
 import { Provider } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 import App from '../../client/components/app';
 import configureStore from '../../client/store';
 import safelyRenderObject from '../../client/utils/safelyRenderObject';
@@ -21,6 +22,7 @@ function getHtml(reactHtml: string, reduxState = {}): string {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
         <title>Yan Run</title>
       </head>
       <body>
@@ -42,7 +44,7 @@ type Cookies = {
   [key: string]: string;
 };
 
-function selectAuthThunk(cookies: Cookies): (dispatch: Dispatch) => Promise<unknown> | void {
+function selectAuthThunk(cookies: Cookies): (dispatch: Dispatch) => Promise<unknown> {
   if (cookies) {
     const cookiesString = Object
       .entries(cookies)
@@ -81,6 +83,8 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
   }
 
   const thunk = selectAuthThunk(req.cookies);
-  store.dispatch(thunk)
-    .then(() => renderApp());
+  const thunkDispatch = store.dispatch as ThunkDispatch<unknown, unknown, Action<string>>;
+  thunkDispatch(thunk)
+    .then(() => renderApp())
+    .catch(() => {});
 }
