@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { Redirect } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { useApiAuth } from '../../hooks';
 
@@ -12,9 +13,13 @@ export default function OauthYa(props: PropsAuth) {
   const { handleSignYa } = useApiAuth();
   const params = new URLSearchParams(props.location.search);
   const code = params.get('code');
+  useEffect(() => {
+    if (code) {
+      handleSignYa(code);
+    }
+  });
   if (code) {
-    handleSignYa(code);
-    return <Redirect to="/" />;
+    return null;
   }
-  return <Redirect to="/login" />;
+  return <Redirect to="/signin" />;
 }
