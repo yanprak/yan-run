@@ -5,6 +5,7 @@
       "es2017",
       "webworker"
     ],
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
@@ -45,6 +46,8 @@
   "include": [
     "src",
     "src/types/**/*.d.ts",
+    "webpack",
+    "webpack.config.ts",
     "./node_modules/@types"
   ],
   "exclude": [

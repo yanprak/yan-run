@@ -1,59 +1,22 @@
-import React, { FC, memo, useCallback } from 'react';
-import { Dispatch, Action } from 'redux';
-import { useDispatch } from 'react-redux';
+import React, { FC, memo } from 'react';
+import { useSelector } from 'react-redux';
 import Input from '../../components/input';
 import { AvatarProps } from './types';
-import { useUsersApi } from '../../hooks';
-import { API_URL } from '../../constants';
+import { useApiUser } from '../../hooks';
+import { HOST_URL } from '../../API';
+import { User, UserState } from '../../store/user/types';
 
-import { setUser } from '../../store/user/actions';
-import { User } from '../../store/user/types';
-import showNotification from '../../utils/notification';
-
-const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
-  const { image } = props;
-  const { changeAvatar } = useUsersApi();
-  const dispatch: Dispatch<Action> = useDispatch();
-
-  const changeAvatarWithDispatch = useCallback(
-    (user: User) => dispatch(setUser(user)),
-    [dispatch],
+const ProfileSetAvatarForm: FC<AvatarProps> = () => {
+  const user = useSelector<UserState, User>(
+    state => state.user!,
   );
 
-  const handleFileUpload = useCallback((event: React.FormEvent<HTMLInputElement>) => {
-    const element = event.target as HTMLInputElement;
-    const { files } = element;
-
-    if (!files || files.length === undefined) {
-      return;
-    }
-
-    const avatar = files[0];
-    const formData = new FormData();
-    formData.append('avatar', avatar);
-
-    changeAvatar(formData)
-      .then(r => {
-        window.console.log(typeof r);
-        window.console.dir(r);
-        // TODO(anton.kagkain) should gone with thunk implementation
-        // TODO(anton.kagkain) cause no request hooks will be presented
-        changeAvatarWithDispatch(r as User);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        showNotification('success', 'Аватар обновлён');
-      })
-      .catch((e: Error) => {
-        const error = JSON.parse(e.message) as { status: string, message: string };
-        window.console.log(error.status, error.message);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        showNotification('error', 'Ошибка: не удалось обновить аватар');
-      });
-  }, [changeAvatar, changeAvatarWithDispatch]);
+  const { handleChangeAvatar } = useApiUser();
 
   return (
     <div className="profile__avatar-form">
       <div className="profile-pic">
-        {image && <img className="profile-pic__image" src={`${API_URL}${image}`} alt="profile-pic" />}
+        {user.avatar && <img className="profile-pic__image" src={`${HOST_URL}${user.avatar}`} alt="profile-pic" />}
         <div className="profile-pic__edit">
           <span className="profile-pic__label">Загрузить аватар</span>
           <Input
@@ -61,7 +24,7 @@ const ProfileSetAvatarForm: FC<AvatarProps> = (props: AvatarProps) => {
             name="avatar"
             title="Аватар"
             className="profile-pic__input"
-            onChange={handleFileUpload}
+            onChange={handleChangeAvatar}
           />
         </div>
       </div>

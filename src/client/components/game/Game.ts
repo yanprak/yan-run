@@ -43,8 +43,11 @@ export default class Game {
 
   private pause = false;
 
-  constructor(canvas: CanvasRenderingContext2D | null) {
+  updateScore: (score: number) => void;
+
+  constructor(canvas: CanvasRenderingContext2D | null, updateScore: (score: number) => void) {
     this.ctx = canvas;
+    this.updateScore = updateScore;
     // create Player
     this.config.player = new Player(this.config, this.ctx);
 
@@ -181,6 +184,7 @@ export default class Game {
   }
 
   public stop(isWin?: boolean): number {
+    this.updateScore(this.score);
     document.onkeydown = null;
     if (this.uiView) {
       this.uiView.classList.toggle('hidden');

@@ -42,12 +42,19 @@ module.exports = {
       'as-needed'
     ],
 
+    // disabled import-errors for devDependencies, when linter assumes it should be in dependencies list
+    'import/no-extraneous-dependencies': 'off',
+
+    // disable this rule to use dangerouslySetInnerHTML
+    // 'react/no-danger': 'off',
+
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
     "react-hooks/exhaustive-deps": 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/naming-convention': 'off'
   }
 };

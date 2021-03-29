@@ -1,11 +1,14 @@
+import { Nullable } from '../../types';
+
 export type LeaderboardTableProps = {
-  count: number;
+  cursor?: number,
+  limit: number,
 };
 
 export type LeaderboardTableRowProps = {
   rank: number,
   user: {
-    avatar: string,
+    avatar: Nullable<string>,
     login: string
   }
   score: number

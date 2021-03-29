@@ -2,4 +2,5 @@
 .git
 node_modules
 dist
+cert
 app.js

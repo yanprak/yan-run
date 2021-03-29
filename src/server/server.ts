@@ -1,16 +1,35 @@
-import express from 'express';
+import express, { Express } from 'express';
 import path from 'path';
 
-const PORT = process.env.PORT || 4100;
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 
-const app = express();
+import config from '../../webpack/client.config';
 
-app.use(express.static(path.join(__dirname, 'dist')));
+import router from './router';
 
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+const app: Express = express();
 
-app.listen(PORT, () => {
-  global.console.log(`Backend server listens on port: ${PORT}`);
-});
+const IS_DEV = process.env.NODE_ENV !== 'production';
+
+app.use(express.static(path.join(__dirname, '../dist')));
+
+if (IS_DEV) {
+  const compiler = webpack(config);
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: '/',
+    }),
+  );
+  app.use(
+    webpackHotMiddleware(compiler, {
+      path: '/__webpack_hmr',
+    }),
+  );
+}
+
+app.use(router);
+
+// eslint-disable-next-line import/prefer-default-export
+export { app };

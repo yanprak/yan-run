@@ -1,5 +1,5 @@
-export { default as useAuth } from './useAuth';
-export { default as useAuthApi } from './useAuthApi';
 export { default as useForm } from './useForm';
-export { default as useRequest } from './useRequest';
-export { default as useUsersApi } from './useUsersApi';
+export { default as useApiAuth } from './useApiAuth';
+export { default as useApiLeaderboard } from './useApiLeaderboard';
+export { default as useApiUser } from './useApiUser';
+export { default as useAuth } from './useAuth';
