@@ -26,13 +26,13 @@ store.subscribe(throttle(() => {
 }, 1000));
 
 const HotApp = hot(() => (
-  <Provider store={store}>
-    <ErrorBoundary>
+  <ErrorBoundary>
+    <Provider store={store}>
       <Router>
         <App />
       </Router>
-    </ErrorBoundary>
-  </Provider>
+    </Provider>
+  </ErrorBoundary>
 ));
 
 ReactDOM.render(

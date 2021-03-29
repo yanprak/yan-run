@@ -22,7 +22,8 @@ if (!isServer) {
       window.console.log(response.data);
       const { reason } = response.data;
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      showNotification('warn', reason);
+      showNotification('warn', reason)
+        .catch(() => {});
     }
     return Promise.reject();
   });

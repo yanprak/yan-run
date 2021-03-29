@@ -46,7 +46,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
 
     // disable this rule to use dangerouslySetInnerHTML
-    'react/no-danger': 'off',
+    // 'react/no-danger': 'off',
 
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',

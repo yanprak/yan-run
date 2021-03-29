@@ -6,7 +6,6 @@ import Header from '../header';
 export default function App() {
   const isAuthenticated = useAuth();
   const routes = getRoutes(isAuthenticated);
-  // const routes = getRoutes(true);
   return (
     <div className="main">
       <Header />

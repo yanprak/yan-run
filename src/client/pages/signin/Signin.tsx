@@ -66,7 +66,7 @@ export default function Signin() {
           }}
         >
           Войти через
-          <span style={{ color: 'red' }}>Y</span>
+          <span style={{ color: 'red' }}> Y</span>
           andex
         </Button>
       </div>

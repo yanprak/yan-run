@@ -17,7 +17,7 @@ export default function OauthYa(props: PropsAuth) {
     if (code) {
       handleSignYa(code);
     }
-  });
+  }, [handleSignYa, code]);
   if (code) {
     return null;
   }

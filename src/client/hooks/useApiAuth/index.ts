@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { FormState } from '../useForm/types';
 import { thunkSignin, thunkSignup, thunkSignout, thunkSignYa } from '../../store/user/thunks';
 import { signYaGetId } from '../../API/auth';
+import { urlOauth } from '../../config';
 
 export default function useApiAuth() {
   const dispatch = useDispatch();
@@ -42,12 +43,7 @@ export default function useApiAuth() {
     signYaGetId()
       .then((r:AxiosResponse) => {
         const { service_id } = r.data;
-        // todo: remove
-        // const service_id = '243f5d3b0fa04e5aa9b8ff6508db3a64';
-        // todo: rename URL before deploy
-        const redirectUrl = 'https://local.ya-praktikum.tech:5000/';
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions,max-len
-        const urlYa = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirectUrl}`;
+        const urlYa = urlOauth(service_id);
         window.location.replace(urlYa);
       })
       .catch(() => {});
