@@ -63,12 +63,16 @@ class Message extends Model<MessageAttributes> {
 
   @HasMany(() => Message)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column(DataType.ARRAY)
   replies!: Message[];
 
   @BelongsTo(() => Reaction)
+  @AllowNull(false)
+  @Column(DataType.ARRAY)
   reactions!: Reaction[];
 
+  @AllowNull(false)
+  @Column(DataType.DATE)
   @CreatedAt
   created_at!: Date;
 }

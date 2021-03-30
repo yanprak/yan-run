@@ -42,6 +42,8 @@ class Topic extends Model<TopicAttributes> {
   })
   user_id!: number;
 
+  @AllowNull(false)
+  @Column(DataType.DATE)
   @CreatedAt
   created_at!: Date;
 }
