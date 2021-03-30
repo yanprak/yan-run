@@ -2,7 +2,6 @@ import express, { Express } from 'express';
 
 import router from './router';
 
-const PORT = 3300;
 const server: Express = express();
 
 server
@@ -12,6 +11,5 @@ server
   // .use(logger)
   .use('/api/v1', router);
 
-server.listen(PORT, () => {
-  global.console.info(`Listen on port ${PORT}`);
-});
+// eslint-disable-next-line import/prefer-default-export
+export { server };
