@@ -10,7 +10,7 @@ import {
 
 type ThemeAttributes = {
   id: number;
-  title: string;
+  name: string;
   style: string;
 };
 
@@ -23,7 +23,7 @@ class Theme extends Model<ThemeAttributes> {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  title!: string;
+  name!: string;
 
   @AllowNull(false)
   @Column(DataType.JSONB)

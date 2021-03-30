@@ -7,9 +7,10 @@ import {
   PrimaryKey,
   AllowNull,
   Default,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { Nullable } from '../../../client/types';
-// import { UserInfo } from "../../../client/pages/profile/types";
+import Theme from './Theme';
 
 type UserAttributes = {
   id: number;
@@ -33,7 +34,6 @@ class User extends Model<UserAttributes> {
   @AllowNull(false)
   @Column(DataType.STRING)
   first_name!: string;
-  // TS2564: Property 'first_name' has no initializer and is not definitely assigned in the constructor.
 
   @AllowNull(false)
   @Column(DataType.STRING)
@@ -57,10 +57,14 @@ class User extends Model<UserAttributes> {
   @Column(DataType.STRING)
   avatar!: string;
 
+  @ForeignKey(() => Theme)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'id',
+  })
   @Default(1)
-  theme!: string;
+  theme!: number;
 }
 
 export default User;
