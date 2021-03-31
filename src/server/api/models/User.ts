@@ -14,9 +14,9 @@ import Theme from './Theme';
 
 type UserAttributes = {
   id: number;
-  first_name: string;
-  second_name: string;
-  display_name: Nullable<string>;
+  firstName: string;
+  secondName: string;
+  displayName: Nullable<string>;
   login: string;
   email: string;
   phone: string;
@@ -33,14 +33,14 @@ class User extends Model<UserAttributes> {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  first_name!: string;
+  firstName!: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  second_name!: string;
+  secondN!: string;
 
   @Column(DataType.STRING)
-  display_name!: string;
+  displayName!: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
@@ -59,10 +59,7 @@ class User extends Model<UserAttributes> {
 
   @ForeignKey(() => Theme)
   @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'id',
-  })
+  @Column(DataType.INTEGER)
   @Default(1)
   theme!: number;
 }

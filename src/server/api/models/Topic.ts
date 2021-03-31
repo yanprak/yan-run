@@ -14,9 +14,9 @@ import User from './User';
 type TopicAttributes = {
   id: number;
   name: string;
-  messages_count: number;
-  user_id: number;
-  created_at: string;
+  messagesCount: number;
+  userId: number;
+  createdAt: string;
 };
 
 @Table
@@ -32,20 +32,17 @@ class Topic extends Model<TopicAttributes> {
 
   @AllowNull(false)
   @Column(DataType.INTEGER)
-  messages_count!: number;
+  messagesCount!: number;
 
   @ForeignKey(() => User)
   @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'id',
-  })
-  user_id!: number;
+  @Column(DataType.INTEGER)
+  userId!: number;
 
   @AllowNull(false)
   @Column(DataType.DATE)
   @CreatedAt
-  created_at!: Date;
+  createdAt!: Date;
 }
 
 export default Topic;

@@ -28,11 +28,11 @@ type Reactions = {
 type MessageAttributes = {
   id: number;
   text: string;
-  user_id: number;
-  topic_id: number;
-  parent_id: Nullable<number>;
+  userId: number;
+  topicId: number;
+  parentId: Nullable<number>;
   reactions: Reactions;
-  created_at: string;
+  createdAt: string;
 };
 
 @Table
@@ -48,26 +48,17 @@ class Message extends Model<MessageAttributes> {
 
   @ForeignKey(() => User)
   @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'user_id',
-  })
-  user_id!: number;
+  @Column(DataType.INTEGER)
+  userId!: number;
 
   @ForeignKey(() => Topic)
   @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'topic_id',
-  })
-  topic_id!: number;
+  @Column(DataType.INTEGER)
+  topicId!: number;
 
   @BelongsTo(() => Message)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'parent_id',
-  })
-  parent_id!: Nullable<number>;
+  @Column(DataType.INTEGER)
+  parentId!: Nullable<number>;
 
   @AllowNull(false)
   @Column(DataType.JSONB)
@@ -76,7 +67,7 @@ class Message extends Model<MessageAttributes> {
   @AllowNull(false)
   @Column(DataType.DATE)
   @CreatedAt
-  created_at!: Date;
+  createdAt!: Date;
 }
 
 export default Message;
