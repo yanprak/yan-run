@@ -37,7 +37,7 @@ class User extends Model<UserAttributes> {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  secondN!: string;
+  secondName!: string;
 
   @Column(DataType.STRING)
   displayName!: string;
