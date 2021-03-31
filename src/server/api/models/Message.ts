@@ -9,12 +9,21 @@ import {
   CreatedAt,
   ForeignKey,
   BelongsTo,
-  HasMany,
 } from 'sequelize-typescript';
-import Reaction from './Reaction';
 import User from './User';
 import Topic from './Topic';
 import { Nullable } from '../../../client/types';
+
+type Reactions = {
+  like: number[];
+  dislike: number[];
+  laugh: number[];
+  hooray: number[];
+  confused: number[];
+  heart: number[];
+  rocket: number[];
+  eyes: number[];
+};
 
 type MessageAttributes = {
   id: number;
@@ -22,8 +31,7 @@ type MessageAttributes = {
   user_id: number;
   topic_id: number;
   parent_id: Nullable<number>;
-  replies: Message[];
-  reactions: Reaction[];
+  reactions: Reactions;
   created_at: string;
 };
 
@@ -42,7 +50,7 @@ class Message extends Model<MessageAttributes> {
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
-    field: 'id',
+    field: 'user_id',
   })
   user_id!: number;
 
@@ -50,26 +58,20 @@ class Message extends Model<MessageAttributes> {
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
-    field: 'id',
+    field: 'topic_id',
   })
   topic_id!: number;
 
   @BelongsTo(() => Message)
   @Column({
     type: DataType.INTEGER,
-    field: 'id',
+    field: 'parent_id',
   })
   parent_id!: Nullable<number>;
 
-  @HasMany(() => Message)
   @AllowNull(false)
-  @Column(DataType.ARRAY)
-  replies!: Message[];
-
-  @BelongsTo(() => Reaction)
-  @AllowNull(false)
-  @Column(DataType.ARRAY)
-  reactions!: Reaction[];
+  @Column(DataType.JSONB)
+  reactions!: Reactions;
 
   @AllowNull(false)
   @Column(DataType.DATE)

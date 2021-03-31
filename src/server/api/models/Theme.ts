@@ -11,7 +11,7 @@ import {
 type ThemeAttributes = {
   id: number;
   name: string;
-  style: string;
+  style: Record<string, unknown>;
 };
 
 @Table
@@ -27,7 +27,7 @@ class Theme extends Model<ThemeAttributes> {
 
   @AllowNull(false)
   @Column(DataType.JSONB)
-  style!: Record<string, unknown>; // object?
+  style!: Record<string, unknown>;
 }
 
 export default Theme;
