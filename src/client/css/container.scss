@@ -27,6 +27,10 @@
     align-items: stretch;
   }
 
+  &_sb {
+    justify-content: space-between;
+  }
+
   &_center-start {
     justify-content: center;
     align-items: flex-start;

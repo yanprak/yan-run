@@ -3,6 +3,8 @@ import { fetchUserInfo, signin, signup, signout, signinYa, fetchUserInfoWithCook
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
+import { getTheme } from '../../API/theme';
+import { setThemeCur } from '../theme/actions';
 
 const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
   signin(data)
@@ -11,6 +13,12 @@ const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
       return fetchUserInfo();
     })
     .then(r => dispatch(setUser(r.data)))
+    // todo: Abdeev.Na refactoring getTheme(id) after adding the API
+    // todo: MOCK
+    .then(() => getTheme(1))
+    .then(theme => {
+      dispatch(setThemeCur(theme));
+    })
     .catch(() => {});
 };
 

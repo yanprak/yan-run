@@ -1,8 +1,11 @@
 .profile {
+  &__tools {
+    border-bottom: 1px solid var(--default-border-color);
+  }
+
   &__wrapper {
     width: 62rem;
     display: flex;
-    justify-content: space-between;
   }
 
   &__info {
@@ -93,5 +96,12 @@
     cursor: pointer;
     position: relative;
     z-index: 999;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.8rem;
+    display: block;
   }
 }
