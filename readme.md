@@ -19,6 +19,6 @@
 ## RUN
 1. Запуск в режиме SSR (запустит и API server в режиме разработки) `npm run start:ssr`
 2. Запуск в режиме CSR (запустит и API server в режиме разработки) `npm run start:csr`
-3. Запуск d ht;bvt разработки только API сервера `npm run start:api-watch`
+3. Запуск в режиме разработки только API сервера `npm run start:api-watch`
 
 

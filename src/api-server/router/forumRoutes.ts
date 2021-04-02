@@ -5,10 +5,11 @@ export default function forumRoutes(router: Router) {
   const TOPICS_ID_URL = `${TOPICS_URL}/:topicId`;
   const MESSAGES_URL = `${TOPICS_ID_URL}/messages`;
   const MESSAGES_ID_URL = `${MESSAGES_URL}/:messageId`;
-  const MESSAGES_LIKE_URL = `${MESSAGES_ID_URL}/like`;
+  const MESSAGES_REACT_URL = `${MESSAGES_ID_URL}/reactions`;
 
   router.get(TOPICS_URL, (req, res) => {
-    // const topics = await Topics.findAll(); pagination?
+    // const { page } = req.params ?page=5
+    // const topics = await Topics.findAll(); offset=page*limit, limit=10 per page
     res.json({
       message: 'OK',
       result: [], // topics
@@ -64,7 +65,7 @@ export default function forumRoutes(router: Router) {
     // const { data } = req.body;
     // const result = await Messages.create(data);
     res.json({
-      message: 'Message has been createdd',
+      message: 'Message has been created',
       result: {}, // result
     });
   });
@@ -97,9 +98,21 @@ export default function forumRoutes(router: Router) {
     });
   });
 
-  router.post(MESSAGES_LIKE_URL, (req, res) => {
+  router.post(MESSAGES_REACT_URL, (req, res) => {
+    // const { topicId, messageId } = req.params;
+    // const { type } = req.body;
+    // try-catch message = await Messages.findById(messageId).where(topicId);
+    // message.update() with reaction type
+    res.json({
+      message: 'Message has been successfully updated with like',
+    });
+  });
+
+  router.get(MESSAGES_REACT_URL, (req, res) => {
     // const { topicId, messageId } = req.params;
     // try-catch message = await Messages.findById(messageId).where(topicId);
+    // message.findAll() reactions
+    // in case we need this route
     res.json({
       message: 'Message has been successfully updated with like',
     });
