@@ -6,11 +6,13 @@ import {
   AutoIncrement,
   PrimaryKey,
   AllowNull,
+  Default,
 } from 'sequelize-typescript';
 
 type ThemeAttributes = {
   id: number;
   name: string;
+  hidden: boolean;
   style: Record<string, unknown>;
 };
 
@@ -24,6 +26,11 @@ class Theme extends Model<ThemeAttributes> {
   @AllowNull(false)
   @Column(DataType.STRING)
   name!: string;
+
+  @AllowNull(false)
+  @Column(DataType.BOOLEAN)
+  @Default(false)
+  hidden!: boolean;
 
   @AllowNull(false)
   @Column(DataType.JSONB)

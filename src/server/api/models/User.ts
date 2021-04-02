@@ -59,7 +59,10 @@ class User extends Model<UserAttributes> {
 
   @ForeignKey(() => Theme)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'theme_id',
+  })
   @Default(1)
   theme!: number;
 }

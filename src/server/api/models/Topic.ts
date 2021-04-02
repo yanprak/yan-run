@@ -31,12 +31,18 @@ class Topic extends Model<TopicAttributes> {
   name!: string;
 
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'messages_count',
+  })
   messagesCount!: number;
 
   @ForeignKey(() => User)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'user_id',
+  })
   userId!: number;
 
   @AllowNull(false)

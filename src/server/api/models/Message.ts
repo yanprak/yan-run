@@ -48,12 +48,18 @@ class Message extends Model<MessageAttributes> {
 
   @ForeignKey(() => User)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'user_id',
+  })
   userId!: number;
 
   @ForeignKey(() => Topic)
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'topic_id',
+  })
   topicId!: number;
 
   @BelongsTo(() => Message)
