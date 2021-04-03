@@ -11,8 +11,8 @@ export type UserTheme = {
   style: string,
 };
 
-export interface SetThemeAction extends Action {
-  type: 'SET_THEME';
+export interface SetThemesAction extends Action {
+  type: 'SET_THEMES';
   payload: UserTheme[];
 }
 
@@ -21,4 +21,4 @@ export interface SetCurrentThemeAction extends Action {
   payload: UserTheme;
 }
 
-export type ThemeAction = SetThemeAction | SetCurrentThemeAction;
+export type ThemeAction = SetThemesAction | SetCurrentThemeAction;

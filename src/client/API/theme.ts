@@ -4,7 +4,7 @@ import { Nullable } from '../types';
 
 // todo: Abdeev.Na refactor after API create
 
-const getAllTheme = () => themes;
+const getAllThemes = () => themes;
 
 const getThemeById = (id:number): Nullable<UserTheme> => {
   const searchResult = themes.find(theme => theme.id === id);
@@ -12,6 +12,6 @@ const getThemeById = (id:number): Nullable<UserTheme> => {
 };
 
 export {
-  getAllTheme,
+  getAllThemes,
   getThemeById,
 };

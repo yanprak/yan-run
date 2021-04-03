@@ -1,5 +1,5 @@
 import { ThemeState, ThemeAction } from './types';
-import { SET_THEME, SET_CURRENT_THEME } from './actions';
+import { SET_THEMES, SET_CURRENT_THEME } from './actions';
 import themes from '../../utils/theme/themes';
 
 const initialState: ThemeState = {
@@ -9,7 +9,7 @@ const initialState: ThemeState = {
 
 export default function reducer(state = initialState, action: ThemeAction) {
   switch (action.type) {
-    case SET_THEME:
+    case SET_THEMES:
       return {
         ...state,
         themes: action.payload,
