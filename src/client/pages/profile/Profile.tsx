@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import ProfileEditInfoForm from './ProfileEditInfoForm';
 import ProfileSetAvatarForm from './ProfileSetAvatarForm';
@@ -12,7 +12,7 @@ import useTheme from '../../hooks/useTheme';
 export default function Profile() {
   const { handleSignout } = useApiAuth();
 
-  const { handleTheme, current } = useTheme();
+  const { toggleTheme, current } = useTheme();
 
   const user = useSelector<UserState, User>(
     state => state.user!,
@@ -26,9 +26,7 @@ export default function Profile() {
           <Button
             size="large"
             styleType="secondary"
-            onClick={(event:MouseEvent<HTMLButtonElement>) => {
-              handleTheme();
-            }}
+            onClick={toggleTheme}
           >
             На { current.id === 0 ? 'светлую' : 'темную'} сторону
           </Button>

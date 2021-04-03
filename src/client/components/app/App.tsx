@@ -5,7 +5,7 @@ import getRoutes from '../../routes';
 import Header from '../header';
 import { ThemeState } from '../../store/theme/types';
 import { ApplicationState } from '../../store/types';
-import themeChange from '../../utils/themeChange';
+import changeTheme from '../../utils/theme';
 
 export default function App() {
   const isAuthenticated = useAuth();
@@ -16,7 +16,7 @@ export default function App() {
   );
 
   useEffect(() => {
-    themeChange(theme.current);
+    changeTheme(theme.current);
   }, [isAuthenticated]);
 
   return (

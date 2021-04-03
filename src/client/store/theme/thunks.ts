@@ -1,17 +1,17 @@
 import { Dispatch } from 'redux';
-import { setThemeCur, setThemes } from './actions';
+import { setCurrentTheme, setThemes } from './actions';
 
 // todo: Abdeev.N add work with the api
 
-const thunkThemeCur = <T>(data:T) => (dispatch: Dispatch) => {
-  dispatch(setThemeCur(data));
+const thunkSetCurrentTheme = <T>(data:T) => (dispatch: Dispatch) => {
+  dispatch(setCurrentTheme(data));
 };
 
-const thunkThemes = <T>(data:T) => (dispatch: Dispatch) => {
+const thunkSetThemes = <T>(data:T) => (dispatch: Dispatch) => {
   dispatch(setThemes(data));
 };
 
 export {
-  thunkThemeCur,
-  thunkThemes,
+  thunkSetCurrentTheme,
+  thunkSetThemes,
 };

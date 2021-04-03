@@ -7,8 +7,8 @@ export type ThemeState = {
 
 export type UserTheme = {
   id: number,
-  name:string,
-  style: string
+  name: string,
+  style: string,
 };
 
 export interface SetThemeAction extends Action {
@@ -16,9 +16,9 @@ export interface SetThemeAction extends Action {
   payload: UserTheme[];
 }
 
-export interface SetThemeCurAction extends Action {
-  type: 'SET_THEME_CUR';
+export interface SetCurrentThemeAction extends Action {
+  type: 'SET_CURRENT_THEME';
   payload: UserTheme;
 }
 
-export type ThemeAction = SetThemeAction | SetThemeCurAction;
+export type ThemeAction = SetThemeAction | SetCurrentThemeAction;

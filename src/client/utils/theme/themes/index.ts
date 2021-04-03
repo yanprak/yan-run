@@ -1,9 +1,9 @@
 import dark from './dark';
-import ligth from './light';
+import light from './light';
 
 const themes = [
   dark,
-  ligth,
+  light,
 ];
 
 export default themes;

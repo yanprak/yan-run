@@ -3,7 +3,7 @@ const style = {
   '--default-bg-color': '#ffffff',
   '--default-bg-hover-color': '#eaeaea',
   '--default-color': '#585858',
-  '--default-border-color': '#bdbdbd',
+  '--default-border-color': '#dcdcdc',
   // primary
   '--primary-bg-color': '#003fe0',
   '--primary-bg-hover-color': '#0033b8',
@@ -35,10 +35,10 @@ const style = {
   '--avatar-color': '#ffffff',
 };
 
-const ligth = {
+const light = {
   id: 1,
   name: 'light',
   style: JSON.stringify(style),
 };
 
-export default ligth;
+export default light;
