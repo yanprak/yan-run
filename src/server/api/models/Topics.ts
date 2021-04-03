@@ -9,7 +9,7 @@ import {
   CreatedAt,
   ForeignKey,
 } from 'sequelize-typescript';
-import User from './User';
+import Users from './Users';
 
 type TopicAttributes = {
   id: number;
@@ -20,7 +20,7 @@ type TopicAttributes = {
 };
 
 @Table
-class Topic extends Model<TopicAttributes> {
+class Topics extends Model<TopicAttributes> {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -37,7 +37,7 @@ class Topic extends Model<TopicAttributes> {
   })
   messagesCount!: number;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => Users)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
@@ -51,4 +51,4 @@ class Topic extends Model<TopicAttributes> {
   createdAt!: Date;
 }
 
-export default Topic;
+export default Topics;

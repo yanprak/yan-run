@@ -17,7 +17,7 @@ type ThemeAttributes = {
 };
 
 @Table
-class Theme extends Model<ThemeAttributes> {
+class Themes extends Model<ThemeAttributes> {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -37,4 +37,4 @@ class Theme extends Model<ThemeAttributes> {
   style!: Record<string, unknown>;
 }
 
-export default Theme;
+export default Themes;

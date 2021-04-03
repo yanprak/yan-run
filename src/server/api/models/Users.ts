@@ -10,7 +10,7 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Nullable } from '../../../client/types';
-import Theme from './Theme';
+import Themes from './Themes';
 
 type UserAttributes = {
   id: number;
@@ -25,7 +25,7 @@ type UserAttributes = {
 };
 
 @Table
-class User extends Model<UserAttributes> {
+class Users extends Model<UserAttributes> {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -57,7 +57,7 @@ class User extends Model<UserAttributes> {
   @Column(DataType.STRING)
   avatar!: string;
 
-  @ForeignKey(() => Theme)
+  @ForeignKey(() => Themes)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
@@ -67,4 +67,4 @@ class User extends Model<UserAttributes> {
   theme!: number;
 }
 
-export default User;
+export default Users;

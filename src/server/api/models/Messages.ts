@@ -10,8 +10,8 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import User from './User';
-import Topic from './Topic';
+import Users from './Users';
+import Topics from './Topics';
 import { Nullable } from '../../../client/types';
 
 type Reactions = {
@@ -36,7 +36,7 @@ type MessageAttributes = {
 };
 
 @Table
-class Message extends Model<MessageAttributes> {
+class Messages extends Model<MessageAttributes> {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -46,7 +46,7 @@ class Message extends Model<MessageAttributes> {
   @Column(DataType.STRING)
   text!: string;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => Users)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
@@ -54,7 +54,7 @@ class Message extends Model<MessageAttributes> {
   })
   userId!: number;
 
-  @ForeignKey(() => Topic)
+  @ForeignKey(() => Topics)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
@@ -62,7 +62,7 @@ class Message extends Model<MessageAttributes> {
   })
   topicId!: number;
 
-  @BelongsTo(() => Message)
+  @BelongsTo(() => Messages)
   @Column(DataType.INTEGER)
   parentId!: Nullable<number>;
 
@@ -76,4 +76,4 @@ class Message extends Model<MessageAttributes> {
   createdAt!: Date;
 }
 
-export default Message;
+export default Messages;
