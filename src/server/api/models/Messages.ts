@@ -63,7 +63,10 @@ class Messages extends Model<MessageAttributes> {
   topicId!: number;
 
   @BelongsTo(() => Messages)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    field: 'parent_id',
+  })
   parentId!: Nullable<number>;
 
   @AllowNull(false)
