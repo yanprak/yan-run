@@ -10,6 +10,7 @@ const IS_SSR = process.env.SR === 'server';
 
 export default {
   mode: IS_DEV ? 'development' : 'production',
+  name: 'client',
   entry: {
     bundle: [
       // magic that doesn't work, dunno why

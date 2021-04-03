@@ -4,3 +4,4 @@ node_modules
 dist
 cert
 app.js
+.DS_Store
