@@ -9,7 +9,7 @@ import { useAuth } from '../../hooks';
 export default function Header() {
   const isAuthenticated = useAuth();
   return (
-    <header className="header">
+    <header className="header padding_lr_s-3">
       <div className="container container_center">
         <div className="header__inner">
           <Link className="header__logo" to="/">Yan Run</Link>

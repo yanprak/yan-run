@@ -15,6 +15,7 @@ const ProfileSetAvatarForm: FC<AvatarProps> = () => {
 
   return (
     <div className="profile__avatar-form">
+      <label className="profile-pic__title">Avatar</label>
       <div className="profile-pic">
         {user.avatar && <img className="profile-pic__image" src={`${HOST_URL}${user.avatar}`} alt="profile-pic" />}
         <div className="profile-pic__edit">

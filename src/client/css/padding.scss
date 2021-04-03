@@ -11,5 +11,9 @@ $step: 0.4;
       padding-top: #{$step * $i}rem;
       padding-bottom: #{$step * $i}rem;
     }
+    &_lr_s-#{$i} {
+      padding-left: #{$step * $i}rem;
+      padding-right: #{$step * $i}rem;
+    }
   }
 }
