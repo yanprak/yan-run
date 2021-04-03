@@ -14,12 +14,14 @@
 2. Добавляем в найденный `hosts` строчку `127.0.0.1 local.ya-praktikum.tech`.
 3. Генерируем SSL сертификаты в папку `./cert` с помощью команды `openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem`.
 4. Открываем проект по адресу [https://local.ya-praktikum.tech:5000](https://local.ya-praktikum.tech:5000)
-5. PORT для приложения 5000, API_PORT для сервера 3500
+5. PORT для приложения 5000, API_PORT для сервера 3500, FEEDBACK_PORT для сервера 3600
+6. Соединение с MongoDB базой указывается в env-переменной MONGO_URI
 
 ## RUN
 1. Запуск в режиме SSR (запустит и API server в режиме разработки) `npm run start:ssr`
 2. Запуск в режиме CSR (запустит и API server в режиме разработки) `npm run start:csr`
 3. Запуск в режиме разработки только API сервера `npm run start:api-watch`
+4. Запуск в режиме разработки только feedback сервера `npm run start:feedback-watch`
 
 
 ## База данных PostgreSQL
