@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.2-alpine
+    env_file:
+      - ./database/database.env
+    volumes:
+      - ./database/postgresdata:/var/lib/postgresql/data
+      - ./database/migrations/dbinit.sql:/database-entrypoint-initdb.d/dbinit.sql
+    ports:
+      - "5432:5432"
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    env_file:
+      - ./database/pg.env
+    volumes:
+      - ./database/pgadmin:/root/.pgadmin
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - postgres
