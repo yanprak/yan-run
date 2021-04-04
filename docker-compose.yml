@@ -25,3 +25,10 @@ services:
     restart: always
     depends_on:
       - postgres
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./database/mongodb:/var/lib/mongodb/data
