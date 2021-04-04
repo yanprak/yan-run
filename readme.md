@@ -15,7 +15,7 @@
 3. Генерируем SSL сертификаты в папку `./cert` с помощью команды `openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem`.
 4. Открываем проект по адресу [https://local.ya-praktikum.tech:5000](https://local.ya-praktikum.tech:5000)
 5. PORT для приложения 5000, API_PORT для сервера 3500, FEEDBACK_PORT для сервера 3600
-6. Соединение с MongoDB базой указывается в env-переменной MONGO_URI
+6. Соединение с MongoDB базой указывается в env-переменной MONGO_URI (пример значения - `mongodb://localhost:27017/`)
 
 ## RUN
 1. Запуск в режиме SSR (запустит и API server в режиме разработки) `npm run start:ssr`
