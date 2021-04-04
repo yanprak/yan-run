@@ -74,7 +74,10 @@ class Messages extends Model<MessageAttributes> {
   reactions!: Reactions;
 
   @AllowNull(false)
-  @Column(DataType.DATE)
+  @Column({
+    type: DataType.DATE,
+    field: 'created_at',
+  })
   @CreatedAt
   createdAt!: Date;
 }

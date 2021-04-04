@@ -32,14 +32,23 @@ class Users extends Model<UserAttributes> {
   id!: number;
 
   @AllowNull(false)
-  @Column(DataType.STRING)
+  @Column({
+    type: DataType.string,
+    field: 'first_name',
+  })
   firstName!: string;
 
   @AllowNull(false)
-  @Column(DataType.STRING)
+  @Column({
+    type: DataType.string,
+    field: 'second_name',
+  })
   secondName!: string;
 
-  @Column(DataType.STRING)
+  @Column({
+    type: DataType.string,
+    field: 'display_name',
+  })
   displayName!: string;
 
   @AllowNull(false)
@@ -64,7 +73,7 @@ class Users extends Model<UserAttributes> {
     field: 'theme_id',
   })
   @Default(1)
-  theme!: number;
+  themeId!: number;
 }
 
 export default Users;

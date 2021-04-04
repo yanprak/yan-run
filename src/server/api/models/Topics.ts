@@ -46,7 +46,10 @@ class Topics extends Model<TopicAttributes> {
   userId!: number;
 
   @AllowNull(false)
-  @Column(DataType.DATE)
+  @Column({
+    type: DataType.DATE,
+    field: 'created_at',
+  })
   @CreatedAt
   createdAt!: Date;
 }
