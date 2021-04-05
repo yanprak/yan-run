@@ -1,5 +1,5 @@
 ## Quick Start
-* Перед первым запуском почистить `cash` docker  связанный с проектом
+* Перед первым запуском почистить `cache` docker связанный с проектом
 * Первый запуск контейнеров `docker-compose up --build`
 
 ## Postgres:
@@ -10,6 +10,7 @@
 * для входа через докер консоль:
   - `docker-compose run postges bash`, если контейнер запущен то `docker exec -it pg_container bash`
   - `psql -h pg_container -d [POSTGRES_DB] -U [POSTGRES_USER]`
+  - На Windows из под git bash: `- docker exec -it <container_id> //bin//sh`
 
 ## Доступ:
 * [Панель pgAdmin local](http://localhost:8080)
