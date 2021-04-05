@@ -22,3 +22,5 @@
 3. Запуск в режиме разработки только API сервера `npm run start:api-watch`
 
 
+## База данных PostgreSQL
+- [ER-модель](https://dbdiagram.io/d/606249c1ecb54e10c33dd608)
