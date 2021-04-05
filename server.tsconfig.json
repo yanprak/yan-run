@@ -12,7 +12,6 @@
   "include": [
     "src/server/server.ts",
     "src/api-server/server.ts",
-    "src/feedback-server/server.ts",
     "./node_modules/@types"
   ],
   "exclude": [

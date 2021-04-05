@@ -10,9 +10,7 @@ server
   // .use(render)
   // .use(logger)
   // todo(anton.kagakin): do we actually need to parse application/x-www-form-urlencoded for this server?
-  .use(express.urlencoded({
-    extended: true,
-  }))
+  .use(express.urlencoded({ extended: true }))
   .use(express.json())
   .use('/api/v1', router);
 

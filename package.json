@@ -17,28 +17,23 @@
     "build:dev-ssr-server": "cross-env NODE_ENV=development SR=server webpack --config webpack/server.config.ts",
     "build:dev-csr-server": "cross-env NODE_ENV=development SR=client webpack --config webpack/server.config.ts",
     "build:dev-api-server": "cross-env NODE_ENV=development webpack --config webpack/api-server.config.ts",
-    "build:dev-feedback-server": "cross-env NODE_ENV=development webpack --config webpack/feedback-server.config.ts",
 
     "watch:ssr-client": "cross-env NODE_ENV=development SR=server webpack --config webpack/client.config.ts",
     "watch:csr-client": "cross-env NODE_ENV=development SR=client webpack --config webpack/client.config.ts",
     "watch:api-server": "cross-env NODE_ENV=development webpack --watch --config webpack/api-server.config.ts",
-    "watch:feedback-server": "cross-env NODE_ENV=development webpack --watch --config webpack/feedback-server.config.ts",
 
     "server:dev-ssr": "cross-env NODE_ENV=development SR=server node index.js",
     "server:dev-csr": "cross-env NODE_ENV=development SR=client node index.js",
     "server:dev-api": "cross-env NODE_ENV=development nodemon api-index.js --watch dist/api-server.js",
-    "server:dev-feedback": "cross-env NODE_ENV=development nodemon feedback-index.js --watch dist/feedback-server.js",
 
     "server:ssr": "cross-env NODE_ENV=production SR=server node index.js",
     "server:csr": "cross-env NODE_ENV=production SR=client node index.js",
     "server:api": "cross-env NODE_ENV=production node api-index.js",
-    "server:feedback": "cross-env NODE_ENV=production node feedback-index.js",
 
-    "start:ssr-watch": "npm-run-all --print-label --parallel server:dev-ssr watch:ssr-client start:api-watch start:feedback-watch",
-    "start:csr-watch": "npm-run-all --print-label --parallel server:dev-csr watch:csr-client start:api-watch start:feedback-watch",
+    "start:ssr-watch": "npm-run-all --print-label --parallel server:dev-ssr watch:ssr-client start:api-watch",
+    "start:csr-watch": "npm-run-all --print-label --parallel server:dev-csr watch:csr-client start:api-watch",
 
     "start:api-watch": "npm-run-all --print-label --parallel watch:api-server server:dev-api",
-    "start:feedback-watch": "npm-run-all --print-label --parallel watch:feedback-server server:dev-feedback",
 
     "start:ssr": "npm-run-all --print-label clean build:dev-ssr-server start:ssr-watch",
     "start:csr": "npm-run-all --print-label clean build:dev-csr-server start:csr-watch",
