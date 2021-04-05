@@ -33,20 +33,20 @@ class Users extends Model<UserAttributes> {
 
   @AllowNull(false)
   @Column({
-    type: DataType.string,
+    type: DataType.STRING,
     field: 'first_name',
   })
   firstName!: string;
 
   @AllowNull(false)
   @Column({
-    type: DataType.string,
+    type: DataType.STRING,
     field: 'second_name',
   })
   secondName!: string;
 
   @Column({
-    type: DataType.string,
+    type: DataType.STRING,
     field: 'display_name',
   })
   displayName!: string;
