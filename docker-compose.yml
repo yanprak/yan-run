@@ -27,6 +27,7 @@ services:
       - postgres
 
   mongo:
+    container_name: mongo_container
     image: mongo
     ports:
       - "27017:27017"
