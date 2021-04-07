@@ -9,7 +9,7 @@ import {
   Default,
   ForeignKey,
 } from 'sequelize-typescript';
-import { Nullable } from '../../../client/types';
+import { Nullable } from '../../../../client/types';
 import Themes from './Themes';
 
 type UserAttributes = {
@@ -68,11 +68,11 @@ class Users extends Model<UserAttributes> {
 
   @ForeignKey(() => Themes)
   @AllowNull(false)
+  @Default(1)
   @Column({
     type: DataType.INTEGER,
     field: 'theme_id',
   })
-  @Default(1)
   themeId!: number;
 }
 

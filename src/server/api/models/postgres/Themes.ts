@@ -28,8 +28,8 @@ class Themes extends Model<ThemeAttributes> {
   name!: string;
 
   @AllowNull(false)
-  @Column(DataType.BOOLEAN)
   @Default(false)
+  @Column(DataType.BOOLEAN)
   hidden!: boolean;
 
   @AllowNull(false)
