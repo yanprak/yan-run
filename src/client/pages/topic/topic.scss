@@ -7,4 +7,16 @@
   &__pagination {
     flex: 1;
   }
+
+  &__title {
+    flex: 3;
+    text-align: center;
+  }
+
+  &__owner-action {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 }

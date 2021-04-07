@@ -35,14 +35,15 @@ const Pagination: FC<OwnProps> = (props: OwnProps) => {
     const allLinks = [];
 
     if (totalPages > 3 && currentPageIndex !== 1) {
-      const prev = currentPageIndex - 1;
-      allLinks.push(<PaginationButton isSelected={false} key="left_start" text="&laquo;" path={`${path}/1`} />);
-      allLinks.push(<PaginationButton
-        isSelected={false}
-        key={`left_${prev}`}
-        text="&lsaquo;"
-        path={`${path}/${prev}`}
-      />);
+      allLinks.push(<PaginationButton key="first" isSelected={false} text="&laquo;" path={`${path}/1`} />);
+      allLinks.push(
+        <PaginationButton
+          key="prev"
+          isSelected={false}
+          text="&lsaquo;"
+          path={`${path}/${currentPageIndex - 1}`}
+        />,
+      );
     }
 
     const pageIndexes = prepareRelevantPageIndexes(currentPageIndex, totalPages);
@@ -58,19 +59,15 @@ const Pagination: FC<OwnProps> = (props: OwnProps) => {
     allLinks.push(pageLinks);
 
     if (totalPages > 3 && currentPageIndex !== totalPages) {
-      const next = currentPageIndex + 1;
-      allLinks.push(<PaginationButton
-        isSelected={false}
-        key={`right_${next}`}
-        text="&rsaquo;"
-        path={`${path}/${next}`}
-      />);
-      allLinks.push(<PaginationButton
-        isSelected={false}
-        key="right_last"
-        text="&raquo;"
-        path={`${path}/${totalPages}`}
-      />);
+      allLinks.push(
+        <PaginationButton
+          key="next"
+          isSelected={false}
+          text="&rsaquo;"
+          path={`${path}/${currentPageIndex + 1}`}
+        />,
+      );
+      allLinks.push(<PaginationButton key="last" isSelected={false} text="&raquo;" path={`${path}/${totalPages}`} />);
     }
 
     return allLinks;

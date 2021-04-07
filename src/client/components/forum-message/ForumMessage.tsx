@@ -6,7 +6,7 @@ import { formatDate, getTime, isDateValid, createShortDate } from '../../utils/d
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const {
-    message,
+    text,
     createdAt,
     user,
     ...otherProps
@@ -26,7 +26,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
           <span className="message__time margin_tb_s-1">{time}</span>
         </time>
       </div>
-      <div className="message__post">{message}</div>
+      <div className="message__post">{text}</div>
     </div>
   );
 };

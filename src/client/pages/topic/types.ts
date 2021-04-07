@@ -1,3 +1,10 @@
 export type TopicPageProps = {
-  isAuthor: boolean;
+  id: number;
+  name: string;
+  messagesCount: number;
+  user: {
+    id: number;
+    login: string;
+  },
+  createdAt: string;
 };
