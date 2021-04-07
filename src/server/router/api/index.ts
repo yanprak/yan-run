@@ -1,13 +1,12 @@
 import { Router } from 'express';
-
 import forumRoutes from './forumRoutes';
 import feedbackRoutes from './feedbackRoutes';
 import themeRoutes from './themeRoutes';
 
-const router: Router = Router();
+const apiRouter: Router = Router();
 
-forumRoutes(router);
-feedbackRoutes(router);
-themeRoutes(router);
+forumRoutes(apiRouter);
+feedbackRoutes(apiRouter);
+themeRoutes(apiRouter);
 
-export default router;
+export default apiRouter;
