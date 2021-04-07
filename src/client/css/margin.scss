@@ -15,5 +15,8 @@ $step: 0.4;
     &_t_s-#{$i} {
       margin-top: #{$step * $i}rem;
     }
+    &_b_s-#{$i} {
+      bottom: #{$step * $i}rem;
+    }
   }
 }

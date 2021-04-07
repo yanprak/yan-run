@@ -26,14 +26,14 @@ const routes = [
     exact: true,
   },
   {
-    path: '/topic',
+    path: '/forum/topics/:id',
     component: Topic,
     exact: true,
   },
   {
     path: '/forum',
     component: Forum,
-    exact: true,
+    exact: false,
   },
   {
     path: '/leaderboard',
