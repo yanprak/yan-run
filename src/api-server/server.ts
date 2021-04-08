@@ -1,10 +1,22 @@
-import express, { Express } from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import apiRouter from './router';
 import sequelize from './api';
 import dataGenerator from './utils/dataGenerator';
 
 const server: Express = express();
+
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const cookie = req.header('Cookie');
+  if (cookie) {
+    const parsedCookiesKeys = cookie.split(';').map(item => item.trim().split('=')[0]);
+    const authorized = parsedCookiesKeys.includes('uuid') && parsedCookiesKeys.includes('authCookie');
+    if (authorized) {
+      next();
+    }
+  }
+  res.status(401).json({ message: 'Cookie is not valid' });
+};
 
 server
   .disable('x-powered-by')
@@ -14,6 +26,7 @@ server
   // todo(anton.kagakin): do we actually need to parse application/x-www-form-urlencoded for this server?
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
+  .use(authMiddleware)
   .use('/api/v1', apiRouter);
 
 // connect POSTGRES
