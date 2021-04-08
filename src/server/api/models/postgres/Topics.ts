@@ -12,11 +12,11 @@ import {
 import Users from './Users';
 
 type TopicAttributes = {
-  id: number;
+  id?: number;
   name: string;
-  messagesCount: number;
-  userId: number;
-  createdAt: string;
+  messagesCount?: number;
+  userId?: number;
+  createdAt?: string;
 };
 
 @Table

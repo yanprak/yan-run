@@ -7,6 +7,7 @@ import config from '../../webpack/client.config';
 import router from './router/app';
 import apiRouter from './router/api';
 import sequelize from './api';
+import dataGenerator from './utils/dataGenerator';
 
 const app: Express = express();
 
@@ -35,11 +36,15 @@ app
   // todo(anton.kagakin): do we actually need to parse application/x-www-form-urlencoded for this server?
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
-  .use(router)
-  .use('/api/v1', apiRouter);
+  .use('/api/v1', apiRouter)
+  .use(router);
 
 sequelize.sync()
-  .then(() => console.log('DB acces success'))
+  .then(() => {
+    console.log('DB acces success');
+    // demo data
+    dataGenerator();
+  })
   .catch(e => console.log(e));
 
 // eslint-disable-next-line import/prefer-default-export

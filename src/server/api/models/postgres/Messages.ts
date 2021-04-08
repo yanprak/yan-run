@@ -26,13 +26,13 @@ type Reactions = {
 };
 
 type MessageAttributes = {
-  id: number;
+  id?: number;
   text: string;
   userId: number;
   topicId: number;
   parentId: Nullable<number>;
-  reactions: Reactions;
-  createdAt: string;
+  reactions?: Reactions;
+  createdAt?: string;
 };
 
 @Table
