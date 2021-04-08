@@ -29,6 +29,8 @@ export default function Topic() {
 
   const messages = useSelector<ApplicationState, MessagesState>(state => state.messages);
   const user = useSelector<ApplicationState, User>(state => state.user!);
+  console.log('messages', messages); // TODO (ilya): remove these logs once ready
+  console.log('user', user);
 
   const isAuthor = true; // user.id === tempTopicProps.user.id;
   const totalPages = Math.ceil(messagesCount / 10);

@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react';
 import { Nullable } from '../../types';
+import { ReactionEnum } from '../reaction/types';
 
 type UserEntry = {
   id: number;
@@ -8,14 +9,7 @@ type UserEntry = {
 };
 
 type ReactionsEntry = {
-  like: number[];
-  dislike: number[];
-  laugh: number[];
-  hooray: number[];
-  confused: number[];
-  heart: number[];
-  rocket: number[];
-  eyes: number[];
+  [key in ReactionEnum]: number[];
 };
 
 export type OwnProps = {

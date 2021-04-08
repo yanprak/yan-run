@@ -1,0 +1,18 @@
+.reaction {
+  padding: 0 0.8rem;
+  font-size: 1.2rem;
+  line-height: 2.6rem;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--base-radius);
+  margin-right: 0.8rem;
+
+  &__emoji {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--primary-bg-hover-color);
+    color: var(--primary-color);
+  }
+}

@@ -25,9 +25,20 @@
     flex-direction: column;
   }
 
-  &__post {
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text {
     display: flex;
     flex: 1;
     font-size: 1.2rem;
+  }
+
+  &__reactions {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
   }
 }
