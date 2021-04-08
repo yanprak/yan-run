@@ -1,6 +1,7 @@
 import { HTMLAttributes } from 'react';
 import { Nullable } from '../../types';
-import { ReactionEnum } from '../reaction/types';
+import { ReactionEnum } from '../../API/messages';
+import { User } from '../../store/user/types';
 
 type UserEntry = {
   id: number;
@@ -20,4 +21,5 @@ export type OwnProps = {
   user: UserEntry;
   reactions: ReactionsEntry;
   createdAt: string;
+  currentUser: User;
 } & HTMLAttributes<HTMLDivElement>;

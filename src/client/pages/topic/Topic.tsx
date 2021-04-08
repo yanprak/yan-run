@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import ForumMessage from '../../components/forum-message';
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
 import { TopicPageProps } from './types';
 import sampleMessages from './sampleMessages';
-import NewMessageForm from '../../components/new-message-form';
+import MessageEditor from '../../components/message-editor';
 import { useApiMessages } from '../../hooks';
 import { ApplicationState } from '../../store/types';
 import { User } from '../../store/user/types';
 import { MessagesState } from '../../store/messages/types';
-import { MessageEntry } from '../../API/messages';
+import { MessageEntry, CreateMessageRequestData } from '../../API/messages';
 
 const tempTopicProps: TopicPageProps = {
   id: 123,
@@ -24,7 +24,7 @@ const tempTopicProps: TopicPageProps = {
 };
 
 export default function Topic() {
-  const { fetchMessages } = useApiMessages();
+  const { fetchMessages, createMessage } = useApiMessages();
   const { id: topicId, messagesCount, name: topicName } = tempTopicProps;
 
   const messages = useSelector<ApplicationState, MessagesState>(state => state.messages);
@@ -32,12 +32,20 @@ export default function Topic() {
   console.log('messages', messages); // TODO (ilya): remove these logs once ready
   console.log('user', user);
 
-  const isAuthor = true; // user.id === tempTopicProps.user.id;
+  const isAuthor = true; // user.id === tempTopicProps.user.id; // TODO (ilya): uncomment proper validation
   const totalPages = Math.ceil(messagesCount / 10);
 
   useEffect(() => {
     fetchMessages(topicId);
   }, [fetchMessages]);
+
+  const submitHandler = useCallback((message: string) => {
+    const requestData: CreateMessageRequestData = {
+      text: message,
+      userId: user.id,
+    };
+    createMessage(topicId, requestData);
+  }, [createMessage, topicId, user.id]);
 
   // const { data, error, loading } = messages;
 
@@ -57,7 +65,7 @@ export default function Topic() {
   // }
 
   const children = sampleMessages.map(({ id: messageId, ...messageProps }: MessageEntry) => (
-    <ForumMessage key={messageId} uid={messageId} {...messageProps} />
+    <ForumMessage key={messageId} uid={messageId} currentUser={user} {...messageProps} />
   ));
 
   return (
@@ -75,8 +83,13 @@ export default function Topic() {
       <div className="topic-page__messages">
         {children}
       </div>
-      <hr className="margin_tb_s-7 " />
-      <NewMessageForm placeholder="Сообщение" topicId={topicId} user={user} />
+      <hr className="margin_tb_s-7" />
+      <MessageEditor
+        className="topic-page__editor"
+        placeholder="Сообщение"
+        iconName="send"
+        submitHandler={submitHandler}
+      />
     </div>
   );
 }

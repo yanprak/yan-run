@@ -2,21 +2,19 @@ import React, {
   FC, useState, ChangeEvent, FormEvent, KeyboardEvent,
 } from 'react';
 import { OwnProps } from './types';
-import './new-message-form.scss';
+import './message-editor.scss';
 import Icon from '../icon';
 import TextArea from '../text-area';
-import { useApiMessages } from '../../hooks';
-import { CreateMessageRequestData } from '../../API/messages';
 
-const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
+const MessageEditor: FC<OwnProps> = (props: OwnProps) => {
   const {
     placeholder,
-    topicId,
-    user,
+    initialValue,
+    iconName,
+    submitHandler,
     ...otherProps
   } = props;
-  const [message, setMessage] = useState('');
-  const { createMessage } = useApiMessages();
+  const [message, setMessage] = useState(initialValue || '');
 
   function handleTextAreaChange(event: ChangeEvent): void {
     const element = event.target as HTMLInputElement;
@@ -26,11 +24,7 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
 
   function handleNewMessageSubmit(event: FormEvent): void {
     event.preventDefault();
-    const requestData: CreateMessageRequestData = {
-      text: message,
-      userId: user.id,
-    };
-    createMessage(topicId, requestData);
+    submitHandler(message);
   }
 
   function handleTextAreaKeyChange(event: KeyboardEvent): void {
@@ -45,24 +39,24 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
     }
   }
 
-  const className = `message-form ${props.className || ''}`;
+  const className = `message-editor ${props.className || ''}`;
   return (
     <form {...otherProps} className={className} onSubmit={handleNewMessageSubmit}>
       <TextArea
-        className="message-form__input padding_s-5"
+        className="message-editor__input padding_s-5"
         placeholder={placeholder}
         resizable={false}
         onChange={handleTextAreaChange}
         onKeyDown={handleTextAreaKeyChange}
         value={message}
       />
-      <div className="message-form__button-wrapper padding_s-5">
-        <button className="message-form__button" type="submit">
-          <Icon name="send" />
+      <div className="message-editor__button-wrapper padding_s-5">
+        <button className="message-editor__button" type="submit">
+          <Icon name={iconName} />
         </button>
       </div>
     </form>
   );
 };
 
-export default NewMessageForm;
+export default MessageEditor;

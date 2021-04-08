@@ -30,13 +30,15 @@ export const thunkCreateMessage = (topicId: number, data: CreateMessageRequestDa
     .catch(() => {});
 };
 
-export function thunkUpdateMessage(topicId: number, messageId: number, data: UpdateMessageRequestData) {
-  return (dispatch: MyThunkDispatch) => {
-    updateMessage(topicId, messageId, data)
-      .then(() => dispatch(thunkFetchMessages(topicId)))
-      .catch(() => {});
-  };
-}
+export const thunkUpdateMessage = (
+  topicId: number,
+  messageId: number,
+  data: UpdateMessageRequestData,
+) => (dispatch: MyThunkDispatch) => {
+  updateMessage(topicId, messageId, data)
+    .then(() => dispatch(thunkFetchMessages(topicId)))
+    .catch(() => {});
+};
 
 export const thunkDeleteMessage = (topicId: number, messageId: number) => (dispatch: MyThunkDispatch) => {
   deleteMessage(topicId, messageId)
@@ -44,10 +46,12 @@ export const thunkDeleteMessage = (topicId: number, messageId: number) => (dispa
     .catch(() => {});
 };
 
-export function thunkToggleReaction(topicId: number, messageId: number, data: ToggleReactionRequestData) {
-  return (dispatch: MyThunkDispatch) => {
-    toggleReaction(topicId, messageId, data)
-      .then(() => dispatch(thunkFetchMessages(topicId)))
-      .catch(() => {});
-  };
-}
+export const thunkToggleReaction = (
+  topicId: number,
+  messageId: number,
+  data: ToggleReactionRequestData,
+) => (dispatch: MyThunkDispatch) => {
+  toggleReaction(topicId, messageId, data)
+    .then(() => dispatch(thunkFetchMessages(topicId)))
+    .catch(() => {});
+};
