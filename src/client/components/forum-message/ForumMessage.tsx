@@ -3,11 +3,12 @@ import { OwnProps } from './types';
 import './forum-message.scss';
 import Avatar from '../avatar';
 import Reaction from '../reaction';
+import { ReactionEnum } from '../../API/messages';
 import { formatDate, getTime, isDateValid, createShortDate } from '../../utils/datetime';
-import { ReactionEnum } from '../reaction/types';
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const {
+    uid: messageId,
     text,
     createdAt,
     user,
@@ -30,6 +31,9 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
           key={reactionName}
           reaction={reaction}
           users={userIdsArray}
+          topicId={topicId}
+          messageId={messageId}
+          userId={user.id}
         />
       );
     });

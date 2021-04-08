@@ -13,7 +13,7 @@ import {
   ToggleReactionRequestData,
 } from '../../API/messages';
 
-export default function useApiForum() {
+export default function useApiMessages() {
   const dispatch = useDispatch();
 
   const fetchMessages = useCallback((topicId: number) => {

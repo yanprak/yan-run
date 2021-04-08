@@ -76,7 +76,7 @@ export default function Topic() {
         {children}
       </div>
       <hr className="margin_tb_s-7 " />
-      <NewMessageForm placeholder="Сообщение" />
+      <NewMessageForm placeholder="Сообщение" topicId={topicId} user={user} />
     </div>
   );
 }

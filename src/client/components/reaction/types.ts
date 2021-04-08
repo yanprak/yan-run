@@ -1,13 +1,4 @@
-export enum ReactionEnum {
-  like = 'like',
-  dislike = 'dislike',
-  laugh = 'laugh',
-  hooray = 'hooray',
-  confused = 'confused',
-  heart = 'heart',
-  rocket = 'rocket',
-  eyes = 'eyes',
-}
+import { ReactionEnum } from '../../API/messages';
 
 export type EmojiLib = {
   [key in ReactionEnum]: string;
@@ -16,4 +7,7 @@ export type EmojiLib = {
 export type OwnProps = {
   reaction: ReactionEnum;
   users: number[];
+  topicId: number;
+  messageId: number;
+  userId: number;
 };

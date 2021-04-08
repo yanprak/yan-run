@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
-import { OwnProps, ReactionEnum, EmojiLib } from './types';
+import React, { FC, MouseEvent } from 'react';
+import { OwnProps, EmojiLib } from './types';
+import { ReactionEnum, ToggleReactionRequestData } from '../../API/messages';
 import './reaction.scss';
+import { useApiMessages } from '../../hooks';
 
 function setEmoji(reaction: ReactionEnum): string {
   const emojiLib: EmojiLib = {
@@ -17,14 +19,25 @@ function setEmoji(reaction: ReactionEnum): string {
   return emojiLib[reaction];
 }
 
-const Reaction: FC<OwnProps> = ({ reaction, users }: OwnProps) => {
+const Reaction: FC<OwnProps> = ({ reaction, users, topicId, messageId, userId }: OwnProps) => {
+  const { toggleReaction } = useApiMessages();
   const emoji = setEmoji(reaction);
   const total = users.length;
+
+  function handleClick(event: MouseEvent) {
+    event.preventDefault();
+    const data: ToggleReactionRequestData = {
+      reaction,
+      userId,
+    };
+    toggleReaction(topicId, messageId, data);
+  }
+
   return (
-    <div className="reaction">
+    <button className="reaction" type="button" onClick={handleClick}>
       <span className="reaction__emoji" role="img" aria-label={reaction}>{emoji}</span>
       <span className="reaction__counter">{total}</span>
-    </div>
+    </button>
   );
 };
 

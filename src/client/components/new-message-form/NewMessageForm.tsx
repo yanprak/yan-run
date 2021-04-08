@@ -5,13 +5,18 @@ import { OwnProps } from './types';
 import './new-message-form.scss';
 import Icon from '../icon';
 import TextArea from '../text-area';
+import { useApiMessages } from '../../hooks';
+import { CreateMessageRequestData } from '../../API/messages';
 
 const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
   const {
     placeholder,
+    topicId,
+    user,
     ...otherProps
   } = props;
   const [message, setMessage] = useState('');
+  const { createMessage } = useApiMessages();
 
   function handleTextAreaChange(event: ChangeEvent): void {
     const element = event.target as HTMLInputElement;
@@ -21,7 +26,11 @@ const NewMessageForm: FC<OwnProps> = (props: OwnProps) => {
 
   function handleNewMessageSubmit(event: FormEvent): void {
     event.preventDefault();
-    window.console.info('Submitting new message', message);
+    const requestData: CreateMessageRequestData = {
+      text: message,
+      userId: user.id,
+    };
+    createMessage(topicId, requestData);
   }
 
   function handleTextAreaKeyChange(event: KeyboardEvent): void {
