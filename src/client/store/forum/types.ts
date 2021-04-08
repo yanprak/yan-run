@@ -1,5 +1,4 @@
 import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import { TopicEntry } from '../../API/forum';
 
 export interface FetchTopicsRequest extends Action {
@@ -14,8 +13,6 @@ export interface FetchTopicsSuccess extends Action {
 export interface FetchTopicsFailure extends Action {
   type: 'FETCH_TOPICS_FAILURE'
 }
-
-export type FetchTopics = ThunkAction<void, TopicsState, unknown, Action<string>>;
 
 export type TopicsActions = FetchTopicsRequest | FetchTopicsSuccess | FetchTopicsFailure;
 
