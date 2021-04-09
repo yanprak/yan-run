@@ -4,10 +4,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack/client.config';
-import router from './router/app';
-import apiRouter from './router/api';
-import sequelize from './api';
-import dataGenerator from './utils/dataGenerator';
+import router from './router';
 
 const app: Express = express();
 
@@ -28,24 +25,8 @@ if (IS_DEV) {
 }
 
 app
-  .disable('x-powered-by')
-  .enable('trust proxy')
   .use(express.static(path.join(__dirname, '../dist')))
-  // .use(render)
-  // .use(logger)
-  // todo(anton.kagakin): do we actually need to parse application/x-www-form-urlencoded for this server?
-  .use(express.urlencoded({ extended: true }))
-  .use(express.json())
-  .use('/api/v1', apiRouter)
   .use(router);
-
-sequelize.sync()
-  .then(() => {
-    console.log('DB acces success');
-    // todo(Nail): Delete "dataGenerator" before releasing the product!
-    dataGenerator();
-  })
-  .catch(e => console.log(e));
 
 // eslint-disable-next-line import/prefer-default-export
 export { app };

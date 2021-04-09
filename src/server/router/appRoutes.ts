@@ -1,8 +1,8 @@
 import { ErrorRequestHandler, RequestHandler, Router } from 'express';
-import { cookieParser } from '../../middlewares';
-import routes from '../../../client/routes/routes';
-import serverRenderMiddleware from '../../middlewares/serverRenderMiddleware';
-import serverCSRMiddleware from '../../middlewares/serverCSRMiddleware';
+import { cookieParser } from '../middlewares';
+import routes from '../../client/routes/routes';
+import serverRenderMiddleware from '../middlewares/serverRenderMiddleware';
+import serverCSRMiddleware from '../middlewares/serverCSRMiddleware';
 
 const allRoutes = routes.map(routeObj => routeObj.path);
 

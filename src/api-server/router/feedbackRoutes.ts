@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Feedback from '../../api/models/mongo/Feedback';
+import Feedback from '../api/models/mongo/Feedback';
 
 export default function forumRoutes(router: Router): void {
   const FEEDBACK_URL = '/feedback';

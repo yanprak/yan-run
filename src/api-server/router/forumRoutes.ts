@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import Topics from '../../api/models/postgres/Topics';
-import Messages from '../../api/models/postgres/Messages';
+import { Topics } from '../api/models/postgres/Topics';
+import { Messages } from '../api/models/postgres/Messages';
 
 export default function forumRoutes(router: Router) {
   const TOPICS_URL = '/forum/topics';
@@ -180,7 +180,7 @@ export default function forumRoutes(router: Router) {
     })
       .then(message => {
         res.json({
-          message: 'Message has been successfully updated with like',
+          message: 'OK',
           result: message?.reactions,
         });
       })

@@ -10,8 +10,8 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import Users from './Users';
-import Topics from './Topics';
+import { Users } from './Users';
+import { Topics } from './Topics';
 import { Nullable } from '../../../../client/types';
 
 type Reactions = {
@@ -31,7 +31,7 @@ type MessageAttributes = {
   userId: number;
   topicId: number;
   parentId: Nullable<number>;
-  reactions?: Reactions;
+  reactions: Reactions;
   createdAt?: string;
 };
 
@@ -86,4 +86,8 @@ class Messages extends Model<MessageAttributes> {
   createdAt!: Date;
 }
 
-export default Messages;
+export {
+  Messages,
+  Reactions,
+  MessageAttributes,
+};

@@ -10,7 +10,7 @@ import {
 } from 'sequelize-typescript';
 
 type ThemeAttributes = {
-  id: number;
+  id?: number;
   name: string;
   hidden: boolean;
   style: Record<string, unknown>;
@@ -37,4 +37,7 @@ class Themes extends Model<ThemeAttributes> {
   style!: Record<string, unknown>;
 }
 
-export default Themes;
+export {
+  Themes,
+  ThemeAttributes,
+};

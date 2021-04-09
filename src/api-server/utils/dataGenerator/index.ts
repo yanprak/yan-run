@@ -1,22 +1,7 @@
-import Topics from '../../api/models/postgres/Topics';
-import Messages from '../../api/models/postgres/Messages';
-import { Nullable } from '../../../client/types';
+import { Topics, TopicAttributes } from '../../api/models/postgres/Topics';
+import { Messages, MessageAttributes } from '../../api/models/postgres/Messages';
 
-type Attributes = {
-  name: string;
-  messagesCount: number;
-  userId: number;
-  createdAt?: string;
-};
-
-type MessageAttributes = {
-  text: string;
-  userId: number;
-  topicId: number;
-  parentId: Nullable<number>;
-};
-
-const topicList: Attributes[] = [
+const topicList: TopicAttributes[] = [
   {
     name: 'Book',
     messagesCount: 12,
@@ -40,6 +25,16 @@ const messageList: MessageAttributes[] = [
     userId: 1,
     topicId: 1,
     parentId: null,
+    reactions: {
+      like: [0],
+      dislike: [0],
+      laugh: [0],
+      hooray: [0],
+      confused: [0],
+      heart: [0],
+      rocket: [0],
+      eyes: [0],
+    },
   },
 ];
 export default function dataGenerator() {

@@ -1,8 +1,8 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import Messages from './models/postgres/Messages';
-import Topics from './models/postgres/Topics';
-import Users from './models/postgres/Users';
-import Themes from './models/postgres/Themes';
+import { Messages } from './models/postgres/Messages';
+import { Topics } from './models/postgres/Topics';
+import { Users } from './models/postgres/Users';
+import { Themes } from './models/postgres/Themes';
 
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
