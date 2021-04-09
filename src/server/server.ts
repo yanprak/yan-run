@@ -42,7 +42,7 @@ app
 sequelize.sync()
   .then(() => {
     console.log('DB acces success');
-    // demo data
+    // todo(Nail): Delete "dataGenerator" before releasing the product!
     dataGenerator();
   })
   .catch(e => console.log(e));
