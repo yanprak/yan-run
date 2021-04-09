@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
 import apiRouter from './router';
 import sequelize from './api';
 import dataGenerator from './utils/dataGenerator';
@@ -30,6 +31,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 server
   .disable('x-powered-by')
   .enable('trust proxy')
+  .use(helmet())
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
   .use((req, res, next) => {
