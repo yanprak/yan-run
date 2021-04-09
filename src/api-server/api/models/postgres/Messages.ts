@@ -10,9 +10,9 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import Users from './Users';
-import Topics from './Topics';
-import { Nullable } from '../../../client/types';
+import { Users } from './Users';
+import { Topics } from './Topics';
+import { Nullable } from '../../../../client/types';
 
 type Reactions = {
   like: number[];
@@ -26,13 +26,13 @@ type Reactions = {
 };
 
 type MessageAttributes = {
-  id: number;
+  id?: number;
   text: string;
   userId: number;
   topicId: number;
   parentId: Nullable<number>;
   reactions: Reactions;
-  createdAt: string;
+  createdAt?: string;
 };
 
 @Table
@@ -62,24 +62,32 @@ class Messages extends Model<MessageAttributes> {
   })
   topicId!: number;
 
-  @BelongsTo(() => Messages)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'parent_id',
-  })
+  @BelongsTo(() => Messages, 'parent_id')
   parentId!: Nullable<number>;
+
+  // todo(Nail): remove column
+  // @ForeignKey(() => Messages)
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   field: 'messages_id',
+  // })
+  // parentId!: Nullable<number>;
 
   @AllowNull(false)
   @Column(DataType.JSONB)
   reactions!: Reactions;
 
   @AllowNull(false)
+  @CreatedAt
   @Column({
     type: DataType.DATE,
     field: 'created_at',
   })
-  @CreatedAt
   createdAt!: Date;
 }
 
-export default Messages;
+export {
+  Messages,
+  Reactions,
+  MessageAttributes,
+};

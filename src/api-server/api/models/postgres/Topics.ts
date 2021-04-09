@@ -8,15 +8,16 @@ import {
   AllowNull,
   CreatedAt,
   ForeignKey,
+  Default,
 } from 'sequelize-typescript';
-import Users from './Users';
+import { Users } from './Users';
 
 type TopicAttributes = {
-  id: number;
+  id?: number;
   name: string;
-  messagesCount: number;
-  userId: number;
-  createdAt: string;
+  messagesCount?: number;
+  userId?: number;
+  createdAt?: string;
 };
 
 @Table
@@ -31,6 +32,7 @@ class Topics extends Model<TopicAttributes> {
   name!: string;
 
   @AllowNull(false)
+  @Default(0)
   @Column({
     type: DataType.INTEGER,
     field: 'messages_count',
@@ -46,12 +48,15 @@ class Topics extends Model<TopicAttributes> {
   userId!: number;
 
   @AllowNull(false)
+  @CreatedAt
   @Column({
     type: DataType.DATE,
     field: 'created_at',
   })
-  @CreatedAt
   createdAt!: Date;
 }
 
-export default Topics;
+export {
+  Topics,
+  TopicAttributes,
+};

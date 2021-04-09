@@ -5,3 +5,6 @@ dist
 cert
 app.js
 .DS_Store
+./database/postgresdata
+./database/pgadmin
+./database/mongodb
