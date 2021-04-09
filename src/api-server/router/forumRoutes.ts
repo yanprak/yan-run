@@ -12,7 +12,7 @@ export default function forumRoutes(router: Router) {
   router.get(TOPICS_URL, (req, res) => {
     const { page } = req.query;
     Topics.findAll({
-      offset: +page!,
+      offset: Number(page) || 0,
       limit: 10,
     })
       .then(topics => {
