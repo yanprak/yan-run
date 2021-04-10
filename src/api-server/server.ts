@@ -7,30 +7,46 @@ import dataGenerator from './utils/dataGenerator';
 const server: Express = express();
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const cookie = req.header('Cookie');
-  if (cookie) {
-    const parsedCookiesKeys = cookie.split(';').map(item => item.trim().split('=')[0]);
-    const authorized = parsedCookiesKeys.includes('uuid') && parsedCookiesKeys.includes('authCookie');
-    if (authorized) {
-      next();
+  const isOptions = req.method.toLowerCase() === 'options';
+
+  if (isOptions) {
+    res.status(204).send('');
+  } else {
+    const cookie = req.header('Cookie');
+    if (cookie) {
+      const parsedCookiesKeys = cookie.split(';').map(item => item.trim().split('=')[0]);
+      const authorized = parsedCookiesKeys.includes('uuid') && parsedCookiesKeys.includes('authCookie');
+      if (authorized) {
+        next();
+      } else {
+        res.status(401).json({ message: 'Cookie is not valid' });
+      }
+    } else {
+      res.status(401).json({ message: 'Cookie is not valid' });
     }
   }
-  res.status(401).json({ message: 'Cookie is not valid' });
 };
 
 server
   .disable('x-powered-by')
   .enable('trust proxy')
-  // .use(render)
-  // .use(logger)
-  // todo(anton.kagakin): do we actually need to parse application/x-www-form-urlencoded for this server?
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
+  .use((req, res, next) => {
+    res.header(
+      'Access-Control-Allow-Origin',
+      'https://local.ya-praktikum.tech:5000',
+    ); // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    next();
+  })
   .use(authMiddleware)
   .use('/api/v1', apiRouter);
 
 // connect POSTGRES
-sequelize.sync()
+sequelize.sync({ force: true })
   .then(() => {
     console.log('[PostgreSQL] Connection established');
     // todo(Nail): Delete "dataGenerator" before releasing the product!

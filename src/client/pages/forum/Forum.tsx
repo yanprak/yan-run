@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
@@ -10,15 +11,16 @@ import { ApplicationState } from '../../store/types';
 import { TopicsState } from '../../store/forum/types';
 import { useApiForum, useForm } from '../../hooks';
 import { FormState } from '../../hooks/useForm/types';
+import { User } from '../../store/user/types';
 
 import './forum.scss';
-import { User } from '../../store/user/types';
 
 const initState: FormState = {
   name: { value: '', type: 'textarea' },
 };
 
 export default function Forum() {
+  const { page = '1' } = useParams<{ page?: string }>();
   const [creatingTopic, setCreatingTopic] = useState(false);
 
   const toggleTopicCreation = () => {
@@ -31,19 +33,17 @@ export default function Forum() {
   const user = useSelector<ApplicationState, User>(state => state.user!);
 
   const handleTopicCreate = useCallback((data: FormState) => {
-    // todo(anton.kagakin): actually we can send full user object here if needed.
     const requestData = {
       name: data.name.value,
-      id: user.id,
-      login: user.login,
+      userId: user.id,
     };
     createTopic(requestData);
     toggleTopicCreation();
   }, [createTopic, user.id, user.login]);
 
   useEffect(() => {
-    fetchTopics();
-  }, [fetchTopics]);
+    fetchTopics(Number(page) - 1);
+  }, [fetchTopics, page]);
 
   const {
     handleBlur,
@@ -66,7 +66,7 @@ export default function Forum() {
       <TopicLink
         key={item.id}
         uid={item.id}
-        title={`${item.name} (by ${user.login}: ${user.id})`}
+        title={`${item.name}`}
         messagesCounter={item.messagesCount}
       />
     ));
@@ -78,7 +78,7 @@ export default function Forum() {
   return (
     <div className="page forum-page container container_is-column container_size-auto container_center">
       <div className="margin_t_s-4 margin_b_s-2 forum-page__header">
-        <Pagination path="/forum" current={1} total={5} className="forum-page__pagination" />
+        <Pagination path="/forum" current={Number(page)} total={5} className="forum-page__pagination" />
         <Button
           size="small"
           styleType="primary"

@@ -33,7 +33,12 @@ const routes = [
   {
     path: '/forum',
     component: Forum,
-    exact: false,
+    exact: true,
+  },
+  {
+    path: '/forum/:page',
+    component: Forum,
+    exact: true,
   },
   {
     path: '/leaderboard',

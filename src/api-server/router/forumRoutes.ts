@@ -9,11 +9,13 @@ export default function forumRoutes(router: Router) {
   const MESSAGES_ID_URL = `${MESSAGES_URL}/:messageId`;
   const MESSAGES_REACT_URL = `${MESSAGES_ID_URL}/reactions`;
 
+  const TOPICS_PAGE_LIMIT = 10;
+
   router.get(TOPICS_URL, (req, res) => {
     const { page } = req.query;
     Topics.findAll({
-      offset: Number(page) || 0,
-      limit: 10,
+      offset: (Number(page) || 0) * TOPICS_PAGE_LIMIT,
+      limit: TOPICS_PAGE_LIMIT,
     })
       .then(topics => {
         res.json({
@@ -25,8 +27,11 @@ export default function forumRoutes(router: Router) {
   });
 
   router.post(TOPICS_URL, (req, res) => {
-    const { data } = req.body;
-    Topics.create(data)
+    const { name, userId } = req.body;
+    Topics.create({
+      name,
+      userId,
+    })
       .then(result => {
         res.json({
           message: 'Topic has been created',

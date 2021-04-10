@@ -6,8 +6,8 @@ import { CreateTopicRequestData } from '../../API/forum';
 export default function useApiForum() {
   const dispatch = useDispatch();
 
-  const fetchTopics = useCallback(() => {
-    dispatch(thunkFetchTopics());
+  const fetchTopics = useCallback((page?: number) => {
+    dispatch(thunkFetchTopics(page));
   }, [dispatch]);
 
   const createTopic = useCallback((data: CreateTopicRequestData) => {

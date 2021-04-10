@@ -7,11 +7,10 @@ interface FetchTopicsResponse {
 
 export interface CreateTopicRequestData {
   name: string,
-  id: number,
-  login: string
+  userId: number,
 }
 
-const fetchTopics = () => BACKEND_API.get<FetchTopicsResponse>('/forum/topics');
+const fetchTopics = (page = 0) => BACKEND_API.get<FetchTopicsResponse>(`/forum/topics?page=${page}`);
 const createTopic = (data: CreateTopicRequestData) => BACKEND_API.post('/forum/topics', JSON.stringify(data));
 
 type UserEntry = {

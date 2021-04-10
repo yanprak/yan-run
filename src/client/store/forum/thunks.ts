@@ -4,9 +4,9 @@ import { createTopic, CreateTopicRequestData, fetchTopics } from '../../API/foru
 import { topicsError, topicsLoaded, topicsRequested } from './actions';
 import { TopicsState } from './types';
 
-export const thunkFetchTopics = () => (dispatch: Dispatch) => {
+export const thunkFetchTopics = (page?: number) => (dispatch: Dispatch) => {
   dispatch(topicsRequested());
-  fetchTopics()
+  fetchTopics(page)
     .then(response => {
       dispatch(topicsLoaded(response.data.result || []));
     })
