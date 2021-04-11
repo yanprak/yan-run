@@ -3,7 +3,6 @@ import {
   Table,
   Column,
   DataType,
-  AutoIncrement,
   PrimaryKey,
   AllowNull,
   Default,
@@ -13,12 +12,12 @@ type ThemeAttributes = {
   id?: number;
   name: string;
   hidden: boolean;
-  style: Record<string, unknown>;
+  style: string;
+  // style: Record<string, unknown>;
 };
 
 @Table
 class Themes extends Model<ThemeAttributes> {
-  @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
   id!: number;
@@ -33,8 +32,9 @@ class Themes extends Model<ThemeAttributes> {
   hidden!: boolean;
 
   @AllowNull(false)
-  @Column(DataType.JSONB)
-  style!: Record<string, unknown>;
+  @Column(DataType.STRING)
+  // style!: Record<string, unknown>;
+  style!: string;
 }
 
 export {

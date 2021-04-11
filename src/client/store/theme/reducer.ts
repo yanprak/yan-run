@@ -3,7 +3,7 @@ import { SET_THEMES, SET_CURRENT_THEME } from './actions';
 import themes from '../../utils/theme/themes';
 
 const initialState: ThemeState = {
-  current: themes[1],
+  current: themes[0],
   themes,
 };
 

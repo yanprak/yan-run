@@ -1,10 +1,19 @@
 import { Dispatch } from 'redux';
-import { fetchUserInfo, signin, signup, signout, signinYa, fetchUserInfoWithCookies } from '../../API/auth';
+import {
+  fetchUserInfo,
+  signin,
+  signup,
+  signout,
+  signinYa,
+  fetchUserInfoWithCookies,
+  createUser,
+  getUserById, updateUser,
+} from '../../API/auth';
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
 import { getThemeById } from '../../API/theme';
-import { setCurrentTheme } from '../theme/actions';
+// import { setCurrentTheme } from '../theme/actions';
 
 const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
   signin(data)
@@ -12,29 +21,50 @@ const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
       window.console.log('Successful signin');
       return fetchUserInfo();
     })
-    .then(r => dispatch(setUser(r.data)))
-    // todo: Abdeev.Na refactoring getThemeById(id) after adding the API
-    // todo: MOCK
-    .then(() => getThemeById(1))
-    .then(theme => {
-      dispatch(setCurrentTheme(theme));
+    .then(r => {
+      const { id } = r.data;
+      return getUserById(id);
+    })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
+    .then(r => {
+      if (r.payload.user) {
+        const { themeId } = r.payload.user;
+        return getThemeById(themeId);
+      }
+      return getThemeById(0);
+    })
+    .then(r => {
+      // todo(Nail): THEME
+      console.log('Theme => ', r);
     })
     .catch(() => {});
 };
 
 const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
   signup(data)
-    .then(() => {
-      window.console.log('Successful signup');
-      return fetchUserInfo();
+    .then(() => fetchUserInfo())
+    .then(r => createUser(r.data))
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
     })
-    .then(r => dispatch(setUser(r.data)))
-    .catch(() => {});
+    .catch(e => console.log('SignUp ERROR => ', e));
 };
 
 const thunkCheckLogin = () => (dispatch: Dispatch) => {
   fetchUserInfo()
-    .then(r => dispatch(setUser(r.data)))
+    .then(r => {
+      const { id } = r.data;
+      return getUserById(id);
+    })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
+    // .then(r => dispatch(setUser(r.data)))
     .catch(() => dispatch(removeUser()));
 };
 
@@ -50,7 +80,14 @@ const thunkProfile = <T>(data:T) => (dispatch: Dispatch) => {
       window.console.log('Successful save profile');
       return fetchUserInfo();
     })
-    .then(r => dispatch(setUser(r.data)))
+    .then(r => {
+      const { id } = r.data;
+      return updateUser(id, r.data);
+    })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
     .catch(() => {});
 };
 
@@ -71,7 +108,14 @@ const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
       showNotification('success', 'Update Avatar');
       return fetchUserInfo();
     })
-    .then(r => dispatch(setUser(r.data)))
+    .then(r => {
+      const { id } = r.data;
+      return updateUser(id, r.data);
+    })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
     .catch(() => {});
 };
 
@@ -85,7 +129,21 @@ const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
       console.info('Successful signin');
       return fetchUserInfo();
     })
-    .then(r => dispatch(setUser(r.data)))
+    .then(r => {
+      const { id } = r.data;
+      return getUserById(id)
+        .then(res => {
+          const { result } = res.data;
+          if (result) {
+            return Promise.resolve(res);
+          }
+          return createUser(r.data);
+        });
+    })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
     .catch(() => {});
 };
 

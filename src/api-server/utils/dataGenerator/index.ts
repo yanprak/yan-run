@@ -1,13 +1,16 @@
 import { Users, UserAttributes } from '../../api/models/postgres/Users';
 import { Topics, TopicAttributes } from '../../api/models/postgres/Topics';
 import { Messages, MessageAttributes } from '../../api/models/postgres/Messages';
+import { Themes, ThemeAttributes } from '../../api/models/postgres/Themes';
+import dark from '../../../client/utils/theme/themes/dark';
+import light from '../../../client/utils/theme/themes/light';
 
 const usersList: UserAttributes[] = [
   {
     id: 1,
-    firstName: 'John',
-    secondName: 'Doe',
-    displayName: null,
+    first_name: 'John',
+    second_name: 'Doe',
+    display_name: null,
     login: 'john.doe',
     email: 'john.doe@ya.ru',
     phone: '1234567',
@@ -16,9 +19,9 @@ const usersList: UserAttributes[] = [
   },
   {
     id: 13072,
-    firstName: 'Ilya',
-    secondName: 'Belyavskiy',
-    displayName: null,
+    first_name: 'Ilya',
+    second_name: 'Belyavskiy',
+    display_name: null,
     login: 'ilya.belyavskiy3',
     email: 'ilya.belyavskiy3@ya.ru',
     phone: '1234567',
@@ -74,6 +77,11 @@ function prepareSingleRealTopic(messagesCount = 0): TopicAttributes[] {
   ];
 }
 
+const themeList: ThemeAttributes[] = [
+  dark,
+  light,
+];
+
 export default function dataGenerator() {
   console.log('=========== G E N E R A T E ============');
 
@@ -89,5 +97,12 @@ export default function dataGenerator() {
   const topicList = prepareSingleRealTopic(manySampleMessages.length);
   Topics.bulkCreate(topicList)
     .then(() => console.log('The "Topics" data was successfully generated'))
+    .catch(e => console.log(e));
+
+  Themes.destroy({
+    where: {},
+    truncate: true,
+  })
+    .then(() => Themes.bulkCreate(themeList))
     .catch(e => console.log(e));
 }

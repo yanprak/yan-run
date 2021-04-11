@@ -38,6 +38,7 @@ const style = {
 const light = {
   id: 1,
   name: 'light',
+  hidden: false,
   style: JSON.stringify(style),
 };
 

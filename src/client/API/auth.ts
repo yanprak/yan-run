@@ -1,4 +1,4 @@
-import API from './index';
+import API, { BACKEND_API } from './index';
 
 const signout = () => API.post('auth/logout');
 const signin = <T>(data:T) => API.post('auth/signin', JSON.stringify(data));
@@ -16,4 +16,22 @@ const fetchUserInfoWithCookies = (cookies: string) => API.get('auth/user', {
   },
 });
 
-export { signin, signout, fetchUserInfo, signup, signYaGetId, signinYa, fetchUserInfoWithCookies };
+const createUser = <T>(data:T) => {
+  console.log('Data => ', data);
+  return BACKEND_API.post('/users', JSON.stringify(data));
+};
+const updateUser = <T>(userId:number, data:T) => BACKEND_API.put(`/users/${userId}`, JSON.stringify(data));
+const getUserById = (userId:number) => BACKEND_API.get(`/users/${userId}`);
+
+export {
+  signin,
+  signout,
+  fetchUserInfo,
+  signup,
+  signYaGetId,
+  signinYa,
+  fetchUserInfoWithCookies,
+  createUser,
+  updateUser,
+  getUserById,
+};

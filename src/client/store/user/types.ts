@@ -13,7 +13,8 @@ export interface User {
   second_name: string,
   id: number,
   login: string,
-  phone: string
+  phone: string,
+  themeId: number,
 }
 
 export interface SetUserAction extends Action {

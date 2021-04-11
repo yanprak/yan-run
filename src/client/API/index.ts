@@ -3,7 +3,7 @@ import showNotification from '../utils/notification';
 import isServer from '../utils/isServer';
 
 export const HOST_URL = 'https://ya-praktikum.tech';
-const BASE_URL = `${HOST_URL}/api/v2/`;
+export const BASE_URL = `${HOST_URL}/api/v2/`;
 export const RESOURCES_URL = `${BASE_URL}resources`;
 
 const BACKEND_HOST_URL = 'https://local.ya-praktikum.tech:3500';

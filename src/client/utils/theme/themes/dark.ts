@@ -38,6 +38,7 @@ const style = {
 const dark = {
   id: 0,
   name: 'dark',
+  hidden: false,
   style: JSON.stringify(style),
 };
 
