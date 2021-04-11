@@ -5,8 +5,20 @@ import isServer from '../utils/isServer';
 export const HOST_URL = 'https://ya-praktikum.tech';
 const BASE_URL = `${HOST_URL}/api/v2/`;
 
+const BACKEND_HOST_URL = 'https://local.ya-praktikum.tech:3500';
+const BACKEND_BASE_URL = `${BACKEND_HOST_URL}/api/v1`;
+
 const API = axios.create({
   baseURL: BASE_URL,
+  responseType: 'json',
+  withCredentials: true,
+  headers: {
+    'content-type': 'application/json',
+  },
+});
+
+export const BACKEND_API = axios.create({
+  baseURL: BACKEND_BASE_URL,
   responseType: 'json',
   withCredentials: true,
   headers: {

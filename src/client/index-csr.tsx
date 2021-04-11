@@ -22,6 +22,7 @@ store.subscribe(throttle(() => {
     user: store.getState().user,
     leaderboard: store.getState().leaderboard,
     router: store.getState().router,
+    topics: store.getState().topics,
     theme: store.getState().theme,
   });
 }, 1000));
