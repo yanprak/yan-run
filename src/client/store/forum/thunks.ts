@@ -13,10 +13,6 @@ export const thunkFetchTopics = (page?: number) => (dispatch: Dispatch) => {
     .catch(() => dispatch(topicsError()));
 };
 
-export const thunkFetchTopic = (id: number) => (/* dispatch */) => {
-  window.console.log(id);
-};
-
 type MyThunkDispatch = ThunkDispatch<TopicsState, unknown, Action<string>>;
 
 export const thunkCreateTopic = (data: CreateTopicRequestData) => (dispatch: MyThunkDispatch) => {

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Topics } from '../api/models/postgres/Topics';
 import { Messages } from '../api/models/postgres/Messages';
+import { Users } from '../api/models/postgres/Users';
 
 export default function forumRoutes(router: Router) {
   const TOPICS_URL = '/forum/topics';
@@ -9,13 +10,13 @@ export default function forumRoutes(router: Router) {
   const MESSAGES_ID_URL = `${MESSAGES_URL}/:messageId`;
   const MESSAGES_REACT_URL = `${MESSAGES_ID_URL}/reactions`;
 
-  const TOPICS_PAGE_LIMIT = 10;
+  const PAGE_LIMIT = 10;
 
   router.get(TOPICS_URL, (req, res) => {
     const { page } = req.query;
     Topics.findAll({
-      offset: (Number(page) || 0) * TOPICS_PAGE_LIMIT,
-      limit: TOPICS_PAGE_LIMIT,
+      offset: (Number(page) || 0) * PAGE_LIMIT,
+      limit: PAGE_LIMIT,
     })
       .then(topics => {
         res.json({
@@ -86,7 +87,16 @@ export default function forumRoutes(router: Router) {
   });
 
   router.get(MESSAGES_URL, (req, res) => {
-    Messages.findAll()
+    const { page } = req.query;
+    const { topicId } = req.params;
+    Messages.findAll({
+      where: {
+        topicId,
+      },
+      include: [Users],
+      offset: (Number(page) || 0) * PAGE_LIMIT,
+      limit: PAGE_LIMIT,
+    })
       .then(result => {
         res.json({
           message: 'OK',

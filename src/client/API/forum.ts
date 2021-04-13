@@ -10,21 +10,25 @@ export interface CreateTopicRequestData {
   userId: number,
 }
 
+interface FetchTopicResponse {
+  result: TopicEntry,
+  message: string
+}
+
 const fetchTopics = (page = 0) => BACKEND_API.get<FetchTopicsResponse>(`/forum/topics?page=${page}`);
 const createTopic = (data: CreateTopicRequestData) => BACKEND_API.post('/forum/topics', JSON.stringify(data));
-
-type UserEntry = {
-  id: number,
-  login: string
-};
+const fetchTopic = (
+  topicId: number,
+  page = 0,
+) => BACKEND_API.get<FetchTopicResponse>(`/forum/topics/${topicId}?page=${page}`);
 
 export type TopicEntry = {
   id: number,
   name: string,
   messagesCount: number,
-  user: UserEntry,
+  userId: number,
   createdAt: string
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { fetchTopics, createTopic };
+export { fetchTopics, createTopic, fetchTopic };

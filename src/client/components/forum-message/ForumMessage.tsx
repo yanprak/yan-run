@@ -36,8 +36,10 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     topicId,
     parentId,
     user,
+    userId,
     reactions,
     createdAt,
+    updatedAt,
     currentUser,
     ...otherProps
   } = props;
@@ -46,7 +48,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const isValidDate = isDateValid(date);
   const shortDate = isValidDate ? createShortDate(date) : '';
   const time = isValidDate ? getTime(date) : '';
-  const isAuthor = true; // user.id === currentUser.id; // TODO (ilya): uncomment proper validation
+  const isAuthor = user.id === currentUser.id;
   const reactionsElements = Object.entries(props.reactions)
     .map(keyValue => {
       const [reactionName, userIdsArray] = keyValue;

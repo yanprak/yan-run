@@ -16,8 +16,8 @@ import {
 export default function useApiMessages() {
   const dispatch = useDispatch();
 
-  const fetchMessages = useCallback((topicId: number) => {
-    dispatch(thunkFetchMessages(topicId));
+  const fetchMessages = useCallback((topicId: number, page?: number) => {
+    dispatch(thunkFetchMessages(topicId, page));
   }, [dispatch]);
 
   const createMessage = useCallback((topicId: number, data: CreateMessageRequestData) => {

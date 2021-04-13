@@ -29,6 +29,7 @@ type MessageAttributes = {
   id?: number;
   text: string;
   userId: number;
+  // user: UserAttributes;
   topicId: number;
   parentId: Nullable<number>;
   reactions: Reactions;
@@ -54,6 +55,9 @@ class Messages extends Model<MessageAttributes> {
   })
   userId!: number;
 
+  @BelongsTo(() => Users, 'user_id')
+  user!: Users;
+
   @ForeignKey(() => Topics)
   @AllowNull(false)
   @Column({
@@ -64,14 +68,6 @@ class Messages extends Model<MessageAttributes> {
 
   @BelongsTo(() => Messages, 'parent_id')
   parentId!: Nullable<number>;
-
-  // todo(Nail): remove column
-  // @ForeignKey(() => Messages)
-  // @Column({
-  //   type: DataType.INTEGER,
-  //   field: 'messages_id',
-  // })
-  // parentId!: Nullable<number>;
 
   @AllowNull(false)
   @Column(DataType.JSONB)

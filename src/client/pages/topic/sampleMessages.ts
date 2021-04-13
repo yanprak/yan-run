@@ -28,9 +28,9 @@ export default [
     parentId: null,
     text: 'Круто!',
     user: {
-      id: 2,
-      login: 'Steve',
-      avatar: 'https://cdn2.thecatapi.com/images/e46.jpg',
+      id: 3351,
+      login: 'Ilya',
+      avatar: 'https://ya-praktikum.tech/api/v2/resources/fb2f8449-c407-4b82-959f-9016871db162/1dc4dd9f-884a-44a3-a596-ec5789973f38_photo_2020-10-30_18-12-48.jpg',
     },
     reactions: {
       like: [],

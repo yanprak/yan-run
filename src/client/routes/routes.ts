@@ -26,6 +26,11 @@ const routes = [
     exact: true,
   },
   {
+    path: '/forum/topics/:id/:page',
+    component: Topic,
+    exact: true,
+  },
+  {
     path: '/forum/topics/:id',
     component: Topic,
     exact: true,

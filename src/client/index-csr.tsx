@@ -25,6 +25,7 @@ store.subscribe(throttle(() => {
     topics: store.getState().topics,
     theme: store.getState().theme,
     messages: store.getState().messages,
+    selectedTopic: store.getState().selectedTopic,
   });
 }, 1000));
 
