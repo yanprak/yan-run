@@ -18,8 +18,10 @@ export type OwnProps = {
   text: string;
   topicId: number;
   parentId: Nullable<number>;
+  userId: number;
   user: UserEntry;
   reactions: ReactionsEntry;
   createdAt: string;
+  updatedAt: string;
   currentUser: User;
 } & HTMLAttributes<HTMLDivElement>;

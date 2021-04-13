@@ -24,8 +24,10 @@ export type MessageEntry = {
   topicId: number;
   parentId: Nullable<number>;
   user: UserEntry;
+  userId: number;
   reactions: ReactionsEntry;
   createdAt: string;
+  updatedAt: string;
 };
 
 export interface CreateMessageRequestData {
@@ -76,8 +78,8 @@ interface ToggleReactionResponse {
   message: string;
 }
 
-function fetchMessages(topicId: number) {
-  return BACKEND_API.get<FetchMessagesResponse>(`/forum/topics/${topicId}/messages`);
+function fetchMessages(topicId: number, page = 0) {
+  return BACKEND_API.get<FetchMessagesResponse>(`/forum/topics/${topicId}/messages?page=${page}`);
 }
 
 function createMessage(topicId: number, data: CreateMessageRequestData) {

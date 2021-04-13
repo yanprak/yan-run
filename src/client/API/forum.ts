@@ -17,19 +17,16 @@ interface FetchTopicResponse {
 
 const fetchTopics = (page = 0) => BACKEND_API.get<FetchTopicsResponse>(`/forum/topics?page=${page}`);
 const createTopic = (data: CreateTopicRequestData) => BACKEND_API.post('/forum/topics', JSON.stringify(data));
-// TODO: add parameter pageId = 1 and ?page=${page} to URL;
-const fetchTopic = (topicId: number) => BACKEND_API.get<FetchTopicResponse>(`/forum/topics/${topicId}`);
-
-type UserEntry = {
-  id: number,
-  login: string
-};
+const fetchTopic = (
+  topicId: number,
+  page = 0,
+) => BACKEND_API.get<FetchTopicResponse>(`/forum/topics/${topicId}?page=${page}`);
 
 export type TopicEntry = {
   id: number,
   name: string,
   messagesCount: number,
-  user: UserEntry,
+  userId: number,
   createdAt: string
 };
 

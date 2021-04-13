@@ -16,42 +16,52 @@ const usersList: UserAttributes[] = [
   },
 ];
 
-const topicList: TopicAttributes[] = [
-  {
-    name: 'Book',
-    messagesCount: 12,
-    userId: 0,
-  },
-  {
-    name: 'Game',
-    messagesCount: 0,
-    userId: 1,
-  },
-  {
-    name: 'Jedi',
-    messagesCount: 1000,
-    userId: 1,
-  },
-];
-
-const messageList: MessageAttributes[] = [
-  {
-    text: 'hi',
+function multiplyMessages(fakePhrases: string[], amountPerPhrase = 1): MessageAttributes[] {
+  const commonArray: MessageAttributes[] = [];
+  const defaultTemplate: MessageAttributes = {
+    text: 'Message',
     userId: 1,
     topicId: 1,
     parentId: null,
     reactions: {
-      like: [0],
-      dislike: [0],
-      laugh: [0],
-      hooray: [0],
-      confused: [0],
-      heart: [0],
-      rocket: [0],
-      eyes: [0],
+      like: [1],
+      dislike: [],
+      laugh: [],
+      hooray: [],
+      confused: [],
+      heart: [],
+      rocket: [],
+      eyes: [],
     },
-  },
-];
+  };
+  for (let i = 0; i < amountPerPhrase; i++) {
+    fakePhrases.forEach((text: string) => commonArray.push({
+      ...defaultTemplate,
+      text: `${text} ${commonArray.length}`,
+    }));
+  }
+  return commonArray;
+}
+
+function prepareSingleRealTopic(messagesCount = 0): TopicAttributes[] {
+  return [
+    {
+      name: 'Book',
+      messagesCount,
+      userId: 0,
+    },
+    {
+      name: 'Game',
+      messagesCount: 0,
+      userId: 1,
+    },
+    {
+      name: 'Jedi',
+      messagesCount: 0,
+      userId: 1,
+    },
+  ];
+}
 
 export default function dataGenerator() {
   console.log('=========== G E N E R A T E ============');
@@ -60,11 +70,13 @@ export default function dataGenerator() {
     .then(() => console.log('The "Users" data was successfully generated'))
     .catch(e => console.log(e));
 
-  Topics.bulkCreate(topicList)
-    .then(() => console.log('The "Topics" data was successfully generated'))
+  const manySampleMessages = multiplyMessages(['hi', 'hey', 'hello'], 7);
+  Messages.bulkCreate(manySampleMessages)
+    .then(() => console.log('The "Messages" data was successfully generated'))
     .catch(e => console.log(e));
 
-  Messages.bulkCreate(messageList)
-    .then(() => console.log('The "Messages" data was successfully generated'))
+  const topicList = prepareSingleRealTopic(manySampleMessages.length);
+  Topics.bulkCreate(topicList)
+    .then(() => console.log('The "Topics" data was successfully generated'))
     .catch(e => console.log(e));
 }

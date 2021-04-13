@@ -27,7 +27,6 @@ const modalStyles = {
 Modal.setAppElement('#root');
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
-  // console.log('ForumMessage Props', props);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { updateMessage, deleteMessage } = useApiMessages();
@@ -37,8 +36,10 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     topicId,
     parentId,
     user,
+    userId,
     reactions,
     createdAt,
+    updatedAt,
     currentUser,
     ...otherProps
   } = props;

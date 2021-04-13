@@ -13,9 +13,9 @@ import {
 import { messagesError, messagesLoaded, messagesRequested } from './actions';
 import { MessagesState } from './types';
 
-export const thunkFetchMessages = (topicId: number) => (dispatch: Dispatch) => {
+export const thunkFetchMessages = (topicId: number, page?: number) => (dispatch: Dispatch) => {
   dispatch(messagesRequested());
-  fetchMessages(topicId)
+  fetchMessages(topicId, page)
     .then(response => {
       dispatch(messagesLoaded(response.data.result || []));
     })
