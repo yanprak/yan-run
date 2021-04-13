@@ -29,7 +29,6 @@ type MessageAttributes = {
   id?: number;
   text: string;
   userId: number;
-  // user: UserAttributes;
   topicId: number;
   parentId: Nullable<number>;
   reactions: Reactions;
