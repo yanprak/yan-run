@@ -27,6 +27,7 @@ const modalStyles = {
 Modal.setAppElement('#root');
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
+  // console.log('ForumMessage Props', props);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { updateMessage, deleteMessage } = useApiMessages();
@@ -46,7 +47,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const isValidDate = isDateValid(date);
   const shortDate = isValidDate ? createShortDate(date) : '';
   const time = isValidDate ? getTime(date) : '';
-  const isAuthor = true; // user.id === currentUser.id; // TODO (ilya): uncomment proper validation
+  const isAuthor = user.id === currentUser.id;
   const reactionsElements = Object.entries(props.reactions)
     .map(keyValue => {
       const [reactionName, userIdsArray] = keyValue;

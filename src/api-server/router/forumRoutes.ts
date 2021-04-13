@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Topics } from '../api/models/postgres/Topics';
 import { Messages } from '../api/models/postgres/Messages';
+import { Users } from '../api/models/postgres/Users';
 
 export default function forumRoutes(router: Router) {
   const TOPICS_URL = '/forum/topics';
@@ -86,7 +87,7 @@ export default function forumRoutes(router: Router) {
   });
 
   router.get(MESSAGES_URL, (req, res) => {
-    Messages.findAll()
+    Messages.findAll({ include: [Users] })
       .then(result => {
         res.json({
           message: 'OK',

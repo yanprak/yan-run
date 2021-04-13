@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { thunkFetchTopics, thunkCreateTopic } from '../../store/forum/thunks';
+import { thunkFetchTopic } from '../../store/topic/thunks';
 import { CreateTopicRequestData } from '../../API/forum';
 
 export default function useApiForum() {
@@ -14,5 +15,9 @@ export default function useApiForum() {
     dispatch(thunkCreateTopic(data));
   }, [dispatch]);
 
-  return { fetchTopics, createTopic };
+  const fetchTopic = useCallback((id: number) => {
+    dispatch(thunkFetchTopic(id));
+  }, [dispatch]);
+
+  return { fetchTopics, createTopic, fetchTopic };
 }

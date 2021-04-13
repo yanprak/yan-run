@@ -1,3 +1,9 @@
+import { RouteComponentProps } from 'react-router-dom';
+
+type OwnProps = {
+  id: string
+};
+
 export type TopicPageProps = {
   id: number;
   name: string;
@@ -8,3 +14,5 @@ export type TopicPageProps = {
   },
   createdAt: string;
 };
+
+export type ComposedProps = RouteComponentProps<OwnProps>;

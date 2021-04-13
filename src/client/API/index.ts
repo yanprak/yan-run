@@ -9,9 +9,6 @@ export const RESOURCES_URL = `${BASE_URL}resources`;
 const BACKEND_HOST_URL = 'https://local.ya-praktikum.tech:3500';
 const BACKEND_BASE_URL = `${BACKEND_HOST_URL}/api/v1`;
 
-const BACKEND_HOST_URL = 'https://local.ya-praktikum.tech:3500';
-const BACKEND_BASE_URL = `${BACKEND_HOST_URL}/api/v1`;
-
 const API = axios.create({
   baseURL: BASE_URL,
   responseType: 'json',

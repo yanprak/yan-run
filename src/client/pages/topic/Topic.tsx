@@ -3,36 +3,48 @@ import { useSelector } from 'react-redux';
 import ForumMessage from '../../components/forum-message';
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
-import { TopicPageProps } from './types';
+import { ComposedProps, TopicPageProps } from './types';
 import sampleMessages from './sampleMessages';
 import MessageEditor from '../../components/message-editor';
 import { useApiMessages } from '../../hooks';
 import { ApplicationState } from '../../store/types';
 import { User } from '../../store/user/types';
 import { MessagesState } from '../../store/messages/types';
+// import { SelectedTopicState } from '../../store/topic/types';
 import { MessageEntry, CreateMessageRequestData } from '../../API/messages';
+import './topic.scss';
 
 const tempTopicProps: TopicPageProps = {
   id: 123,
-  name: 'Demo topic',
+  name: 'Books',
   messagesCount: 57,
   user: {
-    id: 1,
-    login: 'john.doe',
+    id: 3351,
+    login: 'ilya.belyavskiy2',
   },
   createdAt: '2021-01-01T20:59:59Z',
 };
 
-export default function Topic() {
+export default function Topic(props: ComposedProps) {
+  // const { fetchTopic } = useApiForum();
   const { fetchMessages, createMessage } = useApiMessages();
-  const { id: topicId, messagesCount, name: topicName } = tempTopicProps;
+  const topicId = Number(props.match.params.id);
 
-  const messages = useSelector<ApplicationState, MessagesState>(state => state.messages);
+  // useEffect(() => {
+  //   console.log('fetching topic', topicId);
+  //   fetchTopic(topicId);
+  // }, [fetchTopic]);
+
+  // const selectedTopic = useSelector<ApplicationState, SelectedTopicState>(state => state.selectedTopic);
+  // console.log('[REDUX] Selected topic', selectedTopic);
+  const messagesList = useSelector<ApplicationState, MessagesState>(state => state.messages);
+  console.log('[REDUX] Messages', messagesList);
   const user = useSelector<ApplicationState, User>(state => state.user!);
-  console.log('messages', messages); // TODO (ilya): remove these logs once ready
-  console.log('user', user);
+  console.log('[REDUX] User', user);
 
-  const isAuthor = true; // user.id === tempTopicProps.user.id; // TODO (ilya): uncomment proper validation
+  // const { data: topic, error: topicError, loading: topicLoading } = selectedTopic;
+  const { messagesCount, name: topicTitle, user: topicAuthor } = tempTopicProps; // topic;
+  const isAuthor = user.id === topicAuthor.id;
   const totalPages = Math.ceil(messagesCount / 10);
 
   useEffect(() => {
@@ -47,17 +59,25 @@ export default function Topic() {
     createMessage(topicId, requestData);
   }, [createMessage, topicId, user.id]);
 
-  // const { data, error, loading } = messages;
+  // let topicTitle;
+  // if (topicError || !topicName) {
+  //   topicTitle = 'Something when wrong. Reload page, please';
+  // } else if (topicLoading) {
+  //   topicTitle = 'Loading...';
+  // } else {
+  //   topicTitle = topic.name;
+  // }
+
+  // const { data: messages, error: messagesError, loading: messagesLoading } = messagesList;
 
   // let children;
-  // if (error) {
+  // if (messagesError) {
   //   children = 'Something when wrong. Reload page, please';
-  // } else if (loading) {
+  // } else if (messagesLoading) {
   //   children = 'Loading...';
   // } else {
-  //   // TopicLink.title done this way for debug purposes only
-  //   children = data.map(({ id: messageId, ...messageProps }: MessageEntry) => (
-  //     <ForumMessage key={messageId} uid={messageId} {...messageProps} />
+  //   children = messages.map(({ id: messageId, ...messageProps }: MessageEntry) => (
+  //     <ForumMessage key={messageId} uid={messageId} currentUser={user} {...messageProps} />
   //   ));
   //   if (!children.length) {
   //     children = <h1 className="margin_t_s-5">Нет сообщений. Будь первым, кто напишет</h1>;
@@ -72,7 +92,7 @@ export default function Topic() {
     <div className="page topic-page container container_is-column container_center">
       <div className="margin_tb_s-7 topic-page__header">
         <Pagination path="/topic" current={1} total={totalPages} className="topic-page__pagination" />
-        <h1 className="topic-page__title">{topicName}</h1>
+        <h1 className="topic-page__title">{topicTitle}</h1>
         <div className="topic-page__owner-action">
           { isAuthor && (
             <Button size="small" styleType="secondary" className="topic-page__button">Удалить тему</Button>
@@ -85,7 +105,7 @@ export default function Topic() {
       </div>
       <hr className="margin_tb_s-7" />
       <MessageEditor
-        className="topic-page__editor"
+        className="topic-page__editor margin_tb_s-7"
         placeholder="Сообщение"
         iconName="send"
         submitHandler={submitHandler}
