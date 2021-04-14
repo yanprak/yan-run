@@ -1,5 +1,8 @@
 import { Action } from 'redux';
+import { AxiosResponse } from 'axios';
 import { Nullable } from '../../types';
+
+export type Fun = <T>(data: T) => Promise<AxiosResponse>;
 
 export type UserState = {
   user: Nullable<User>

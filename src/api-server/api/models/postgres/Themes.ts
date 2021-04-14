@@ -34,9 +34,7 @@ class Themes extends Model<ThemeAttributes> {
   hidden!: boolean;
 
   @AllowNull(false)
-  // @Column(DataType.STRING)
   @Column(DataType.TEXT)
-  // style!: Record<string, unknown>;
   style!: string;
 
   @HasMany(() => Users)

@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import { AxiosResponse } from 'axios';
 import {
   fetchUserInfo,
   signin,
@@ -14,8 +13,7 @@ import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
 import { setCurrentTheme } from '../theme/actions';
-
-type Fun = <T>(data: T) => Promise<AxiosResponse>;
+import { Fun } from './types';
 
 const syncUser = <T>(fun: Fun, data: T, dispatch: Dispatch) => {
   fun(data)

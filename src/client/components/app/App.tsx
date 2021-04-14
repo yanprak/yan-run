@@ -6,9 +6,11 @@ import Header from '../header';
 import { ThemeState } from '../../store/theme/types';
 import { ApplicationState } from '../../store/types';
 import changeTheme from '../../utils/theme';
+import useTheme from '../../hooks/useTheme';
 
 export default function App() {
   const isAuthenticated = useAuth();
+  const { getThemes } = useTheme();
   const routes = getRoutes(isAuthenticated);
 
   const theme = useSelector<ApplicationState, ThemeState>(
@@ -19,6 +21,8 @@ export default function App() {
     if (theme.current) {
       console.log('APP-THEME', theme.current);
       changeTheme(theme.current);
+    } else {
+      getThemes();
     }
   }, [isAuthenticated]);
 

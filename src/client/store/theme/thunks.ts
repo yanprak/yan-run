@@ -2,16 +2,21 @@ import { Dispatch } from 'redux';
 import { setCurrentTheme, setThemes } from './actions';
 import { UserTheme } from './types';
 import changeTheme from '../../utils/theme';
-
-// todo: Abdeev.N add work with the api
+import { getAllThemes } from '../../API/theme';
 
 const thunkSetCurrentTheme = (data:UserTheme) => (dispatch: Dispatch) => {
   dispatch(setCurrentTheme(data));
   changeTheme(data);
 };
 
-const thunkSetThemes = <T>(data:T) => (dispatch: Dispatch) => {
-  dispatch(setThemes(data));
+const thunkSetThemes = () => (dispatch: Dispatch) => {
+  getAllThemes()
+    .then(r => {
+      const { result } = r.data;
+      dispatch(setThemes(result));
+      dispatch(setCurrentTheme(result[0]));
+    })
+    .catch(() => {});
 };
 
 export {

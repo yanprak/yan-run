@@ -21,6 +21,7 @@ const API = axios.create({
 export const BACKEND_API = axios.create({
   baseURL: BACKEND_BASE_URL,
   responseType: 'json',
+  // todo(Nail): activate withCredentials after review
   // withCredentials: true,
   headers: {
     'content-type': 'application/json',

@@ -22,13 +22,13 @@ export default function Profile() {
     <div className="page profile container container_center">
       <div className="profile__wrapper container_center container_is-column margin_tb_s-10">
         <div className="container container_sb profile__tools padding_tb_s-3">
-          <h3 className="h3">Theme: {current!.name}</h3>
+          <h3 className="h3">{`Theme: ${!current ? '' : current.name}`}</h3>
           <Button
             size="large"
             styleType="secondary"
             onClick={toggleTheme}
           >
-            На { current!.id === 1 ? 'светлую' : 'темную'} сторону
+            {`На ${current!.id === 1 ? 'светлую' : 'темную'} сторону`}
           </Button>
         </div>
         <div className="container profile__tools padding_tb_s-2">
