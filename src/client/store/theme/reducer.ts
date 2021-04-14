@@ -1,11 +1,21 @@
-import { ThemeState, ThemeAction } from './types';
+import { ThemeState, ThemeAction, UserTheme } from './types';
 import { SET_THEMES, SET_CURRENT_THEME } from './actions';
-import themes from '../../utils/theme/themes';
+import { getAllThemes } from '../../API/theme';
+// import themes from '../../utils/theme/themes';
 
 const initialState: ThemeState = {
-  current: themes[0],
-  themes,
+  themes: [],
+  // current: null,
 };
+
+getAllThemes()
+  .then(r => {
+    const { result } = r.data;
+    initialState.themes = result;
+    initialState.current = result[0] as UserTheme;
+    console.log('-= InitialState =-', initialState);
+  })
+  .catch(() => {});
 
 export default function reducer(state = initialState, action: ThemeAction) {
   switch (action.type) {

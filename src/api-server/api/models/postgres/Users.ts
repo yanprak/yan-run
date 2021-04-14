@@ -7,6 +7,7 @@ import {
   AllowNull,
   Default,
   ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { Nullable } from '../../../../client/types';
 import { Themes } from './Themes';
@@ -20,7 +21,6 @@ type UserAttributes = {
   email: string;
   phone: Nullable<string>;
   avatar: Nullable<string>;
-  theme?: number;
 };
 
 @Table
@@ -30,23 +30,14 @@ class Users extends Model<UserAttributes> {
   id!: number;
 
   @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-    field: 'first_name',
-  })
+  @Column(DataType.STRING)
   first_name!: string;
 
   @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-    field: 'second_name',
-  })
+  @Column(DataType.STRING)
   second_name!: string;
 
-  @Column({
-    type: DataType.STRING,
-    field: 'display_name',
-  })
+  @Column(DataType.STRING)
   display_name!: string;
 
   @AllowNull(false)
@@ -65,12 +56,12 @@ class Users extends Model<UserAttributes> {
 
   @ForeignKey(() => Themes)
   @AllowNull(false)
-  @Default(0)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'theme_id',
-  })
+  @Default(1)
+  @Column(DataType.INTEGER)
   themeId!: number;
+
+  @BelongsTo(() => Themes)
+  them!: Themes;
 }
 
 export {

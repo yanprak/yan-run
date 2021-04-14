@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { AxiosResponse } from 'axios';
 import {
   fetchUserInfo,
   signin,
@@ -12,35 +13,40 @@ import {
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
-import { getThemeById } from '../../API/theme';
-// import { setCurrentTheme } from '../theme/actions';
+import { setCurrentTheme } from '../theme/actions';
 
-const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
-  signin(data)
-    .then(() => {
-      window.console.log('Successful signin');
-      return fetchUserInfo();
-    })
+type Fun = <T>(data: T) => Promise<AxiosResponse>;
+
+const syncUser = <T>(fun: Fun, data: T, dispatch: Dispatch) => {
+  fun(data)
+    .then(() => fetchUserInfo())
     .then(r => {
       const { id } = r.data;
-      return getUserById(id);
+      return getUserById(id)
+        .then(res => {
+          const { result } = res.data;
+          if (result) {
+            return Promise.resolve(res);
+          }
+          return createUser(r.data);
+        });
     })
     .then(r => {
-      const { result } = r.data;
+      const { result, them } = r.data;
+      if (them) {
+        dispatch(setCurrentTheme(them));
+      }
       return dispatch(setUser(result));
     })
-    .then(r => {
-      if (r.payload.user) {
-        const { themeId } = r.payload.user;
-        return getThemeById(themeId);
-      }
-      return getThemeById(0);
-    })
-    .then(r => {
-      // todo(Nail): THEME
-      console.log('Theme => ', r);
-    })
-    .catch(() => {});
+    .catch(e => console.log(e));
+};
+
+const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
+  syncUser(signin, data, dispatch);
+};
+
+const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
+  syncUser(signinYa, data, dispatch);
 };
 
 const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
@@ -58,13 +64,22 @@ const thunkCheckLogin = () => (dispatch: Dispatch) => {
   fetchUserInfo()
     .then(r => {
       const { id } = r.data;
-      return getUserById(id);
+      return getUserById(id)
+        .then(res => {
+          const { result } = res.data;
+          if (result) {
+            return Promise.resolve(res);
+          }
+          return createUser(r.data);
+        });
     })
     .then(r => {
-      const { result } = r.data;
+      const { result, them } = r.data;
+      if (them) {
+        dispatch(setCurrentTheme(them));
+      }
       return dispatch(setUser(result));
     })
-    // .then(r => dispatch(setUser(r.data)))
     .catch(() => dispatch(removeUser()));
 };
 
@@ -84,6 +99,15 @@ const thunkProfile = <T>(data:T) => (dispatch: Dispatch) => {
       const { id } = r.data;
       return updateUser(id, r.data);
     })
+    .then(r => {
+      const { result } = r.data;
+      return dispatch(setUser(result));
+    })
+    .catch(() => {});
+};
+
+const thunkUpdateUser = <T>(id:number, data:T) => (dispatch: Dispatch) => {
+  updateUser(id, data)
     .then(r => {
       const { result } = r.data;
       return dispatch(setUser(result));
@@ -119,16 +143,8 @@ const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
     .catch(() => {});
 };
 
-const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInfoWithCookies(cookies)
-  .then(r => dispatch(setUser(r.data)))
-  .catch(() => {});
-
-const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
-  signinYa(data)
-    .then(() => {
-      console.info('Successful signin');
-      return fetchUserInfo();
-    })
+const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => {
+  return fetchUserInfoWithCookies(cookies)
     .then(r => {
       const { id } = r.data;
       return getUserById(id)
@@ -141,10 +157,14 @@ const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
         });
     })
     .then(r => {
-      const { result } = r.data;
+      const { result, them } = r.data;
+      if (them) {
+        dispatch(setCurrentTheme(them));
+      }
       return dispatch(setUser(result));
     })
-    .catch(() => {});
+    .catch(() => {
+    });
 };
 
 export {
@@ -157,4 +177,5 @@ export {
   thunkAvatar,
   thunkSignYa,
   thunkFetchUser,
+  thunkUpdateUser,
 };

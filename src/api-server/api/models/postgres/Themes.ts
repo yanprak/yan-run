@@ -6,14 +6,16 @@ import {
   PrimaryKey,
   AllowNull,
   Default,
+  HasMany,
 } from 'sequelize-typescript';
+
+import { UserAttributes, Users } from './Users';
 
 type ThemeAttributes = {
   id?: number;
   name: string;
   hidden: boolean;
   style: string;
-  // style: Record<string, unknown>;
 };
 
 @Table
@@ -32,9 +34,13 @@ class Themes extends Model<ThemeAttributes> {
   hidden!: boolean;
 
   @AllowNull(false)
-  @Column(DataType.STRING)
+  // @Column(DataType.STRING)
+  @Column(DataType.TEXT)
   // style!: Record<string, unknown>;
   style!: string;
+
+  @HasMany(() => Users)
+  users: UserAttributes[] | undefined;
 }
 
 export {

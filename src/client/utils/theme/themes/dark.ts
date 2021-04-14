@@ -36,7 +36,7 @@ const style = {
 };
 
 const dark = {
-  id: 0,
+  id: 1,
   name: 'dark',
   hidden: false,
   style: JSON.stringify(style),

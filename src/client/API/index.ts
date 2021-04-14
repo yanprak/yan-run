@@ -21,7 +21,7 @@ const API = axios.create({
 export const BACKEND_API = axios.create({
   baseURL: BACKEND_BASE_URL,
   responseType: 'json',
-  withCredentials: true,
+  // withCredentials: true,
   headers: {
     'content-type': 'application/json',
   },

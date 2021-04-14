@@ -16,7 +16,10 @@ export default function App() {
   );
 
   useEffect(() => {
-    changeTheme(theme.current);
+    if (theme.current) {
+      console.log('APP-THEME', theme.current);
+      changeTheme(theme.current);
+    }
   }, [isAuthenticated]);
 
   return (

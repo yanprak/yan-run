@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Users } from '../api/models/postgres/Users';
+import { Themes } from '../api/models/postgres/Themes';
 
 export default function userRoutes(router: Router) {
   const USER_URL = '/users';
@@ -18,12 +19,20 @@ export default function userRoutes(router: Router) {
 
   router.get(USER_ID_URL, (req, res) => {
     const { userId } = req.params;
-    Users.findByPk(userId)
+    // Users.findByPk(userId)
+    Users.findOne({
+      where: {
+        id: userId,
+      },
+      include: [Themes],
+    })
       .then(result => {
-        console.log('resulr =>', userId, result);
+        console.log('result =>', userId, result);
+        console.log('Theme =>', result?.them);
         res.json({
           message: 'OK',
           result,
+          them: result?.them,
         });
       })
       .catch(e => console.log(e));
@@ -32,11 +41,14 @@ export default function userRoutes(router: Router) {
   router.post(USER_URL, (req, res) => {
     const { ...data } = req.body;
     console.log('data ===>', data);
-    Users.create(data)
+    Users.create(data, {
+      include: [Themes],
+    })
       .then(result => {
         res.json({
           message: 'User has been created',
           result,
+          them: result?.them,
         });
       })
       .catch(e => console.log(e));

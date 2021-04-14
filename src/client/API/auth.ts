@@ -20,6 +20,7 @@ const createUser = <T>(data:T) => {
   console.log('Data => ', data);
   return BACKEND_API.post('/users', JSON.stringify(data));
 };
+
 const updateUser = <T>(userId:number, data:T) => BACKEND_API.put(`/users/${userId}`, JSON.stringify(data));
 const getUserById = (userId:number) => BACKEND_API.get(`/users/${userId}`);
 

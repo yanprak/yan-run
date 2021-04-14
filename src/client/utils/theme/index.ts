@@ -3,6 +3,7 @@ import { Theme } from './type';
 import dark from './themes/dark';
 
 export default function changeTheme(theme:UserTheme = dark) {
+  console.log('-= Change theme =-');
   const root = document.documentElement;
   const data = JSON.parse(theme.style) as Theme;
   Object.keys(data).forEach(key => {
