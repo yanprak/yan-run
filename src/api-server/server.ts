@@ -1,6 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
+import 'dotenv/config';
 import helmet from 'helmet';
+
 import apiRouter from './router';
 import sequelize from './api';
 import dataGenerator from './utils/dataGenerator';
@@ -56,21 +58,27 @@ sequelize.sync({ force: true })
   .catch(e => console.log(e));
 
 // connect MONGO
-if (process.env.MONGO_URI) {
-  const connectionOptions = {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  };
-  mongoose.connect(process.env.MONGO_URI, connectionOptions)
-    .then(() => console.log('[MongoDB] Connection established'))
-    .catch(error => {
-      console.error('[MongoDB] Could not establish connection', error);
-      process.exit(1);
-    });
-} else {
-  console.error('[MongoDB] Could not establish connection: no URI provided');
-}
+const {
+  MONGO_HOST = '',
+  MONGO_PORT = 27017,
+  MONGO_USER = '',
+  MONGO_PASS = '',
+  MONGO_DB = '',
+} = process.env;
+
+const mongoURI = `mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+const connectionOptions = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+};
+
+mongoose.connect(mongoURI, connectionOptions)
+  .then(() => global.console.log('[MongoDB] Connection established'))
+  .catch(error => {
+    global.console.error('[MongoDB] Could not establish connection', error);
+    process.exit(1);
+  });
 
 // eslint-disable-next-line import/prefer-default-export
 export { server };

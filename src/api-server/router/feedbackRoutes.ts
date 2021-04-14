@@ -9,12 +9,12 @@ export default function forumRoutes(router: Router): void {
     if (!req.body) {
       res
         .status(400)
-        .json({ error: 'Missing request body' });
+        .json({ message: 'Missing request body' });
       return;
     }
 
-    const { data } = req.body;
-    const result = await Feedback.create(data);
+    const { email, message } = req.body;
+    const result = await Feedback.create({ email, message });
     res.json({
       message: 'Feedback has been submitted',
       result,
