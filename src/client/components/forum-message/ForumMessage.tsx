@@ -14,12 +14,6 @@ import { useApiMessages } from '../../hooks';
 import Button from '../button';
 import { RESOURCES_URL } from '../../API';
 
-const modalStyles = {
-  content: {
-
-  },
-};
-
 Modal.setAppElement('#root');
 
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
@@ -118,7 +112,6 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
       <Modal
         className="modal"
         isOpen={isEditModalOpen}
-        style={modalStyles}
         onRequestClose={() => setIsEditModalOpen(false)}
       >
         <div className="modal__content">
@@ -136,7 +129,6 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
       <Modal
         className="modal"
         isOpen={isDeleteModalOpen}
-        style={modalStyles}
         onRequestClose={() => setIsDeleteModalOpen(false)}
       >
         <div className="modal__content">
