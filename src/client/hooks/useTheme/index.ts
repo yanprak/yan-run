@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { useCallback } from 'react';
 import { ApplicationState } from '../../store/types';
 import { ThemeState } from '../../store/theme/types';
-import {thunkSetCurrentTheme, thunkSetThemes} from '../../store/theme/thunks';
+import { thunkSetCurrentTheme, thunkSetThemes } from '../../store/theme/thunks';
 import { User, UserState } from '../../store/user/types';
 import { thunkUpdateUser } from '../../store/user/thunks';
 // import changeTheme from '../../utils/theme';

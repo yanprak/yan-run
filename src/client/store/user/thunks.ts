@@ -136,29 +136,27 @@ const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
     .catch(() => {});
 };
 
-const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => {
-  return fetchUserInfoWithCookies(cookies)
-    .then(r => {
-      const { id } = r.data;
-      return getUserById(id)
-        .then(res => {
-          const { result } = res.data;
-          if (result) {
-            return Promise.resolve(res);
-          }
-          return createUser(r.data);
-        });
-    })
-    .then(r => {
-      const { result, them } = r.data;
-      if (them) {
-        dispatch(setCurrentTheme(them));
-      }
-      return dispatch(setUser(result));
-    })
-    .catch(() => {
-    });
-};
+const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInfoWithCookies(cookies)
+  .then(r => {
+    const { id } = r.data;
+    return getUserById(id)
+      .then(res => {
+        const { result } = res.data;
+        if (result) {
+          return Promise.resolve(res);
+        }
+        return createUser(r.data);
+      });
+  })
+  .then(r => {
+    const { result, them } = r.data;
+    if (them) {
+      dispatch(setCurrentTheme(them));
+    }
+    return dispatch(setUser(result));
+  })
+  .catch(() => {
+  });
 
 export {
   thunkSignin,
