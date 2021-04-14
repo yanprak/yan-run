@@ -20,20 +20,30 @@ export default function useApiMessages() {
     dispatch(thunkFetchMessages(topicId, page));
   }, [dispatch]);
 
-  const createMessage = useCallback((topicId: number, data: CreateMessageRequestData) => {
-    dispatch(thunkCreateMessage(topicId, data));
+  const createMessage = useCallback((topicId: number, data: CreateMessageRequestData, page?: number) => {
+    dispatch(thunkCreateMessage(topicId, data, page));
   }, [dispatch]);
 
-  const updateMessage = useCallback((topicId: number, messageId: number, data: UpdateMessageRequestData) => {
-    dispatch(thunkUpdateMessage(topicId, messageId, data));
+  const updateMessage = useCallback((
+    topicId: number,
+    messageId: number,
+    data: UpdateMessageRequestData,
+    page?: number,
+  ) => {
+    dispatch(thunkUpdateMessage(topicId, messageId, data, page));
   }, [dispatch]);
 
-  const deleteMessage = useCallback((topicId: number, messageId: number) => {
-    dispatch(thunkDeleteMessage(topicId, messageId));
+  const deleteMessage = useCallback((topicId: number, messageId: number, page?: number) => {
+    dispatch(thunkDeleteMessage(topicId, messageId, page));
   }, [dispatch]);
 
-  const toggleReaction = useCallback((topicId: number, messageId: number, data: ToggleReactionRequestData) => {
-    dispatch(thunkToggleReaction(topicId, messageId, data));
+  const toggleReaction = useCallback((
+    topicId: number,
+    messageId: number,
+    data: ToggleReactionRequestData,
+    page?: number,
+  ) => {
+    dispatch(thunkToggleReaction(topicId, messageId, data, page));
   }, [dispatch]);
 
   return { fetchMessages, createMessage, updateMessage, deleteMessage, toggleReaction };

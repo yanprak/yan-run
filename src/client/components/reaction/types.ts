@@ -10,4 +10,5 @@ export type OwnProps = {
   topicId: number;
   messageId: number;
   userId: number;
+  currentPage: number;
 };

@@ -78,8 +78,9 @@ interface ToggleReactionResponse {
   message: string;
 }
 
-function fetchMessages(topicId: number, page = 0) {
-  return BACKEND_API.get<FetchMessagesResponse>(`/forum/topics/${topicId}/messages?page=${page}`);
+function fetchMessages(topicId: number, page = 1) {
+  const apiPage = page - 1;
+  return BACKEND_API.get<FetchMessagesResponse>(`/forum/topics/${topicId}/messages?page=${apiPage}`);
 }
 
 function createMessage(topicId: number, data: CreateMessageRequestData) {

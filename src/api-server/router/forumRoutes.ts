@@ -56,8 +56,8 @@ export default function forumRoutes(router: Router) {
 
   router.put(TOPICS_ID_URL, (req, res) => {
     const { topicId } = req.params;
-    const { data } = req.body;
-    Topics.update(data, {
+    const data = req.body;
+    Topics.update({ ...data }, {
       where: {
         id: topicId,
       },

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import ForumMessage from '../../components/forum-message';
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
@@ -14,10 +15,12 @@ import { MessageEntry, CreateMessageRequestData } from '../../API/messages';
 import './topic.scss';
 
 export default function Topic() {
-  const { fetchTopic } = useApiForum();
+  const { fetchTopic, updateTopic } = useApiForum();
   const { fetchMessages, createMessage } = useApiMessages();
+  const history = useHistory();
   const { id, page = '1' } = useParams<{id?: string, page?: string }>();
   const topicId = Number(id);
+  const currentPage = Number(page);
 
   const selectedTopic = useSelector<ApplicationState, SelectedTopicState>(state => state.selectedTopic);
   const messagesList = useSelector<ApplicationState, MessagesState>(state => state.messages);
@@ -33,7 +36,7 @@ export default function Topic() {
   }, [fetchTopic, topicId]);
 
   useEffect(() => {
-    fetchMessages(topicId, Number(page) - 1);
+    fetchMessages(topicId, currentPage);
   }, [fetchMessages, topicId, page]);
 
   const submitHandler = useCallback((message: string) => {
@@ -41,8 +44,12 @@ export default function Topic() {
       text: message,
       userId: user.id,
     };
-    createMessage(topicId, requestData);
-  }, [createMessage, topicId, user.id]);
+    const willNewPageBeCreated = messagesCount % 10 === 0;
+    const lastPage = willNewPageBeCreated ? totalPages + 1 : totalPages;
+    createMessage(topicId, requestData, lastPage);
+    updateTopic(topicId, { messagesCount: messagesCount + 1 });
+    history.push(`/forum/topics/${topicId}/${lastPage}`);
+  }, [createMessage, topicId, user.id, totalPages, messagesCount, history, currentPage]);
 
   let topicTitle;
   if (topicError || !topicName) {
@@ -62,7 +69,14 @@ export default function Topic() {
     children = 'Loading...';
   } else {
     children = messages.map(({ id: messageId, ...messageProps }: MessageEntry) => (
-      <ForumMessage key={messageId} uid={messageId} currentUser={user} {...messageProps} />
+      <ForumMessage
+        key={messageId}
+        uid={messageId}
+        currentUser={user}
+        currentPage={currentPage}
+        totalMessages={messagesCount}
+        {...messageProps}
+      />
     ));
     if (!children.length) {
       children = <h1 className="margin_t_s-5">Нет сообщений. Будь первым, кто напишет</h1>;

@@ -24,4 +24,6 @@ export type OwnProps = {
   createdAt: string;
   updatedAt: string;
   currentUser: User;
+  currentPage: number;
+  totalMessages: number;
 } & HTMLAttributes<HTMLDivElement>;

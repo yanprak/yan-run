@@ -4,7 +4,8 @@ import { ReactionEnum, ToggleReactionRequestData } from '../../API/messages';
 import './reaction.scss';
 import { useApiMessages } from '../../hooks';
 
-const Reaction: FC<OwnProps> = ({ reaction, users, topicId, messageId, userId }: OwnProps) => {
+const Reaction: FC<OwnProps> = (props: OwnProps) => {
+  const { reaction, users, topicId, messageId, userId, currentPage } = props;
   const { toggleReaction } = useApiMessages();
 
   const setEmoji = useCallback((reactionName: ReactionEnum): string => {
@@ -32,7 +33,7 @@ const Reaction: FC<OwnProps> = ({ reaction, users, topicId, messageId, userId }:
       reaction,
       userId,
     };
-    toggleReaction(topicId, messageId, data);
+    toggleReaction(topicId, messageId, data, currentPage);
   };
 
   return (

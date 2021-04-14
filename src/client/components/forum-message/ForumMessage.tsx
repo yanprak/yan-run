@@ -1,5 +1,6 @@
 import React, { useCallback, useState, FC, MouseEvent } from 'react';
 import Modal from 'react-modal';
+import { useHistory } from 'react-router-dom';
 import { OwnProps } from './types';
 import './forum-message.scss';
 
@@ -10,7 +11,7 @@ import MessageEditor from '../message-editor';
 
 import { ReactionEnum, UpdateMessageRequestData } from '../../API/messages';
 import { formatDate, getTime, isDateValid, createShortDate } from '../../utils/datetime';
-import { useApiMessages } from '../../hooks';
+import { useApiForum, useApiMessages } from '../../hooks';
 import Button from '../button';
 import { RESOURCES_URL } from '../../API';
 
@@ -19,7 +20,9 @@ Modal.setAppElement('#root');
 const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { updateMessage, deleteMessage } = useApiMessages();
+  const history = useHistory();
+  const { updateMessage, deleteMessage, fetchMessages } = useApiMessages();
+  const { updateTopic } = useApiForum();
   const {
     uid: messageId,
     text,
@@ -31,6 +34,8 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     createdAt,
     updatedAt,
     currentUser,
+    currentPage,
+    totalMessages,
     ...otherProps
   } = props;
   const className = `message padding_s-6 ${props.className || ''}`;
@@ -52,6 +57,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
           topicId={topicId}
           messageId={messageId}
           userId={currentUser.id}
+          currentPage={currentPage}
         />
       );
     });
@@ -70,15 +76,37 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     const requestData: UpdateMessageRequestData = {
       text: message,
     };
-    updateMessage(topicId, messageId, requestData);
+    updateMessage(topicId, messageId, requestData, currentPage);
     setIsEditModalOpen(false);
-  }, [updateMessage, topicId, messageId]);
+  }, [updateMessage, topicId, messageId, currentPage, setIsEditModalOpen]);
 
   const deleteMessageHandler = useCallback((event: MouseEvent) => {
     event.preventDefault();
-    deleteMessage(topicId, messageId);
     setIsDeleteModalOpen(false);
-  }, [topicId, messageId]);
+
+    updateTopic(topicId, { messagesCount: totalMessages - 1 });
+
+    const totalPages = Math.ceil(totalMessages / 10);
+    const willLastPageBeDeleted = totalMessages % 10 === 1;
+    const lastPage = willLastPageBeDeleted ? totalPages - 1 : totalPages;
+    const isCurrentPageLast = currentPage === totalPages;
+    const pageToFetchMessagesFor = isCurrentPageLast ? lastPage : currentPage;
+
+    deleteMessage(topicId, messageId, currentPage);
+    fetchMessages(topicId, pageToFetchMessagesFor);
+
+    history.push(`/forum/topics/${topicId}/${lastPage}`);
+  }, [
+    topicId,
+    messageId,
+    currentPage,
+    totalMessages,
+    history,
+    updateTopic,
+    deleteMessage,
+    currentPage,
+    setIsDeleteModalOpen,
+  ]);
 
   return (
     <div {...otherProps} className={className}>

@@ -10,8 +10,22 @@ export interface CreateTopicRequestData {
   userId: number,
 }
 
+export interface UpdateTopicRequestData {
+  name?: string;
+  messagesCount?: number;
+}
+
 interface FetchTopicResponse {
   result: TopicEntry,
+  message: string
+}
+
+interface UpdateTopicResponse {
+  result: TopicEntry,
+  message: string
+}
+
+interface DeleteTopicResponse {
   message: string
 }
 
@@ -21,6 +35,11 @@ const fetchTopic = (
   topicId: number,
   page = 0,
 ) => BACKEND_API.get<FetchTopicResponse>(`/forum/topics/${topicId}?page=${page}`);
+const updateTopic = (
+  topicId: number,
+  data: UpdateTopicRequestData,
+) => BACKEND_API.put<UpdateTopicResponse>(`/forum/topics/${topicId}`, JSON.stringify(data));
+const deleteTopic = (topicId: number) => BACKEND_API.delete<DeleteTopicResponse>(`/forum/topics/${topicId}`);
 
 export type TopicEntry = {
   id: number,
@@ -31,4 +50,4 @@ export type TopicEntry = {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { fetchTopics, createTopic, fetchTopic };
+export { fetchTopics, createTopic, fetchTopic, updateTopic, deleteTopic };
