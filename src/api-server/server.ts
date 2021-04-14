@@ -29,7 +29,6 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 };
 
 server
-  .disable('x-powered-by')
   .enable('trust proxy')
   .use(helmet())
   .use(express.urlencoded({ extended: true }))
