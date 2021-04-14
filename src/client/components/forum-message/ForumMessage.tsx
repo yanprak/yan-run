@@ -12,15 +12,11 @@ import { ReactionEnum, UpdateMessageRequestData } from '../../API/messages';
 import { formatDate, getTime, isDateValid, createShortDate } from '../../utils/datetime';
 import { useApiMessages } from '../../hooks';
 import Button from '../button';
+import { RESOURCES_URL } from '../../API';
 
 const modalStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+
   },
 };
 
@@ -49,6 +45,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
   const shortDate = isValidDate ? createShortDate(date) : '';
   const time = isValidDate ? getTime(date) : '';
   const isAuthor = user.id === currentUser.id;
+  const avatar = user.avatar ? `${RESOURCES_URL}${user.avatar}` : user.avatar;
   const reactionsElements = Object.entries(props.reactions)
     .map(keyValue => {
       const [reactionName, userIdsArray] = keyValue;
@@ -60,7 +57,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
           users={userIdsArray}
           topicId={topicId}
           messageId={messageId}
-          userId={user.id}
+          userId={currentUser.id}
         />
       );
     });
@@ -93,7 +90,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     <div {...otherProps} className={className}>
       <div className="message__user">
         <h4 className="message__username">{user.login}</h4>
-        <Avatar url={user.avatar} className="message__avatar margin_tb_s-4" />
+        <Avatar url={avatar} className="message__avatar margin_tb_s-4" />
         <time dateTime={`${formatDate(date)} ${time}`} className="message__datetime">
           <span className="message__date">{shortDate}</span>
           <span className="message__time margin_tb_s-1">{time}</span>
@@ -119,12 +116,13 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
       </div>
 
       <Modal
+        className="modal"
         isOpen={isEditModalOpen}
         style={modalStyles}
         onRequestClose={() => setIsEditModalOpen(false)}
       >
-        <div className="modal">
-          <h1 className="modal__header margin_tb_s-4">Исправить сообщение</h1>
+        <div className="modal__content">
+          <h1 className="modal__header margin_tb_s-4">Отредактировать сообщение</h1>
           <MessageEditor
             className="modal__editor"
             placeholder="Сообщение"
@@ -136,11 +134,12 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
       </Modal>
 
       <Modal
+        className="modal"
         isOpen={isDeleteModalOpen}
         style={modalStyles}
         onRequestClose={() => setIsDeleteModalOpen(false)}
       >
-        <div className="modal">
+        <div className="modal__content">
           <h1 className="modal__header margin_tb_s-4">Вы уверены?</h1>
           <div className="modal__actions margin_t_s-8">
             <Button

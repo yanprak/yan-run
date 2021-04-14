@@ -14,6 +14,17 @@ const usersList: UserAttributes[] = [
     avatar: null,
     theme: 1,
   },
+  {
+    id: 13072,
+    firstName: 'Ilya',
+    secondName: 'Belyavskiy',
+    displayName: null,
+    login: 'ilya.belyavskiy3',
+    email: 'ilya.belyavskiy3@ya.ru',
+    phone: '1234567',
+    avatar: '/bc887ee2-d7e6-4055-ac83-99cb9203b589/dc3b77fa-ad12-4dc6-b7cb-5d7f3112e697_photo_2020-10-30_18-12-48.jpg',
+    theme: 1,
+  },
 ];
 
 function multiplyMessages(fakePhrases: string[], amountPerPhrase = 1): MessageAttributes[] {

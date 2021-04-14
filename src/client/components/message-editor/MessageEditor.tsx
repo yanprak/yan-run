@@ -25,6 +25,7 @@ const MessageEditor: FC<OwnProps> = (props: OwnProps) => {
   function handleNewMessageSubmit(event: FormEvent): void {
     event.preventDefault();
     submitHandler(message);
+    setMessage('');
   }
 
   function handleTextAreaKeyChange(event: KeyboardEvent): void {

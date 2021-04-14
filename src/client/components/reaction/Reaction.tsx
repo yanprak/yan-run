@@ -24,6 +24,7 @@ const Reaction: FC<OwnProps> = ({ reaction, users, topicId, messageId, userId }:
 
   const emoji = setEmoji(reaction);
   const total = users.length;
+  const isToggledClass = users.indexOf(userId) > -1 ? 'reaction_toggled' : '';
 
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -35,7 +36,7 @@ const Reaction: FC<OwnProps> = ({ reaction, users, topicId, messageId, userId }:
   };
 
   return (
-    <button className="reaction" type="button" onClick={handleClick}>
+    <button className={`reaction ${isToggledClass}`} type="button" onClick={handleClick}>
       <span className="reaction__emoji" role="img" aria-label={reaction}>{emoji}</span>
       <span className="reaction__counter">{total}</span>
     </button>

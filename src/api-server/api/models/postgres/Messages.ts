@@ -14,15 +14,19 @@ import { Users } from './Users';
 import { Topics } from './Topics';
 import { Nullable } from '../../../../client/types';
 
-type Reactions = {
-  like: number[];
-  dislike: number[];
-  laugh: number[];
-  hooray: number[];
-  confused: number[];
-  heart: number[];
-  rocket: number[];
-  eyes: number[];
+enum ReactionEnum {
+  like = 'like',
+  dislike = 'dislike',
+  laugh = 'laugh',
+  hooray = 'hooray',
+  confused = 'confused',
+  heart = 'heart',
+  rocket = 'rocket',
+  eyes = 'eyes',
+}
+
+type ReactionsEntry = {
+  [key in ReactionEnum]: number[];
 };
 
 type MessageAttributes = {
@@ -31,7 +35,7 @@ type MessageAttributes = {
   userId: number;
   topicId: number;
   parentId: Nullable<number>;
-  reactions: Reactions;
+  reactions: ReactionsEntry;
   createdAt?: string;
 };
 
@@ -70,7 +74,7 @@ class Messages extends Model<MessageAttributes> {
 
   @AllowNull(false)
   @Column(DataType.JSONB)
-  reactions!: Reactions;
+  reactions!: ReactionsEntry;
 
   @AllowNull(false)
   @CreatedAt
@@ -83,6 +87,7 @@ class Messages extends Model<MessageAttributes> {
 
 export {
   Messages,
-  Reactions,
+  ReactionEnum,
+  ReactionsEntry,
   MessageAttributes,
 };

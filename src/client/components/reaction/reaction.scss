@@ -3,6 +3,8 @@
   font-size: 1.2rem;
   line-height: 2.6rem;
   border: 1px solid var(--default-border-color);
+  background-color: var(--default-bg-color);
+  color: var(--default-color);
   border-radius: var(--base-radius);
   margin-right: 0.8rem;
 
@@ -12,7 +14,14 @@
 
   &:hover {
     cursor: pointer;
-    background-color: var(--primary-bg-hover-color);
-    color: var(--primary-color);
+    background-color: var(--default-bg-hover-color);
+  }
+
+  &_toggled {
+    background-color: var(--success-bg-color);
+
+    &:hover {
+      background-color: var(--success-bg-hover-color);
+    }
   }
 }
