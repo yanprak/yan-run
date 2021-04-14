@@ -1,11 +1,11 @@
 import { ThemeState, ThemeAction, UserTheme } from './types';
 import { SET_THEMES, SET_CURRENT_THEME } from './actions';
 import { getAllThemes } from '../../API/theme';
-// import themes from '../../utils/theme/themes';
+import themes from '../../utils/theme/themes';
 
 const initialState: ThemeState = {
-  themes: [],
-  // current: null,
+  themes,
+  current: themes[0],
 };
 
 getAllThemes()

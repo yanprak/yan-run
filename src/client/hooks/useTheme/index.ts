@@ -17,7 +17,7 @@ const useTheme = () => {
 
   const { current, themes } = theme;
   const dispatch = useDispatch();
-  console.log('current THEMES', current, themes);
+  console.log('current THEMES', user, current, themes);
 
   const toggleTheme = () => {
     const num = current!.id === 1 ? 2 : 1;

@@ -41,13 +41,8 @@ const syncUser = <T>(fun: Fun, data: T, dispatch: Dispatch) => {
     .catch(e => console.log(e));
 };
 
-const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => {
-  syncUser(signin, data, dispatch);
-};
-
-const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => {
-  syncUser(signinYa, data, dispatch);
-};
+const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => syncUser(signin, data, dispatch);
+const thunkSignYa = <T>(data:T) => (dispatch: Dispatch) => syncUser(signinYa, data, dispatch);
 
 const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
   signup(data)
