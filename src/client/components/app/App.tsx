@@ -18,11 +18,10 @@ export default function App() {
   // );
 
   useEffect(() => {
+    getThemes();
     if (current) {
       console.log('-= Change theme = ', current.id);
       changeTheme(current);
-    } else if (isAuthenticated) {
-      getThemes();
     }
   }, [isAuthenticated]);
 

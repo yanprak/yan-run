@@ -15,6 +15,7 @@ const usersList: UserAttributes[] = [
     email: 'john.doe@ya.ru',
     phone: '1234567',
     avatar: null,
+    themeId: 1,
   },
   {
     id: 13072,
@@ -25,6 +26,7 @@ const usersList: UserAttributes[] = [
     email: 'ilya.belyavskiy3@ya.ru',
     phone: '1234567',
     avatar: '/bc887ee2-d7e6-4055-ac83-99cb9203b589/dc3b77fa-ad12-4dc6-b7cb-5d7f3112e697_photo_2020-10-30_18-12-48.jpg',
+    themeId: 1,
   },
 ];
 
@@ -83,6 +85,10 @@ const themeList: ThemeAttributes[] = [
 export default function dataGenerator() {
   console.log('=========== G E N E R A T E ============');
 
+  Themes.bulkCreate(themeList)
+    .then(() => console.log('The "-= Themes =-" data was successfully generated'))
+    .catch(e => console.log(e));
+
   Users.bulkCreate(usersList)
     .then(() => console.log('The "Users" data was successfully generated'))
     .catch(e => console.log(e));
@@ -95,9 +101,5 @@ export default function dataGenerator() {
   const topicList = prepareSingleRealTopic(manySampleMessages.length);
   Topics.bulkCreate(topicList)
     .then(() => console.log('The "Topics" data was successfully generated'))
-    .catch(e => console.log(e));
-
-  Themes.bulkCreate(themeList)
-    .then(() => console.log('The "-= Themes =-" data was successfully generated'))
     .catch(e => console.log(e));
 }

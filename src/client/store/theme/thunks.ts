@@ -13,8 +13,9 @@ const thunkSetThemes = () => (dispatch: Dispatch) => {
   getAllThemes()
     .then(r => {
       const { result } = r.data;
-      dispatch(setThemes(result));
-      dispatch(setCurrentTheme(result[0]));
+      const allThemes: UserTheme[] = result;
+      dispatch(setThemes(allThemes));
+      dispatch(setCurrentTheme(allThemes[0]));
     })
     .catch(() => {});
 };
