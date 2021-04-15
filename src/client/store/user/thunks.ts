@@ -13,10 +13,10 @@ import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
 import { setCurrentTheme } from '../theme/actions';
-import { Fun } from './types';
+import { HandlerSign } from './types';
 
-const syncUser = <T>(fun: Fun, data: T, dispatch: Dispatch) => {
-  fun(data)
+const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
+  handler(data)
     .then(() => fetchUserInfo())
     .then(r => {
       const { id } = r.data;
@@ -30,9 +30,9 @@ const syncUser = <T>(fun: Fun, data: T, dispatch: Dispatch) => {
         });
     })
     .then(r => {
-      const { result, them } = r.data;
-      if (them) {
-        dispatch(setCurrentTheme(them));
+      const { result, theme } = r.data;
+      if (theme) {
+        dispatch(setCurrentTheme(theme));
       }
       return dispatch(setUser(result));
     })

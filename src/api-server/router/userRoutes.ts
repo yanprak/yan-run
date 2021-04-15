@@ -28,11 +28,11 @@ export default function userRoutes(router: Router) {
     })
       .then(result => {
         console.log('result =>', userId, result);
-        console.log('Theme =>', result?.them);
+        console.log('Theme =>', result?.theme);
         res.json({
           message: 'OK',
           result,
-          them: result?.them,
+          theme: result?.theme,
         });
       })
       .catch(e => console.log(e));
@@ -48,7 +48,7 @@ export default function userRoutes(router: Router) {
         res.json({
           message: 'User has been created',
           result,
-          them: result?.them,
+          theme: result?.theme,
         });
       })
       .catch(e => console.log(e));

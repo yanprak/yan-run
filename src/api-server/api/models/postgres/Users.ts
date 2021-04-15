@@ -61,7 +61,7 @@ class Users extends Model<UserAttributes> {
   themeId!: number;
 
   @BelongsTo(() => Themes)
-  them!: Themes;
+  theme!: Themes;
 }
 
 export {

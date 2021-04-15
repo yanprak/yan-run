@@ -8,6 +8,15 @@ import Button from '../../components/button/Button';
 import { useApiAuth } from '../../hooks';
 import './profile.scss';
 import useTheme from '../../hooks/useTheme';
+import { UserTheme } from '../../store/theme/types';
+
+const getBtnTitle = (theme: UserTheme | undefined) => {
+  if (theme) {
+    const title = theme.id === 1 ? 'светлую' : 'темную';
+    return `На ${title} сторону`;
+  }
+  return 'Theme';
+};
 
 export default function Profile() {
   const { handleSignout } = useApiAuth();
@@ -28,7 +37,7 @@ export default function Profile() {
             styleType="secondary"
             onClick={toggleTheme}
           >
-            {`На ${current!.id === 1 ? 'светлую' : 'темную'} сторону`}
+            {getBtnTitle(current)}
           </Button>
         </div>
         <div className="container profile__tools padding_tb_s-2">

@@ -23,7 +23,7 @@ export interface SetCurrentThemeAction extends Action {
 }
 
 export interface SetRemoveThemeAction extends Action {
-  type: 'SET_REMOVE_THEME';
+  type: 'REMOVE_THEME';
   payload: UserTheme;
 }
 
