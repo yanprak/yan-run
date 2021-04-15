@@ -5,6 +5,22 @@
   }
 
   &__pagination {
+    flex: 1 1 3rem;
+  }
+
+  &__title {
+    flex: 3;
+    text-align: center;
+  }
+
+  &__owner-action {
+    display: flex;
     flex: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &__editor {
+    margin-bottom: 5rem;
   }
 }

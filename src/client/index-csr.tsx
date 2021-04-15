@@ -24,6 +24,8 @@ store.subscribe(throttle(() => {
     router: store.getState().router,
     topics: store.getState().topics,
     theme: store.getState().theme,
+    messages: store.getState().messages,
+    selectedTopic: store.getState().selectedTopic,
   });
 }, 1000));
 

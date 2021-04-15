@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Topics } from '../api/models/postgres/Topics';
-import { Messages } from '../api/models/postgres/Messages';
+import { MessageAttributes, Messages, ReactionsEntry, ReactionEnum } from '../api/models/postgres/Messages';
+import { Users } from '../api/models/postgres/Users';
 
 export default function forumRoutes(router: Router) {
   const TOPICS_URL = '/forum/topics';
@@ -9,13 +10,13 @@ export default function forumRoutes(router: Router) {
   const MESSAGES_ID_URL = `${MESSAGES_URL}/:messageId`;
   const MESSAGES_REACT_URL = `${MESSAGES_ID_URL}/reactions`;
 
-  const TOPICS_PAGE_LIMIT = 10;
+  const PAGE_LIMIT = 10;
 
   router.get(TOPICS_URL, (req, res) => {
     const { page } = req.query;
     Topics.findAll({
-      offset: (Number(page) || 0) * TOPICS_PAGE_LIMIT,
-      limit: TOPICS_PAGE_LIMIT,
+      offset: (Number(page) || 0) * PAGE_LIMIT,
+      limit: PAGE_LIMIT,
     })
       .then(topics => {
         res.json({
@@ -55,8 +56,8 @@ export default function forumRoutes(router: Router) {
 
   router.put(TOPICS_ID_URL, (req, res) => {
     const { topicId } = req.params;
-    const { data } = req.body;
-    Topics.update(data, {
+    const data = req.body;
+    Topics.update({ ...data }, {
       where: {
         id: topicId,
       },
@@ -86,7 +87,19 @@ export default function forumRoutes(router: Router) {
   });
 
   router.get(MESSAGES_URL, (req, res) => {
-    Messages.findAll()
+    const { page } = req.query;
+    const { topicId } = req.params;
+    Messages.findAll({
+      where: {
+        topicId,
+      },
+      include: [Users],
+      offset: (Number(page) || 0) * PAGE_LIMIT,
+      limit: PAGE_LIMIT,
+      order: [
+        ['id', 'ASC'],
+      ],
+    })
       .then(result => {
         res.json({
           message: 'OK',
@@ -97,7 +110,25 @@ export default function forumRoutes(router: Router) {
   });
 
   router.post(MESSAGES_URL, (req, res) => {
-    const { data } = req.body;
+    const { topicId } = req.params;
+    const { text, userId } = req.body;
+    const data: MessageAttributes = {
+      text,
+      userId,
+      topicId: Number(topicId),
+      parentId: null,
+      reactions: {
+        like: [],
+        dislike: [],
+        laugh: [],
+        hooray: [],
+        confused: [],
+        heart: [],
+        rocket: [],
+        eyes: [],
+      },
+    };
+
     Messages.create(data)
       .then(result => {
         res.json({
@@ -127,14 +158,14 @@ export default function forumRoutes(router: Router) {
 
   router.put(MESSAGES_ID_URL, (req, res) => {
     const { topicId, messageId } = req.params;
-    const { data } = req.body;
-    Messages.update(data, {
+    const { text } = req.body;
+    Messages.update({ text }, {
       where: {
         id: messageId,
         topicId,
       },
     })
-      .then(result => {
+      .then(() => {
         res.json({
           message: 'Message has been successfully updated',
         });
@@ -160,16 +191,31 @@ export default function forumRoutes(router: Router) {
 
   router.post(MESSAGES_REACT_URL, (req, res) => {
     const { topicId, messageId } = req.params;
-    const { type } = req.body;
-    Messages.update(type, {
+    const { userId, reaction } = req.body;
+    const reactionName = reaction as ReactionEnum;
+    Messages.findOne({
       where: {
         id: messageId,
         topicId,
       },
     })
-      .then(result => {
+      .then(message => {
+        if (!message) {
+          throw new Error('Message not found');
+        }
+        const reactionsObject: ReactionsEntry = { ...message.reactions };
+        const reactionValues: number[] = reactionsObject[reactionName];
+
+        reactionsObject[reactionName] = reactionValues.indexOf(userId) > -1
+          ? reactionValues.filter(uid => uid !== userId)
+          : [...reactionValues, userId];
+
+        message.reactions = reactionsObject;
+        return message.save();
+      })
+      .then(() => {
         res.json({
-          message: 'Message has been successfully updated with like',
+          message: 'Message has been successfully updated with reaction',
         });
       })
       .catch(e => console.log(e));

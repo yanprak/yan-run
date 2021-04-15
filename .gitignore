@@ -8,3 +8,6 @@ app.js
 ./database/postgresdata
 ./database/pgadmin
 ./database/mongodb
+database/postgresdata
+database/pgadmin
+database/mongodb

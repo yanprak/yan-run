@@ -13,7 +13,7 @@ import { leaderboardError, leaderboardLoaded, leaderboardRequested } from './act
 import { FetchLeaderboard } from './types';
 import { Nullable } from '../../types';
 import { getUserInfo } from '../../API/user';
-import { HOST_URL } from '../../API';
+import { RESOURCES_URL } from '../../API';
 
 type IdsAndScores = {
   ids: number[],
@@ -45,7 +45,7 @@ function usersWithScores(responseData: LeaderboardResponseData[]): Promise<UserW
       return {
         id,
         login,
-        avatar: avatar ? `${HOST_URL}${avatar}` : null,
+        avatar: avatar ? `${RESOURCES_URL}${avatar}` : null,
         score: idsAndScores.scores[index],
       };
     }));
