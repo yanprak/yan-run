@@ -31,6 +31,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 };
 
 server
+  .use(helmet())
   .enable('trust proxy')
   .use(helmet())
   .use(express.urlencoded({ extended: true }))
@@ -52,7 +53,7 @@ server
 sequelize.sync({ force: true })
   .then(() => {
     console.log('[PostgreSQL] Connection established');
-    // todo(Nail): Delete "dataGenerator" before releasing the product!
+    // todo(Nail): Edit "dataGenerator" before releasing the product!
     dataGenerator();
   })
   .catch(e => console.log(e));

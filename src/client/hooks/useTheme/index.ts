@@ -17,7 +17,6 @@ const useTheme = () => {
 
   const { current, themes } = theme;
   const dispatch = useDispatch();
-  console.log('current THEMES', user, current, themes);
 
   const toggleTheme = () => {
     const num = current!.id === 1 ? 2 : 1;
@@ -25,10 +24,10 @@ const useTheme = () => {
     const theme = themes.find(t => t.id === num);
     if (theme) {
       dispatch(thunkSetCurrentTheme(theme));
+      user.themeId = num;
+      console.log('USER =>', user);
+      dispatch(thunkUpdateUser(user.id, user));
     }
-    user.themeId = num;
-    console.log('USER =>', user);
-    dispatch(thunkUpdateUser(user.id, user));
   };
 
   const getThemes = () => dispatch(thunkSetThemes());

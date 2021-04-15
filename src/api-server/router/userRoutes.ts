@@ -19,7 +19,6 @@ export default function userRoutes(router: Router) {
 
   router.get(USER_ID_URL, (req, res) => {
     const { userId } = req.params;
-    // Users.findByPk(userId)
     Users.findOne({
       where: {
         id: userId,
@@ -41,14 +40,11 @@ export default function userRoutes(router: Router) {
   router.post(USER_URL, (req, res) => {
     const { ...data } = req.body;
     console.log('data ===>', data);
-    Users.create(data, {
-      include: [Themes],
-    })
+    Users.create(data)
       .then(result => {
         res.json({
           message: 'User has been created',
           result,
-          theme: result?.theme,
         });
       })
       .catch(e => console.log(e));

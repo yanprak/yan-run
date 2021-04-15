@@ -15,7 +15,6 @@ const usersList: UserAttributes[] = [
     email: 'john.doe@ya.ru',
     phone: '1234567',
     avatar: null,
-    theme: 1,
   },
   {
     id: 13072,
@@ -26,7 +25,6 @@ const usersList: UserAttributes[] = [
     email: 'ilya.belyavskiy3@ya.ru',
     phone: '1234567',
     avatar: '/bc887ee2-d7e6-4055-ac83-99cb9203b589/dc3b77fa-ad12-4dc6-b7cb-5d7f3112e697_photo_2020-10-30_18-12-48.jpg',
-    theme: 1,
   },
 ];
 
@@ -99,10 +97,7 @@ export default function dataGenerator() {
     .then(() => console.log('The "Topics" data was successfully generated'))
     .catch(e => console.log(e));
 
-  Themes.destroy({
-    where: {},
-    truncate: true,
-  })
-    .then(() => Themes.bulkCreate(themeList))
+  Themes.bulkCreate(themeList)
+    .then(() => console.log('The "-= Themes =-" data was successfully generated'))
     .catch(e => console.log(e));
 }

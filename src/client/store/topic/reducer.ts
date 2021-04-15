@@ -8,10 +8,7 @@ const initialState: SelectedTopicState = {
     id: 0,
     name: 'Title',
     messagesCount: 0,
-    user: {
-      id: 0,
-      login: 'Username',
-    },
+    userId: 1,
     createdAt: '2021-04-13 14:14:49.605+00',
   },
 };

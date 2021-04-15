@@ -14,6 +14,7 @@ import { removeUser, setUser } from './actions';
 import showNotification from '../../utils/notification';
 import { setCurrentTheme } from '../theme/actions';
 import { HandlerSign } from './types';
+import changeTheme from "../../utils/theme";
 
 const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
   handler(data)
@@ -31,10 +32,12 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
     })
     .then(r => {
       const { result, theme } = r.data;
+      dispatch(setUser(result));
+      console.log('THEME => ', theme);
       if (theme) {
         dispatch(setCurrentTheme(theme));
+        changeTheme(theme);
       }
-      return dispatch(setUser(result));
     })
     .catch(e => console.log(e));
 };
@@ -67,9 +70,9 @@ const thunkCheckLogin = () => (dispatch: Dispatch) => {
         });
     })
     .then(r => {
-      const { result, them } = r.data;
-      if (them) {
-        dispatch(setCurrentTheme(them));
+      const { result, theme } = r.data;
+      if (theme) {
+        dispatch(setCurrentTheme(theme));
       }
       return dispatch(setUser(result));
     })
@@ -101,9 +104,11 @@ const thunkProfile = <T>(data:T) => (dispatch: Dispatch) => {
 
 const thunkUpdateUser = <T>(id:number, data:T) => (dispatch: Dispatch) => {
   updateUser(id, data)
+    .then(() => getUserById(id))
     .then(r => {
+      console.log('UPDATE USER NEW', r);
       const { result } = r.data;
-      return dispatch(setUser(result));
+      dispatch(setUser(result));
     })
     .catch(() => {});
 };
