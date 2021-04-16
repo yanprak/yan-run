@@ -1,30 +1,42 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback } from 'react';
 import { ApplicationState } from '../../store/types';
 import { ThemeState } from '../../store/theme/types';
+import { thunkSetCurrentTheme, thunkSetThemes } from '../../store/theme/thunks';
+import { User, UserState } from '../../store/user/types';
+import { thunkUpdateUser } from '../../store/user/thunks';
+import { getThemeById } from '../../API/theme';
 import changeTheme from '../../utils/theme';
-import { thunkSetCurrentTheme } from '../../store/theme/thunks';
 
 const useTheme = () => {
-  const theme = useSelector<ApplicationState, ThemeState>(
+  const dispatch = useDispatch();
+  const currentThemeState = useSelector<ApplicationState, ThemeState>(
     state => state.theme,
   );
 
-  const { current, themes } = theme;
-  const dispatch = useDispatch();
-
-  const toggleTheme = useCallback(
-    () => {
-      const num = current.id === 0 ? 1 : 0;
-      changeTheme(themes[num]);
-      dispatch(thunkSetCurrentTheme(themes[num]));
-    }, [current, themes],
+  const user = useSelector<UserState, User>(
+    state => state.user!,
   );
+  const { current } = currentThemeState;
+
+  const toggleTheme = () => {
+    const currentThemeId = user.themeId === 1 ? 2 : 1;
+    getThemeById(currentThemeId)
+      .then(r => {
+        const { result } = r.data;
+        changeTheme(result);
+        user.themeId = currentThemeId;
+        dispatch(thunkUpdateUser(user.id, user));
+        dispatch(thunkSetCurrentTheme(result));
+      })
+      .catch(() => {});
+  };
+
+  const getThemes = () => dispatch(thunkSetThemes());
 
   return {
     current,
-    themes,
     toggleTheme,
+    getThemes,
   };
 };
 

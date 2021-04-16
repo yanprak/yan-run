@@ -11,33 +11,24 @@
     "lint:codefix": "eslint ./src --ext .ts,.tsx --fix",
     "lint:css": "stylelint src/client/css/*.scss",
     "lint:cssfix": "stylelint src/client/css/*.scss --fix",
-
     "clean": "rimraf dist",
-
     "build:dev-ssr-server": "cross-env NODE_ENV=development SR=server webpack --config webpack/server.config.ts",
     "build:dev-csr-server": "cross-env NODE_ENV=development SR=client webpack --config webpack/server.config.ts",
     "build:dev-api-server": "cross-env NODE_ENV=development webpack --config webpack/api-server.config.ts",
-
     "watch:ssr-client": "cross-env NODE_ENV=development SR=server webpack --config webpack/client.config.ts",
     "watch:csr-client": "cross-env NODE_ENV=development SR=client webpack --config webpack/client.config.ts",
     "watch:api-server": "cross-env NODE_ENV=development webpack --watch --config webpack/api-server.config.ts",
-
     "server:dev-ssr": "cross-env NODE_ENV=development SR=server node index.js",
     "server:dev-csr": "cross-env NODE_ENV=development SR=client node index.js",
     "server:dev-api": "cross-env NODE_ENV=development nodemon api-index.js --watch dist/api-server.js",
-
     "server:ssr": "cross-env NODE_ENV=production SR=server node index.js",
     "server:csr": "cross-env NODE_ENV=production SR=client node index.js",
     "server:api": "cross-env NODE_ENV=production node api-index.js",
-
     "start:ssr-watch": "npm-run-all --print-label --parallel server:dev-ssr watch:ssr-client start:api-watch",
     "start:csr-watch": "npm-run-all --print-label --parallel server:dev-csr watch:csr-client start:api-watch",
-
     "start:api-watch": "npm-run-all --print-label --parallel watch:api-server server:dev-api",
-
     "start:ssr": "npm-run-all --print-label clean build:dev-ssr-server start:ssr-watch",
     "start:csr": "npm-run-all --print-label clean build:dev-csr-server start:csr-watch",
-
     "build:ssr": "cross-env NODE_ENV=production SR=server npm run clean && webpack",
     "build:csr": "cross-env NODE_ENV=production SR=client npm run clean && webpack"
   },

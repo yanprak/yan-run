@@ -1,15 +1,8 @@
-import themes from '../utils/theme/themes';
-import { UserTheme } from '../store/theme/types';
-import { Nullable } from '../types';
+import { BACKEND_API } from './index';
 
-// todo: Abdeev.Na refactor after API create
+const getAllThemes = () => BACKEND_API.get('/themes');
 
-const getAllThemes = () => themes;
-
-const getThemeById = (id:number): Nullable<UserTheme> => {
-  const searchResult = themes.find(theme => theme.id === id);
-  return searchResult || null;
-};
+const getThemeById = (id:number) => BACKEND_API.get(`/themes/${id}`);
 
 export {
   getAllThemes,

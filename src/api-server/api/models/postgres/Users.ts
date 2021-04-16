@@ -3,53 +3,43 @@ import {
   Table,
   Column,
   DataType,
-  AutoIncrement,
   PrimaryKey,
   AllowNull,
   Default,
   ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { Nullable } from '../../../../client/types';
 import { Themes } from './Themes';
 
 type UserAttributes = {
   id?: number;
-  firstName: string;
-  secondName: string;
-  displayName: Nullable<string>;
+  first_name: string;
+  second_name: string;
+  display_name: Nullable<string>;
   login: string;
   email: string;
-  phone: string;
+  phone: Nullable<string>;
   avatar: Nullable<string>;
-  theme?: number;
+  themeId?: number,
 };
 
 @Table
 class Users extends Model<UserAttributes> {
-  @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
   id!: number;
 
   @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-    field: 'first_name',
-  })
-  firstName!: string;
+  @Column(DataType.STRING)
+  first_name!: string;
 
   @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-    field: 'second_name',
-  })
-  secondName!: string;
+  @Column(DataType.STRING)
+  second_name!: string;
 
-  @Column({
-    type: DataType.STRING,
-    field: 'display_name',
-  })
-  displayName!: string;
+  @Column(DataType.STRING)
+  display_name!: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
@@ -59,7 +49,6 @@ class Users extends Model<UserAttributes> {
   @Column(DataType.STRING)
   email!: string;
 
-  @AllowNull(false)
   @Column(DataType.STRING)
   phone!: string;
 
@@ -69,11 +58,11 @@ class Users extends Model<UserAttributes> {
   @ForeignKey(() => Themes)
   @AllowNull(false)
   @Default(1)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'theme_id',
-  })
+  @Column(DataType.INTEGER)
   themeId!: number;
+
+  @BelongsTo(() => Themes)
+  theme!: Themes;
 }
 
 export {

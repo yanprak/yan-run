@@ -1,8 +1,9 @@
 import { Action } from 'redux';
+// import { Nullable } from '../../types';
 
 export type ThemeState = {
-  current: UserTheme,
   themes: UserTheme[]
+  current?: UserTheme,
 };
 
 export type UserTheme = {
@@ -21,4 +22,9 @@ export interface SetCurrentThemeAction extends Action {
   payload: UserTheme;
 }
 
-export type ThemeAction = SetThemesAction | SetCurrentThemeAction;
+export interface SetRemoveThemeAction extends Action {
+  type: 'REMOVE_THEME';
+  payload: UserTheme;
+}
+
+export type ThemeAction = SetThemesAction | SetCurrentThemeAction | SetRemoveThemeAction;
