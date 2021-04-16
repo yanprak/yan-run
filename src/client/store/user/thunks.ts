@@ -15,7 +15,6 @@ import showNotification from '../../utils/notification';
 import { setCurrentTheme } from '../theme/actions';
 import { HandlerSign } from './types';
 import changeTheme from '../../utils/theme';
-// import {UserTheme} from "../theme/types";
 
 const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
   handler(data)
@@ -34,25 +33,10 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
     .then(r => {
       const { result, theme } = r.data;
       dispatch(setUser(result));
-      // new Promise<UserTheme>(resolve => {
-      //   setTimeout(() => {
-      //     dispatch(setCurrentTheme(theme));
-      //     resolve(theme);
-      //   });
-      // }).then(th => {
-      //   changeTheme(th);
-      // });
-      dispatch(setCurrentTheme(theme));
+      setTimeout(() => dispatch(setCurrentTheme(theme)), 1000);
+      // dispatch(setCurrentTheme(theme));
       changeTheme(theme);
-      // const { themeId } = result;
-      // return getThemeById(themeId);
     })
-    // .then(r => {
-    //   const { result } = r.data;
-    //   console.log(result);
-    //   dispatch(setCurrentTheme(result));
-    //   changeTheme(result);
-    // })
     .catch(e => console.log(e));
 };
 
