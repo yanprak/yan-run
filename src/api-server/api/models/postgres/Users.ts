@@ -21,6 +21,7 @@ type UserAttributes = {
   email: string;
   phone: Nullable<string>;
   avatar: Nullable<string>;
+  themeId?: number,
 };
 
 @Table

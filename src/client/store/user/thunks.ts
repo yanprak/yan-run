@@ -106,7 +106,6 @@ const thunkUpdateUser = <T>(id:number, data:T) => (dispatch: Dispatch) => {
     .then(r => {
       const { result } = r.data;
       dispatch(setUser(result));
-      console.log('UPDATE USER NEW', result);
     })
     .catch(() => {});
 };
