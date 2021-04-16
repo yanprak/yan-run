@@ -3,7 +3,7 @@ import { ThemeAction, UserTheme } from './types';
 
 export const SET_THEMES = 'SET_THEMES';
 export const SET_CURRENT_THEME = 'SET_CURRENT_THEME';
-export const REMOVE_THEME = 'SET_REMOVE_THEME';
+export const REMOVE_THEME = 'REMOVE_THEME';
 
 export const setThemes: ActionCreator<ThemeAction> = (themes: UserTheme[]) => ({
   type: SET_THEMES,

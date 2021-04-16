@@ -10,7 +10,7 @@ import useTheme from '../../hooks/useTheme';
 
 export default function App() {
   const isAuthenticated = useAuth();
-  const { getThemes, current } = useTheme();
+  const { current } = useTheme();
   const routes = getRoutes(isAuthenticated);
 
   // const theme = useSelector<ApplicationState, ThemeState>(
@@ -18,12 +18,16 @@ export default function App() {
   // );
 
   useEffect(() => {
+
     if (current) {
       console.log('-= Change theme = ', current.id);
       changeTheme(current);
-    } else if (isAuthenticated) {
-      getThemes();
     }
+
+    // if (isAuthenticated) {
+    //   console.log('getThemes');
+    //   getThemes();
+    // }
   }, [isAuthenticated]);
 
   return (
