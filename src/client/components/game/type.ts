@@ -8,6 +8,10 @@ export type GameResult = 'continued' | 'losing' | 'win';
 
 export type CTX = Nullable<CanvasRenderingContext2D>;
 
+export type GameUiParams = {
+  [key in string]: () => void;
+};
+
 export type Background = {
   fillStyle: string,
   x: number,

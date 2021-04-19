@@ -19,4 +19,15 @@
     top: 12px;
     right: 12px;
   }
+
+  &__character {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: solid 1px var(--default-border-color);
+  }
+
+  &_active {
+    border: solid 1px var(--primary-border-color);
+  }
 }

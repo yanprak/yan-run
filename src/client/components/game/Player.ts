@@ -1,8 +1,6 @@
 import { PropsGameObject, Config, CTX } from './type';
 
-import runImageSprite from './textures/sprite/frog/run.png';
-import jumpImageSprite from './textures/sprite/frog/jump.png';
-import fallImageSprite from './textures/sprite/frog/fall.png';
+import characterSkin from './playerTextures';
 
 export default class Player {
   ctx: CTX;
@@ -27,18 +25,12 @@ export default class Player {
   private frameIndex = 0;
   private frame = 12;
 
-  constructor(config: Config, ctx: CTX) {
+  constructor(config: Config, ctx: CTX, characterNumber = 0) {
     this.config = config;
     this.ctx = ctx;
-
-    this.runningImage = new Image();
-    this.runningImage.src = runImageSprite;
-
-    this.jumpingImage = new Image();
-    this.jumpingImage.src = jumpImageSprite;
-
-    this.fallingImage = new Image();
-    this.fallingImage.src = fallImageSprite;
+    this.runningImage.src = characterSkin[characterNumber].runImageSprite;
+    this.jumpingImage.src = characterSkin[characterNumber].jumpImageSprite;
+    this.fallingImage.src = characterSkin[characterNumber].fallImageSprite;
   }
 
   public showRunning() {

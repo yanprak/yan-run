@@ -45,11 +45,11 @@ export default class Game {
 
   updateScore: (score: number) => void;
 
-  constructor(canvas: CanvasRenderingContext2D | null, updateScore: (score: number) => void) {
+  constructor(canvas: CanvasRenderingContext2D | null, updateScore: (score: number) => void, characterNumber = 0) {
     this.ctx = canvas;
     this.updateScore = updateScore;
     // create Player
-    this.config.player = new Player(this.config, this.ctx);
+    this.config.player = new Player(this.config, this.ctx, characterNumber);
 
     // create Box
     for (let i = 0; i < this.config.box_max; i++) {
