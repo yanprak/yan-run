@@ -6,6 +6,7 @@ import Pagination from '../../components/pagination';
 import Button from '../../components/button';
 import TopicLink from '../../components/topic-link';
 import Input from '../../components/input';
+import Loader from '../../components/loader';
 import { TopicEntry } from '../../API/forum';
 import { ApplicationState } from '../../store/types';
 import { TopicsState } from '../../store/forum/types';
@@ -57,11 +58,14 @@ export default function Forum() {
   let children;
 
   if (error) {
-    children = 'Something when wrong. Reload page, please';
+    children = 'Something went wrong. Reload page, please';
   } else if (loading) {
-    children = 'Loading...';
+    children = (
+      <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+        <Loader />
+      </div>
+    );
   } else {
-    // TopicLink.title done this way for debug purposes only
     children = data.map((item: TopicEntry) => (
       <TopicLink
         key={item.id}
@@ -77,7 +81,7 @@ export default function Forum() {
 
   return (
     <div className="page forum-page container container_is-column container_size-auto container_center">
-      <div className="margin_t_s-4 margin_b_s-2 forum-page__header">
+      <div className="margin_tb_s-7 forum-page__header">
         <Pagination path="/forum" current={Number(page)} total={5} className="forum-page__pagination" />
         <Button
           size="small"

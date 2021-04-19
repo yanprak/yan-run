@@ -2,6 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import LeaderboardTableRow from './LeaderboardTableRow';
+import Loader from '../loader';
 import { LeaderboardTableProps } from './types';
 import { LeaderboardState } from '../../store/leaderboard/types';
 import { ApplicationState } from '../../store/types';
@@ -24,7 +25,7 @@ function LeaderboardTable({ cursor = 0, limit }: LeaderboardTableProps) {
   if (error) {
     children = 'Something went wrong';
   } else if (loading) {
-    children = 'Loading...';
+    children = <Loader />;
   } else {
     children = data.map((item, index) => (
       <LeaderboardTableRow
@@ -40,10 +41,8 @@ function LeaderboardTable({ cursor = 0, limit }: LeaderboardTableProps) {
   }
 
   return (
-    <div className="container container_center container_center-items">
-      <div className="leaderboard-table">
-        {children}
-      </div>
+    <div className="leaderboard-table">
+      {children}
     </div>
   );
 }
