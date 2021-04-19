@@ -21,7 +21,8 @@
     color: inherit;
 
     &:focus {
-      box-shadow: 0 0 0 1px var(--focus-border-color);
+      //box-shadow: 0 0 0 1px var(--focus-border-color);
+      border: 1px solid var(--focus-border-color);
     }
   }
 

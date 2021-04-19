@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Avatar from '../avatar';
 import { User, UserState } from '../../store/user/types';
-import { HOST_URL } from '../../API';
+import { RESOURCES_URL } from '../../API';
 
 function HeaderUserInfo() {
   const user = useSelector<UserState, User>(
@@ -14,7 +14,7 @@ function HeaderUserInfo() {
   return (
     <Link to="/profile">
       <div className="container">
-        <Avatar size="small" url={avatar ? `${HOST_URL}${avatar}` : avatar} />
+        <Avatar size="small" url={avatar ? `${RESOURCES_URL}${avatar}` : avatar} />
         <div className="container container_is-column h4 padding_s-1 header__menu-list-link">
           {first_name}
           <span className="text">

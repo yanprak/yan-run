@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.2-alpine
+    restart: always
+    env_file:
+      - ./database/database.env
+    volumes:
+      - ./database/postgresdb:/var/lib/postgresql/data
+#      - ./database/migrations/postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+    networks:
+      - lan
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    env_file:
+      - ./database/pg.env
+    volumes:
+      - ./database/pgadmin:/root/.pgadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - lan
+
+  mongo:
+    container_name: mongo_container
+    image: mongo
+    restart: always
+    env_file:
+      - ./database/mongo.env
+    volumes:
+      - ./database/mongodb:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - lan
+
+networks:
+  lan:
+    driver: bridge

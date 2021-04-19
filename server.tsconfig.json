@@ -11,6 +11,7 @@
   },
   "include": [
     "src/server/server.ts",
+    "src/api-server/server.ts",
     "./node_modules/@types"
   ],
   "exclude": [

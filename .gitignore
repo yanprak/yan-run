@@ -4,3 +4,8 @@ node_modules
 dist
 cert
 app.js
+.DS_Store
+database/postgresdb
+database/pgadmin
+database/mongodb
+.env

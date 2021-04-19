@@ -26,12 +26,22 @@ const routes = [
     exact: true,
   },
   {
-    path: '/topic',
+    path: '/forum/topics/:id/:page',
+    component: Topic,
+    exact: true,
+  },
+  {
+    path: '/forum/topics/:id',
     component: Topic,
     exact: true,
   },
   {
     path: '/forum',
+    component: Forum,
+    exact: true,
+  },
+  {
+    path: '/forum/:page',
     component: Forum,
     exact: true,
   },

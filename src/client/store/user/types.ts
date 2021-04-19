@@ -1,5 +1,8 @@
 import { Action } from 'redux';
+import { AxiosResponse } from 'axios';
 import { Nullable } from '../../types';
+
+export type HandlerSign = <T>(data: T) => Promise<AxiosResponse>;
 
 export type UserState = {
   user: Nullable<User>
@@ -13,7 +16,8 @@ export interface User {
   second_name: string,
   id: number,
   login: string,
-  phone: string
+  phone: string,
+  themeId: number,
 }
 
 export interface SetUserAction extends Action {

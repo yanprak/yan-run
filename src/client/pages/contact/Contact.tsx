@@ -1,10 +1,13 @@
 import React from 'react';
 
-import './contact.scss';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import { useForm } from '../../hooks';
 import { FormState, FormSubmitHandler } from '../../hooks/useForm/types';
+import { createFeedback } from '../../API/feedback';
+import showNotification from '../../utils/notification';
+
+import './contact.scss';
 
 const initState: FormState = {
   email: { value: '', type: 'email' },
@@ -12,8 +15,20 @@ const initState: FormState = {
 };
 
 const submitHandler: FormSubmitHandler = state => {
-  window.console.log(state);
+  createFeedback({
+    email: state.email.value,
+    message: state.message.value,
+  }).then(result => {
+    showNotification('success', result.data.message).then(() => {}, () => {});
+  }, () => {
+    showNotification('error', 'Something went wrong.\nReload page and try again.').then(() => {}, () => {});
+  });
 };
+
+/*
+  todo(anton.kagakin): the page name Contact, the API method is createFeedback
+    refactor this mess
+ */
 
 export default function Contact() {
   const {
