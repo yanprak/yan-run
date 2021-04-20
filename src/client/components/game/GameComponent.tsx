@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Game from './Game';
 import GameUI from './GameUI';
 import { toggleFullscreen } from '../../utils/fullscreen';
-import { useApiLeaderboard } from '../../hooks';
+import { useApiLeaderboard, useHero } from '../../hooks';
 import { User, UserState } from '../../store/user/types';
 
 import { RATING_FIELD_NAME } from '../../API/leaderboard';
@@ -15,6 +15,8 @@ const GameComponent = () => {
   const refCanvas = useRef<HTMLCanvasElement>(null);
   const { updateLeaderboardData } = useApiLeaderboard();
 
+  const { currentHero } = useHero();
+
   const user = useSelector<UserState, User>(
     state => state.user!,
   );
@@ -22,9 +24,13 @@ const GameComponent = () => {
   const startGame = () => {
     const canvas = refCanvas.current;
     if (canvas) {
-      game = new Game(canvas.getContext('2d'), score => {
-        updateLeaderboardData({ yanrunUserId: user.id, [RATING_FIELD_NAME]: score });
-      });
+      game = new Game(
+        canvas.getContext('2d'),
+        score => {
+          updateLeaderboardData({ yanrunUserId: user.id, [RATING_FIELD_NAME]: score });
+        },
+        currentHero,
+      );
       game.start();
     }
   };

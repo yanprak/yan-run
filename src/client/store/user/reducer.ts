@@ -1,16 +1,19 @@
 import { Reducer } from 'redux';
 import { User, UserActions } from './types';
-import { SET_USER } from './actions';
+import { SET_USER, SET_HERO } from './actions';
 import { Nullable } from '../../types';
 
 const reducer: Reducer<Nullable<User>, UserActions> = (state = null, action) => {
-  // TODO(anton.kagakin): rework to 2 different actions
-  // TODO(anton.kagakin): probably should called as userSignIn / userSignOut respectively
-  // TODO(anton.kagakin): consider things about profile cause it also SET_USER action now
   switch (action.type) {
     case SET_USER:
       const { user } = action.payload;
       return user ? { ...user } : null;
+    case SET_HERO:
+      const { heroId } = action.payload;
+      if (state) {
+        return { ...state, heroId };
+      }
+      return null;
     default:
       return state;
   }

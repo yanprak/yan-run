@@ -3,7 +3,7 @@ import Player from './Player';
 import Box from './Box';
 import { Nullable } from '../../types';
 
-import backgroundImage from './textures/background.png';
+import backgroundImage from './textures/background/background.png';
 
 export default class Game {
   private readonly ctx: CTX;
@@ -12,11 +12,10 @@ export default class Game {
 
   private readonly uiView: HTMLElement | null = null;
 
-  // структуру config необходимо переработать: разбить на ветки
-  // в аналогии с background
   private config: Config = {
     gravity: 0.6,
-    canJump: true,
+    canJump: 2,
+    canDoubleJump: true,
     box: [],
     box_max: 42,
     box_speed: 6,
@@ -68,8 +67,9 @@ export default class Game {
   private keyDown(k: number) {
     const key = +k;
     const player = this.config.player as Player;
-    if ((key === 38 || key === 87) && this.config.canJump) {
+    if ((key === 38 || key === 87) && (this.config.canJump > 0)) {
       player.ySpeed = -10;
+      this.config.canJump -= 1;
     }
     // pause press key "space"
     if (key === 32) {
@@ -150,7 +150,6 @@ export default class Game {
     this.ctx.clearRect(0, 0, width, height);
 
     // create and show ground
-    // если не анимировать то лучше убрать его в отдельный слой (другой canvas)
     this.updateBackground();
 
     // show player
@@ -179,6 +178,9 @@ export default class Game {
       const { keyCode } = event;
       this.keyDown(keyCode);
     };
+    document.onclick = () => {
+      this.keyDown(38);
+    };
     if (this.uiView) this.uiView.classList.toggle('hidden');
     this.startAnimate();
   }
@@ -186,6 +188,7 @@ export default class Game {
   public stop(isWin?: boolean): number {
     this.updateScore(this.score);
     document.onkeydown = null;
+    document.onclick = null;
     if (this.uiView) {
       this.uiView.classList.toggle('hidden');
     }

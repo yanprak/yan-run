@@ -5,3 +5,4 @@ export { default as useApiLeaderboard } from './useApiLeaderboard';
 export { default as useApiUser } from './useApiUser';
 export { default as useAuth } from './useAuth';
 export { default as useApiMessages } from './useApiMessages';
+export { default as useHero } from './useHero';
