@@ -1,13 +1,12 @@
 import React from 'react';
 import { useHero } from '../../hooks';
-import frogImg from './textures/sprite/frog/jump.png';
-import vmImg from './textures/sprite/vm/jump.png';
-import maskImg from './textures/sprite/mask/jump.png';
+import heroSkin from './playerTextures';
 
-type HeroProps = {
-  id: number,
-  name: string,
-  pathImg: string,
+type HeroSkin = {
+  runImageSprite: string,
+  jumpImageSprite: string,
+  fallImageSprite: string,
+  jumpDoubleImageSprite: string,
 };
 
 const chatacterClassName = (isActive: boolean) => {
@@ -15,28 +14,22 @@ const chatacterClassName = (isActive: boolean) => {
   return `game__character margin_s-2 ${style}`;
 };
 
-const Hero = (props: HeroProps) => {
-  const { id, name, pathImg } = props;
+const Hero = (id: number, skin: HeroSkin) => {
   const { currentHero, handlerHero } = useHero();
   return (
     <div
+      key={id}
       onClick={() => handlerHero(id)}
       className={chatacterClassName(currentHero === id)}
     >
-      <img className="game__img" src={pathImg} alt={name} />
+      <img className="game__img" src={skin.fallImageSprite} />
     </div>
   );
 };
 
-const heroList: HeroProps[] = [
-  { id: 0, name: 'Frog', pathImg: frogImg },
-  { id: 1, name: 'VirtualMan', pathImg: vmImg },
-  { id: 2, name: 'Mask', pathImg: maskImg },
-];
-
 const Heroes = () => (
   <div className="container container_center-items">
-    { heroList.map(hero => Hero(hero)) }
+    { heroSkin.map((hero:HeroSkin, index: number) => Hero(index, hero)) }
   </div>
 );
 
