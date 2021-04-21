@@ -1,0 +1,98 @@
+name: CI/CD into Yandex.Cloud
+
+on:
+  push:
+    branches: [ env-11-ci-cd ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "👀 Checking out the repository"
+      -
+        name: Checking out the repository
+        uses: actions/checkout@v2
+
+#      - run: echo "🔨 Building docker image"
+#      -
+#        name: Build Docker images
+#        run: docker build -t yanrun-web:latest .
+
+      -
+        name: Build and push Docker images
+        uses: docker/build-push-action@v2.4.0
+        with:
+          allow: # optional
+          # List of build-time variables
+          build-args: # optional
+          # Builder instance
+          builder: # optional
+          # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
+          cache-from: # optional
+          # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
+          cache-to: # optional
+          # Build's context is the set of files located in the specified PATH or URL
+          context: # optional
+          # Path to the Dockerfile
+          file: # optional
+          # List of metadata for an image
+          labels: # optional
+          # Load is a shorthand for --output=type=docker
+          load: # optional, default is false
+          # Set the networking mode for the RUN instructions during build
+          network: # optional
+          # Do not use cache when building the image
+          no-cache: # optional, default is false
+          # List of output destinations (format: type=local,dest=path)
+          outputs: # optional
+          # List of target platforms for build
+          platforms: # optional
+          # Always attempt to pull a newer version of the image
+          pull: # optional, default is false
+          # Push is a shorthand for --output=type=registry
+          push: # optional, default is false
+          # List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
+          secrets: # optional
+          # List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)
+          secret-files: # optional
+          # List of SSH agent socket or keys to expose to the build
+          ssh: # optional
+          # Sets the target stage to build
+          target: # optional
+          # GitHub Token used to authenticate against a repository for Git context
+          github-token: # optional, default is ${{ github.token }}
+
+  deploy:
+    - name: Deploy to Yandex.Cloud via SSH action
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.SSHKEY }}
+        envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
+        script: |
+          # Stop running container
+          docker stop $(echo $IMAGE_NAME)
+
+          # Remove old container
+          docker rm $(echo $IMAGE_NAME)
+
+          # Run a new container from a new image
+          docker run -d \
+          --restart always \
+          --env-file .env \
+          -p 8000:8000 \
+          --name $(echo $IMAGE_NAME) \
+          $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) $(echo $COMMAND)
+
+    - name: Deploy to Yandex.Cloud via SSH action
+      uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: ""
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
