@@ -1,9 +1,14 @@
 import { Config, CTX, GameResult } from './type';
 import Player from './Player';
 import Box from './Box';
+import Sound from './Sound';
 import { Nullable } from '../../types';
 
 import backgroundImage from './textures/background/background.png';
+import bgSound from './audio/background.mp3';
+import jumpSound from './audio/jump.mp3';
+import hitSound from './audio/hit.mp3';
+import clickSound from './audio/click.mp3';
 
 export default class Game {
   private readonly ctx: CTX;
@@ -36,6 +41,11 @@ export default class Game {
 
   bgImg: HTMLImageElement;
 
+  backgroundSound: Sound;
+  jumpSound: Sound;
+  hitSound: Sound;
+  clickSound: Sound;
+
   score = 0;
 
   private idAnimate: Nullable<number> = null;
@@ -62,6 +72,11 @@ export default class Game {
 
     this.scoreView = document.getElementById('game-score');
     this.uiView = document.getElementById('game-ui');
+
+    this.backgroundSound = new Sound(bgSound);
+    this.jumpSound = new Sound(jumpSound);
+    this.hitSound = new Sound(hitSound);
+    this.clickSound = new Sound(clickSound);
   }
 
   private keyDown(k: number) {
@@ -70,9 +85,13 @@ export default class Game {
     if ((key === 38 || key === 87) && (this.config.jumpsRemaining > 0)) {
       player.ySpeed = -10;
       this.config.jumpsRemaining -= 1;
+      if (!this.pause) {
+        this.jumpSound.play();
+      }
     }
     // pause press key "space"
     if (key === 32) {
+      this.clickSound.play();
       this.handlePause();
     }
   }
@@ -161,6 +180,7 @@ export default class Game {
     // collision
     switch (gameResult) {
       case 'losing':
+        this.hitSound.play();
         this.stop();
         break;
       case 'win':
@@ -183,10 +203,12 @@ export default class Game {
     };
     if (this.uiView) this.uiView.classList.toggle('hidden');
     this.startAnimate();
+    this.backgroundSound.play();
   }
 
   public stop(isWin?: boolean): number {
     this.updateScore(this.score);
+    this.backgroundSound.stop();
     document.onkeydown = null;
     document.onclick = null;
     if (this.uiView) {
@@ -209,6 +231,10 @@ export default class Game {
     if (this.pause) {
       this.startAnimate();
       this.pause = false;
-    } else this.pause = true;
+      this.backgroundSound.play();
+    } else {
+      this.pause = true;
+      this.backgroundSound.pause();
+    }
   }
 }
