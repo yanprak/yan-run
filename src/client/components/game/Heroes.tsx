@@ -15,11 +15,11 @@ const chatacterClassName = (isActive: boolean) => {
 };
 
 const Hero = (id: number, skin: HeroSkin) => {
-  const { currentHero, handlerHero } = useHero();
+  const { currentHero, handleHero } = useHero();
   return (
     <div
       key={id}
-      onClick={() => handlerHero(id)}
+      onClick={() => handleHero(id)}
       className={chatacterClassName(currentHero === id)}
     >
       <img className="game__img" src={skin.fallImageSprite} />

@@ -23,7 +23,7 @@ export type Background = {
 
 export type Config = {
   gravity: number,
-  canJump: number,
+  jumpsRemaining: number,
   canDoubleJump: boolean,
   box: unknown[];
   box_x: number,

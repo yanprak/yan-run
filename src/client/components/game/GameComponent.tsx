@@ -55,7 +55,7 @@ const GameComponent = () => {
 
   return (
     <div className="game">
-      <GameUI {...{ startGame, handleFullscreenClick }} />
+      <GameUI startGame={startGame} handleFullscreenClick={handleFullscreenClick} />
       <canvas
         ref={refCanvas}
         id="canvas"

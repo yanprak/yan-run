@@ -14,7 +14,7 @@ export default class Game {
 
   private config: Config = {
     gravity: 0.6,
-    canJump: 2,
+    jumpsRemaining: 2,
     canDoubleJump: true,
     box: [],
     box_max: 42,
@@ -67,9 +67,9 @@ export default class Game {
   private keyDown(k: number) {
     const key = +k;
     const player = this.config.player as Player;
-    if ((key === 38 || key === 87) && (this.config.canJump > 0)) {
+    if ((key === 38 || key === 87) && (this.config.jumpsRemaining > 0)) {
       player.ySpeed = -10;
-      this.config.canJump -= 1;
+      this.config.jumpsRemaining -= 1;
     }
     // pause press key "space"
     if (key === 32) {

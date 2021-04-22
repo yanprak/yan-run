@@ -7,16 +7,16 @@ const useHero = () => {
   const user = useSelector<UserState, User>(
     state => state.user!,
   );
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const currentHero = user.heroId ? user.heroId : 0;
 
-  const handlerHero = (id:number) => {
-    dispath(setHero(id));
+  const handleHero = (id:number) => {
+    dispatch(setHero(id));
   };
 
   return {
     currentHero,
-    handlerHero,
+    handleHero,
   };
 };
 

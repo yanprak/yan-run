@@ -83,11 +83,11 @@ export default class Player {
     if (this.state.y > lowerBorder) {
       this.state.y = lowerBorder + 1;
       this.ySpeed = 0;
-      this.config.canJump = 2;
+      this.config.jumpsRemaining = 2;
       this.showRunning();
     } else {
       const ySpeed = Math.floor(this.ySpeed);
-      if (ySpeed < 0 && this.config.canJump < 1) {
+      if (ySpeed < 0 && this.config.jumpsRemaining < 1) {
         this.showDoubleJump();
       } else if (ySpeed <= 0) {
         this.showInAction(this.jumpingImage);
