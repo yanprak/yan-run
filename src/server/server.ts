@@ -6,6 +6,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack/client.config';
 import router from './router';
 import { cookieParser } from './middlewares';
+import queryString from '../api-server/utils/queryString';
 
 const app: Express = express();
 
@@ -13,8 +14,10 @@ const IS_DEV = process.env.NODE_ENV !== 'production';
 
 if (IS_DEV) {
   app.all('/backend:requestUri(*)', cookieParser, (req, res) => {
+    const query = queryString(req.query);
     const { requestUri } = req.params;
-    console.log(req.method, 'PROXY REQUEST TO', requestUri);
+    const fullPath = query.length > 0 ? `${requestUri}?${query}` : requestUri;
+    console.log(req.method, 'PROXY REQUEST TO', fullPath);
     const {
       WEB_HOST = '',
       WEB_PORT = '',
@@ -22,8 +25,8 @@ if (IS_DEV) {
       API_PORT = 3500,
     } = process.env;
     console.log('FROM:', `${WEB_HOST}:${WEB_PORT}`, 'TO:', `${API_HOST}:${API_PORT}`);
-    console.log('FINALIZED URL:', `${API_HOST}:${API_PORT}${requestUri}`);
-    res.redirect(307, `${API_HOST}:${API_PORT}${requestUri}`);
+    console.log('FINALIZED URL:', `${API_HOST}:${API_PORT}${fullPath}`);
+    res.redirect(307, `${API_HOST}:${API_PORT}${fullPath}`);
   });
   const compiler = webpack(config);
   app.use(
