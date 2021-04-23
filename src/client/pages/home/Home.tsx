@@ -7,13 +7,11 @@ import './home.scss';
 
 export default function Home() {
   return (
-    <div className="home">
+    <div className="home container container_is-column">
       <div className="home__intro">
-        <h3>Приветствую, друг!</h3>
-        <br />
+        <h3 className="h3">Приветствую, друг!</h3>
         <p className="home__into-paragraph">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid, aperiam asperiores aut, beatae
-          commodi culpa cum eaque eius explicabo facere libero maiores maxime nesciunt nobis sed tempore ut vitae!
+          Предлагаем тебе окунуться в замечательный мир цифровой легкой атлетики с элементами ACTION!
         </p>
         <Link to="/game">
           <Button size="large" styleType="primary">Играть</Button>

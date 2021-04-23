@@ -1,5 +1,5 @@
 .home {
-  background-color: var(--secondary-bg-color);
+  //background-color: var(--secondary-bg-color);
   margin: 3rem 5% 0;
 
   display: flex;
@@ -9,7 +9,7 @@
   font-size: 2rem;
 
   &__intro {
-    background-color: var(--dark-bg-color);
+    //background-color: var(--dark-bg-color);
 
     text-align: center;
     justify-content: center;
@@ -23,9 +23,9 @@
 
   &__ranking {
     text-align: center;
-    background-color: var(--dark-bg-color);
-    padding: 1rem 1rem 0;
-    margin: 0.7rem;
+    //background-color: var(--dark-bg-color);
+    //padding: 1rem 1rem 0;
+    //margin: 0.7rem;
 
     width: 40%;
     font-size: 3rem;
@@ -33,6 +33,7 @@
   }
 
   &__into-paragraph {
-    margin-bottom: 2rem;
+    margin: 2rem;
+    font-size: 1.8rem;
   }
 }
