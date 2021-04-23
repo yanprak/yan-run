@@ -6,7 +6,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack/client.config';
 import router from './router';
 import { cookieParser } from './middlewares';
-import queryString from '../api-server/utils/queryString';
+import queryString from './utils/queryString';
 
 const app: Express = express();
 
