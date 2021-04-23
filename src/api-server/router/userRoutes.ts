@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { Users } from '../api/models/postgres/Users';
-import { Themes } from '../api/models/postgres/Themes';
+import { Users } from '../models/postgres/Users';
+import { Themes } from '../models/postgres/Themes';
 
 export default function userRoutes(router: Router) {
   const USER_URL = '/users';

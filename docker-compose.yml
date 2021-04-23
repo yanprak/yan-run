@@ -1,12 +1,40 @@
 version: "3"
 
 services:
+#  api-server:
+#    image: yanrun/api:latest
+#    env_file:
+#      - .env
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - postgres
+#      - mongo
+#    networks:
+#      - lan
+
+#  web:
+#    image: yanrun/web:latest
+#    build:
+#      context: .
+#      dockerfile: ./src/client/Dockerfile
+#    env_file:
+#      - .env
+#    ports:
+#      - "80:5000"
+#    depends_on:
+#      - postgres
+#      - mongo
+#      - api-server
+#    networks:
+#      - lan
+
   postgres:
     container_name: postgres_container
     image: postgres:13.2-alpine
     restart: always
     env_file:
-      - ./database/database.env
+      - .env
     volumes:
       - ./database/postgresdb:/var/lib/postgresql/data
 #      - ./database/migrations/postgres/:/docker-entrypoint-initdb.d/
@@ -20,7 +48,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     env_file:
-      - ./database/pg.env
+      - .env
     volumes:
       - ./database/pgadmin:/root/.pgadmin
     ports:
@@ -35,7 +63,7 @@ services:
     image: mongo
     restart: always
     env_file:
-      - ./database/mongo.env
+      - .env
     volumes:
       - ./database/mongodb:/data/db
     ports:

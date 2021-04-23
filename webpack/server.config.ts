@@ -1,9 +1,15 @@
+import 'dotenv/config';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
-import { SRC_DIR, IS_DEV, DIST_DIR } from './env';
+import {
+  SRC_DIR,
+  IS_DEV,
+  DIST_DIR,
+} from './env';
+
 import tsLoader from './loaders/ts';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';

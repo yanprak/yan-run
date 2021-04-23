@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Themes } from '../api/models/postgres/Themes';
+import { Themes } from '../models/postgres/Themes';
 
 export default function themeRoutes(router: Router) {
   const THEMES_URL = '/themes';

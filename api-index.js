@@ -1,6 +1,9 @@
 const https = require('https');
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { server } = require('./dist/api-server.js');
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
@@ -13,11 +16,11 @@ if (IS_DEV) {
   https
     .createServer({key, cert}, server)
     .listen(PORT, '0.0.0.0', () => {
-        console.info(`Backend API server listens on port: ${PORT} - https://localhost:${PORT}`);
+        console.info(`API server listens on port: ${PORT} - https://localhost:${PORT}`);
     });
   return;
 }
 
 server.listen(PORT, () => {
-  console.log(`Backend server listens on port: ${PORT}`);
+  console.log(`API server listens on port: ${PORT}`);
 });
