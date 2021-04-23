@@ -8,6 +8,7 @@ import tsLoader from './loaders/ts';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
 import audioLoader from './loaders/audio';
+import videoLoader from './loaders/video';
 
 const IS_SSR = process.env.SR === 'server';
 
@@ -38,6 +39,7 @@ export default {
       cssLoader.client,
       fileLoader.client,
       audioLoader.client,
+      videoLoader.client,
     ],
   },
   plugins: [

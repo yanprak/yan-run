@@ -14,6 +14,7 @@ import tsLoader from './loaders/ts';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
 import audioLoader from './loaders/audio';
+import videoLoader from './loaders/video';
 
 export default {
   mode: IS_DEV ? 'development' : 'production',
@@ -29,6 +30,7 @@ export default {
       cssLoader.server,
       fileLoader.server,
       audioLoader.server,
+      videoLoader.server,
     ],
   },
 

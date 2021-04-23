@@ -8,18 +8,20 @@ import './home.scss';
 
 export default function Home() {
   return (
-    <div className="home container container_is-column">
+    <div className="container container_is-column container_center page home">
       <div className="home__intro">
-        <h3 className="h3">Приветствую, друг!</h3>
-        <p className="home__into-paragraph">
-          Предлагаем тебе окунуться в замечательный мир цифровой легкой атлетики с элементами ACTION!
-        </p>
-        <Link to="/game">
-          <Button size="large" styleType="primary">Играть</Button>
-        </Link>
-        <video autoPlay muted loop id="myVideo">
+        <video autoPlay muted loop id="myVideo" className="home__demo">
           <source src={gameVideoPath} type="video/mp4" />
         </video>
+        <div className="home__content">
+          <h3 className="h3">Приветствую, друг!</h3>
+          <p className="home__into-paragraph">
+            Предлагаем тебе окунуться в замечательный мир цифровой легкой атлетики с элементами ACTION!
+          </p>
+          <Link to="/game">
+            <Button size="large" styleType="primary">Играть</Button>
+          </Link>
+        </div>
       </div>
       <div className="home__ranking">
         <h3 className="h3">Чемпионы</h3>
