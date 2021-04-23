@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LeaderboardTable from '../../components/leaderboard-table';
 import Button from '../../components/button/Button';
+import gameVideoPath from './game.mp4';
 
 import './home.scss';
 
@@ -16,9 +17,12 @@ export default function Home() {
         <Link to="/game">
           <Button size="large" styleType="primary">Играть</Button>
         </Link>
+        <video autoPlay muted loop id="myVideo">
+          <source src={gameVideoPath} type="video/mp4" />
+        </video>
       </div>
       <div className="home__ranking">
-        <h3>Чемпионы</h3>
+        <h3 className="h3">Чемпионы</h3>
         <LeaderboardTable limit={5} />
       </div>
     </div>

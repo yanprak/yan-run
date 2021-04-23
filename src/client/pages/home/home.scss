@@ -1,24 +1,17 @@
 .home {
   //background-color: var(--secondary-bg-color);
   margin: 3rem 5% 0;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
   font-size: 2rem;
 
   &__intro {
-    //background-color: var(--dark-bg-color);
-
+    background-color: var(--dark-bg-color);
+    position: relative;
     text-align: center;
-    justify-content: center;
-
-    margin: 0.7rem;
-    padding: 1rem;
+    padding: 2rem;
+    padding-top: 4rem;
     font-size: 3rem;
-
-    width: 60%;
+    width: 100%;
+    flex: 0 0 260px;
   }
 
   &__ranking {
@@ -26,8 +19,6 @@
     //background-color: var(--dark-bg-color);
     //padding: 1rem 1rem 0;
     //margin: 0.7rem;
-
-    width: 40%;
     font-size: 3rem;
     position: relative;
   }
@@ -35,5 +26,13 @@
   &__into-paragraph {
     margin: 2rem;
     font-size: 1.8rem;
+  }
+
+  &__demo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 500%;
   }
 }
