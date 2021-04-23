@@ -6,6 +6,7 @@ import ForumMessage from '../../components/forum-message';
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
 import MessageEditor from '../../components/message-editor';
+import Loader from '../../components/loader';
 import { useApiMessages, useApiForum } from '../../hooks';
 import { ApplicationState } from '../../store/types';
 import { User } from '../../store/user/types';
@@ -64,9 +65,13 @@ export default function Topic() {
 
   let children;
   if (messagesError) {
-    children = 'Something when wrong. Reload page, please';
+    children = 'Something went wrong. Reload page, please';
   } else if (messagesLoading) {
-    children = 'Loading...';
+    children = (
+      <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+        <Loader />
+      </div>
+    );
   } else {
     children = messages.map(({ id: messageId, ...messageProps }: MessageEntry) => (
       <ForumMessage
