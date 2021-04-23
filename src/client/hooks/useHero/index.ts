@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { User, UserState } from '../../store/user/types';
 import { setHero } from '../../store/user/actions';

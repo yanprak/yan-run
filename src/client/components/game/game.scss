@@ -11,6 +11,16 @@
     align-content: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+
+    &_fullscreen {
+      top: 50%;
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   &__score {
@@ -35,5 +45,15 @@
 
   &__img {
     width: 100%;
+  }
+
+  &__canvas_fullscreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    z-index: 1;
   }
 }

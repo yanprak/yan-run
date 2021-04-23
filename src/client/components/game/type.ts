@@ -9,7 +9,9 @@ export type GameResult = 'continued' | 'losing' | 'win';
 export type CTX = Nullable<CanvasRenderingContext2D>;
 
 export type GameUiParams = {
-  [key in string]: () => void;
+  isFullscreen: boolean;
+  startGame: () => void;
+  handleFullscreenClick: () => void;
 };
 
 export type Background = {
