@@ -8,6 +8,10 @@ export type GameResult = 'continued' | 'losing' | 'win';
 
 export type CTX = Nullable<CanvasRenderingContext2D>;
 
+export type GameUiParams = {
+  [key in string]: () => void;
+};
+
 export type Background = {
   fillStyle: string,
   x: number,
@@ -19,7 +23,8 @@ export type Background = {
 
 export type Config = {
   gravity: number,
-  canJump: boolean,
+  jumpsRemaining: number,
+  canDoubleJump: boolean,
   box: unknown[];
   box_x: number,
   box_speed: number,

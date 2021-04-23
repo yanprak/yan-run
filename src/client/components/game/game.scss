@@ -15,8 +15,25 @@
 
   &__score {
     color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.6rem;
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 1.2rem;
+    right: 1.2rem;
+  }
+
+  &__character {
+    width: 64px;
+    height: 64px;
+    border: solid 2px rgba(0, 0, 0, 0.1);
+  }
+
+  &_active {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: solid 2px var(--primary-border-color);
+  }
+
+  &__img {
+    width: 100%;
   }
 }
