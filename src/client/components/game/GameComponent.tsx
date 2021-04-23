@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Game from './Game';
 import GameUI from './GameUI';
-import { toggleFullscreen } from '../../utils/fullscreen';
-import { useApiLeaderboard, useHero } from '../../hooks';
+import { useApiLeaderboard, useFullscreen, useHero } from '../../hooks';
 import { User, UserState } from '../../store/user/types';
 
 import { RATING_FIELD_NAME } from '../../API/leaderboard';
@@ -12,8 +11,10 @@ import './game.scss';
 
 const GameComponent = () => {
   let game: Game;
+  const refGameContainer = useRef<HTMLDivElement>(null);
   const refCanvas = useRef<HTMLCanvasElement>(null);
   const { updateLeaderboardData } = useApiLeaderboard();
+  const [isFullscreen, setFullscreen] = useFullscreen();
 
   const { currentHero } = useHero();
 
@@ -44,24 +45,39 @@ const GameComponent = () => {
   };
 
   const handleFullscreenClick = () => {
-    const canvas = refCanvas.current;
-    if (canvas) {
-      toggleFullscreen(canvas);
+    const gameContainer = refGameContainer.current;
+    if (gameContainer) {
+      setFullscreen(gameContainer);
     }
-    startGame();
   };
 
   useEffect(() => stopGame, []);
 
+  const width = isFullscreen ? document.body.clientWidth : '800';
+  const canvasMultiplier = Number(width) / 800;
+  const canvasStyleProps = {
+    border: '1px solid #d3d3d3',
+    background: 'black',
+    transform: isFullscreen ? `translate(-50%, -50%) scale(${canvasMultiplier})` : 'none',
+  };
+
   return (
-    <div className="game">
-      <GameUI startGame={startGame} handleFullscreenClick={handleFullscreenClick} />
+    <div
+      className="game"
+      ref={refGameContainer}
+    >
+      <GameUI
+        startGame={startGame}
+        handleFullscreenClick={handleFullscreenClick}
+        isFullscreen={isFullscreen}
+      />
       <canvas
         ref={refCanvas}
         id="canvas"
+        className={`game__canvas ${isFullscreen ? 'game__canvas_fullscreen' : ''}`}
         width="800"
         height="400"
-        style={{ border: '1px solid #d3d3d3', background: 'black' }}
+        style={canvasStyleProps}
       />
     </div>
   );
