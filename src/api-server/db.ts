@@ -40,10 +40,10 @@ const sequelizeOptions: SequelizeOptions = {
 const sequelize = new Sequelize(sequelizeOptions);
 sequelize.sync({ force: true })
   .then(() => {
-    global.console.log('[PostgreSQL] Connection established');
-    dataGenerator();
+    console.log('[PostgreSQL] Connection established');
+    return dataGenerator();
   })
-  .catch(e => global.console.log(e));
+  .catch(e => console.log(e));
 
 // connect MONGO
 const mongoURI = `mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;

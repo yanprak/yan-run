@@ -104,8 +104,8 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     history,
     updateTopic,
     deleteMessage,
-    currentPage,
     setIsDeleteModalOpen,
+    fetchMessages,
   ]);
 
   return (

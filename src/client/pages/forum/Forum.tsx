@@ -40,7 +40,7 @@ export default function Forum() {
     };
     createTopic(requestData);
     toggleTopicCreation();
-  }, [createTopic, user.id, user.login]);
+  }, [createTopic, user.id]);
 
   useEffect(() => {
     fetchTopics(Number(page) - 1);

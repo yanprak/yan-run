@@ -186,7 +186,7 @@ export default function forumRoutes(router: Router) {
         topicId,
       },
     })
-      .then(result => {
+      .then(() => {
         res.json({
           message: 'Message has been successfully deleted',
         });

@@ -25,8 +25,9 @@ if (IS_DEV) {
       API_PORT = 3500,
     } = process.env;
     console.log('FROM:', `${WEB_HOST}:${WEB_PORT}`, 'TO:', `${API_HOST}:${API_PORT}`);
-    console.log('FINALIZED URL:', `${API_HOST}:${API_PORT}${fullPath}`);
-    res.redirect(307, `${API_HOST}:${API_PORT}${fullPath}`);
+    const redirectUrl = `${API_HOST}:${API_PORT}${fullPath}`;
+    console.log('FINALIZED URL:', redirectUrl);
+    res.redirect(307, redirectUrl);
   });
   const compiler = webpack(config);
   app.use(

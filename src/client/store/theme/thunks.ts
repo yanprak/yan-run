@@ -10,10 +10,9 @@ const thunkSetCurrentTheme = (data:UserTheme) => (dispatch: Dispatch) => {
 };
 
 const thunkSetThemes = () => (dispatch: Dispatch) => {
-  console.log('thunkSetThemes');
   getAllThemes()
     .then(r => {
-      const { result } = r.data;
+      const { result }: { result: UserTheme[] } = r.data;
       dispatch(setThemes(result));
       dispatch(setCurrentTheme(result[0]));
     })

@@ -14,7 +14,7 @@ export default function App() {
     if (current) {
       changeTheme(current);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, current]);
 
   return (
     <div className="main">
