@@ -24,8 +24,8 @@
     "server:watch:api": "nodemon api-index.js --watch dist/api-server.js",
     "start:api": "npm-run-all --parallel --print-label watch:api server:watch:api",
     "start": "npm-run-all --parallel --print-label clean start:web start:api",
-    "docker:api": "docker build -t yanrun/api:latest -f ./src/api-server/Dockerfile .",
-    "docker:web": "docker build -t yanrun/web:latest -f ./src/client/Dockerfile ."
+    "docker:api": "docker build -t dubaidev/yanrun-api:latest -f ./src/api-server/Dockerfile .",
+    "docker:web": "docker build -t dubaidev/yanrun-web:latest -f ./src/client/Dockerfile ."
   },
   "repository": {
     "type": "git",

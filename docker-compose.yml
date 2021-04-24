@@ -1,33 +1,30 @@
 version: "3"
 
 services:
-#  api-server:
-#    image: yanrun/api:latest
-#    env_file:
-#      - .env
-#    ports:
-#      - "3000:3000"
-#    depends_on:
-#      - postgres
-#      - mongo
-#    networks:
-#      - lan
+  api-server:
+    image: dubaidev/yanrun-api:latest
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - mongo
+    networks:
+      - lan
 
-#  web:
-#    image: yanrun/web:latest
-#    build:
-#      context: .
-#      dockerfile: ./src/client/Dockerfile
-#    env_file:
-#      - .env
-#    ports:
-#      - "80:5000"
-#    depends_on:
-#      - postgres
-#      - mongo
-#      - api-server
-#    networks:
-#      - lan
+  web:
+    image: dubaidev/yanrun-web:latest
+    env_file:
+      - .env
+    ports:
+      - "80:3000"
+    depends_on:
+      - postgres
+      - mongo
+      - api-server
+    networks:
+      - lan
 
   postgres:
     container_name: postgres_container
