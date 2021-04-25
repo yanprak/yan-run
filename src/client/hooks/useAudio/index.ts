@@ -20,7 +20,7 @@ const useAudio = (src: string) => {
     return () => {
       audio.removeEventListener('ended', () => setIsPlaying(false));
     };
-  }, []);
+  }, [audio]);
 
   return [isPlaying, toggleSound] as const;
 };

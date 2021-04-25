@@ -9,7 +9,7 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Nullable } from '../../../../client/types';
+import { Nullable } from '../../../client/types';
 import { Themes } from './Themes';
 
 type UserAttributes = {

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { Request, Response } from 'express';

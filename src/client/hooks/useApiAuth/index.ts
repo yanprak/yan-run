@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { FormState } from '../useForm/types';
 import { thunkSignin, thunkSignup, thunkSignout, thunkSignYa } from '../../store/user/thunks';
 import { signYaGetId } from '../../API/auth';
-import { urlOauth } from '../../config';
+import urlOauth from '../../config';
 
 export default function useApiAuth() {
   const dispatch = useDispatch();
@@ -43,8 +43,11 @@ export default function useApiAuth() {
     signYaGetId()
       .then((r:AxiosResponse) => {
         const { service_id } = r.data;
-        const urlYa = urlOauth(service_id);
-        window.location.replace(urlYa);
+        const loc = window.location;
+        // const port = loc.port ? `:${loc.port}` : '';
+        const redirectUrl = `${loc.protocol}//${loc.host}`;
+        const urlYa = urlOauth(service_id, redirectUrl);
+        loc.replace(urlYa);
       })
       .catch(() => {});
   }, []);

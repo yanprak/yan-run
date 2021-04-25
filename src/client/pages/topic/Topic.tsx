@@ -38,7 +38,7 @@ export default function Topic() {
 
   useEffect(() => {
     fetchMessages(topicId, currentPage);
-  }, [fetchMessages, topicId, page]);
+  }, [fetchMessages, topicId, currentPage]);
 
   const submitHandler = useCallback((message: string) => {
     const requestData: CreateMessageRequestData = {
@@ -50,7 +50,7 @@ export default function Topic() {
     createMessage(topicId, requestData, lastPage);
     updateTopic(topicId, { messagesCount: messagesCount + 1 });
     history.push(`/forum/topics/${topicId}/${lastPage}`);
-  }, [createMessage, topicId, user.id, totalPages, messagesCount, history, currentPage]);
+  }, [createMessage, topicId, user.id, totalPages, messagesCount, history, updateTopic]);
 
   let topicTitle;
   if (topicError || !topicName) {

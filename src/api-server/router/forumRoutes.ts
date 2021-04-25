@@ -1,7 +1,12 @@
 import { Router } from 'express';
-import { Topics } from '../api/models/postgres/Topics';
-import { MessageAttributes, Messages, ReactionsEntry, ReactionEnum } from '../api/models/postgres/Messages';
-import { Users } from '../api/models/postgres/Users';
+import { Topics } from '../models/postgres/Topics';
+import { Users } from '../models/postgres/Users';
+import {
+  MessageAttributes,
+  Messages,
+  ReactionsEntry,
+  ReactionEnum,
+} from '../models/postgres/Messages';
 
 export default function forumRoutes(router: Router) {
   const TOPICS_URL = '/forum/topics';
@@ -181,7 +186,7 @@ export default function forumRoutes(router: Router) {
         topicId,
       },
     })
-      .then(result => {
+      .then(() => {
         res.json({
           message: 'Message has been successfully deleted',
         });

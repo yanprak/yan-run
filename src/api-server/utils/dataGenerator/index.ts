@@ -1,7 +1,7 @@
-import { Users, UserAttributes } from '../../api/models/postgres/Users';
-import { Topics, TopicAttributes } from '../../api/models/postgres/Topics';
-import { Messages, MessageAttributes } from '../../api/models/postgres/Messages';
-import { Themes, ThemeAttributes } from '../../api/models/postgres/Themes';
+import { Users, UserAttributes } from '../../models/postgres/Users';
+import { Topics, TopicAttributes } from '../../models/postgres/Topics';
+import { Messages, MessageAttributes } from '../../models/postgres/Messages';
+import { Themes, ThemeAttributes } from '../../models/postgres/Themes';
 import dark from '../../../client/utils/theme/themes/dark';
 import light from '../../../client/utils/theme/themes/light';
 
@@ -82,24 +82,24 @@ const themeList: ThemeAttributes[] = [
   light,
 ];
 
-export default function dataGenerator() {
+export default async function dataGenerator() {
   console.log('=========== G E N E R A T E ============');
 
-  Themes.bulkCreate(themeList)
-    .then(() => console.log('The "-= Themes =-" data was successfully generated'))
-    .catch(e => console.log(e));
+  try {
+    await Themes.bulkCreate(themeList);
+    console.log('The "-= Themes =-" data was successfully generated');
 
-  Users.bulkCreate(usersList)
-    .then(() => console.log('The "Users" data was successfully generated'))
-    .catch(e => console.log(e));
+    await Users.bulkCreate(usersList);
+    console.log('The "Users" data was successfully generated');
 
-  const manySampleMessages = multiplyMessages(['hi', 'hey', 'hello'], 7);
-  Messages.bulkCreate(manySampleMessages)
-    .then(() => console.log('The "Messages" data was successfully generated'))
-    .catch(e => console.log(e));
+    const manySampleMessages = multiplyMessages(['hi', 'hey', 'hello'], 7);
+    await Messages.bulkCreate(manySampleMessages);
+    console.log('The "Messages" data was successfully generated');
 
-  const topicList = prepareSingleRealTopic(manySampleMessages.length);
-  Topics.bulkCreate(topicList)
-    .then(() => console.log('The "Topics" data was successfully generated'))
-    .catch(e => console.log(e));
+    const topicList = prepareSingleRealTopic(manySampleMessages.length);
+    await Topics.bulkCreate(topicList);
+    console.log('The "Topics" data was successfully generated');
+  } catch (e) {
+    console.log(e);
+  }
 }

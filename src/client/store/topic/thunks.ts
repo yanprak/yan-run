@@ -21,7 +21,7 @@ export const thunkUpdateTopic = (topicId: number, data: UpdateTopicRequestData) 
     .catch(() => {});
 };
 
-export const thunkDeleteTopic = (topicId: number) => (dispatch: MyThunkDispatch) => {
+export const thunkDeleteTopic = (topicId: number) => () => {
   deleteTopic(topicId)
     .catch(() => {});
 };

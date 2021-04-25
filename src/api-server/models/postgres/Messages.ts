@@ -12,7 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { Users } from './Users';
 import { Topics } from './Topics';
-import { Nullable } from '../../../../client/types';
+import { Nullable } from '../../../client/types';
 
 enum ReactionEnum {
   like = 'like',
