@@ -9,59 +9,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "👀 Checking out the repository"
       -
         name: Checking out the repository
         uses: actions/checkout@v2
-
-#      - run: echo "🔨 Building docker image"
-#      -
-#        name: Build Docker images
-#        run: docker build -t yanrun-web:latest .
-
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push Docker images
         uses: docker/build-push-action@v2.4.0
         with:
-          allow: # optional
-          # List of build-time variables
-          build-args: # optional
-          # Builder instance
-          builder: # optional
-          # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
-          cache-from: # optional
-          # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
-          cache-to: # optional
-          # Build's context is the set of files located in the specified PATH or URL
-          context: # optional
-          # Path to the Dockerfile
-          file: # optional
-          # List of metadata for an image
-          labels: # optional
-          # Load is a shorthand for --output=type=docker
-          load: # optional, default is false
-          # Set the networking mode for the RUN instructions during build
-          network: # optional
-          # Do not use cache when building the image
-          no-cache: # optional, default is false
-          # List of output destinations (format: type=local,dest=path)
-          outputs: # optional
-          # List of target platforms for build
-          platforms: # optional
-          # Always attempt to pull a newer version of the image
-          pull: # optional, default is false
-          # Push is a shorthand for --output=type=registry
-          push: # optional, default is false
-          # List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
-          secrets: # optional
-          # List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)
-          secret-files: # optional
-          # List of SSH agent socket or keys to expose to the build
-          ssh: # optional
-          # Sets the target stage to build
-          target: # optional
-          # GitHub Token used to authenticate against a repository for Git context
-          github-token: # optional, default is ${{ github.token }}
+          context: .
+          tags: #yanrun/app:latest
+          push: true
+
 
   deploy:
     - name: Deploy to Yandex.Cloud via SSH action
