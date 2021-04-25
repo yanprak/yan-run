@@ -2,16 +2,22 @@ name: CI/CD into Yandex.Cloud
 
 on:
   push:
-    branches: [ env-11-ci-cd ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
-  build:
+  build_api:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
       -
-        name: Checking out the repository
+        name: Check out the repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: Build Docker image
+        run: npm run docker:api
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -29,40 +35,61 @@ jobs:
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
-          tags: #yanrun/app:latest
+          tags: dubaidev/yanrun-api:latest
           push: true
 
+  build_web:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    needs: build_api
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Build Docker image
+        run: npm run docker:web
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          tags: dubaidev/yanrun-web:latest
+          push: true
 
   deploy:
-    - name: Deploy to Yandex.Cloud via SSH action
-      uses: appleboy/ssh-action@v0.1.3
-      with:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        KEY: ${{ secrets.SSHKEY }}
-        envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
-        script: |
-          # Stop running container
-          docker stop $(echo $IMAGE_NAME)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    needs: build_web
+    steps:
+      -
+        name: Deploy to Yandex.Cloud via SSH action
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          KEY: ${{ secrets.SSHKEY }}
+          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
+          script: |
+            # Stop running containers
+            docker stop $(echo $IMAGE_NAME)
 
-          # Remove old container
-          docker rm $(echo $IMAGE_NAME)
+            # Remove old containers
+            docker rm $(echo $IMAGE_NAME)
 
-          # Run a new container from a new image
-          docker run -d \
-          --restart always \
-          --env-file .env \
-          -p 8000:8000 \
-          --name $(echo $IMAGE_NAME) \
-          $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) $(echo $COMMAND)
-
-    - name: Deploy to Yandex.Cloud via SSH action
-      uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: ""
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/dist/, /node_modules/"
+            # Run a new container from a new image
+            # docker-compose up
+            docker run -d \
+            --restart always \
+            --env-file .env \
+            -p 8000:8000 \
+            --name $(echo $IMAGE_NAME) \
+            $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) $(echo $COMMAND)
