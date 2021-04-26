@@ -44,7 +44,7 @@ jobs:
 #          push: true
 
       - name: Create SSH private key file
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa && chmod 600
       - name: Update known hosts
         run: mkdir ~/.ssh && echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
       - name: SSH and install
