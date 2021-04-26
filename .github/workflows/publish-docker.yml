@@ -43,7 +43,10 @@ jobs:
 #          tags: dubaidev/yanrun-web:latest
 #          push: true
 
-      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+      - name: Create SSH private key file
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+      - name: Update known hosts
+        run: echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
       - name: SSH and install
         run: ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_IP }} -i id_rsa "cd /apps/yanrun/ && sudo docker-compose pull web api-server && (sudo docker-compose stop || true) && sudo docker-compose up -d"
 
