@@ -43,8 +43,8 @@ jobs:
           tags: dubaidev/yanrun-web:latest
           push: true
 
-#      - name: SSH and install
-#        run:
+      - name: SSH and install
+        run: ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_IP }} -i ${{ secrets.SSH_PRIVATE_KEY }} "cd /apps/yanrun/ && sudo docker-compose pull web api-server && (sudo docker-compose stop || true) && sudo docker-compose up -d"
 
-#      - name: Validate status #optional
-#        run: curl https://dubai-yanrun-03.ya-praktikum.tech -i | grep status
+      - name: Validate status #optional
+        run: curl https://dubai-yanrun-03.ya-praktikum.tech -i | grep status

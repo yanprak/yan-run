@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home__intro">
-        <h3>Приветствую, друг!</h3>
+        <h3>Приветствую, дружищще!</h3>
         <br />
         <p className="home__into-paragraph">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid, aperiam asperiores aut, beatae
