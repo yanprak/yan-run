@@ -45,7 +45,7 @@ export default function useApiAuth() {
         const { service_id } = r.data;
         const loc = window.location;
         // const port = loc.port ? `:${loc.port}` : '';
-        const redirectUrl = `${loc.protocol}//${loc.host}`;
+        const redirectUrl = `${loc.protocol}//${loc.host}/`;
         const urlYa = urlOauth(service_id, redirectUrl);
         loc.replace(urlYa);
       })

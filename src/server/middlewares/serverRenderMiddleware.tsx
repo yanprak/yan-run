@@ -24,6 +24,7 @@ function getHtml(reactHtml: string, reduxState = {}): string {
         />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+        <link rel="stylesheet" href="/assets/style/index.css" />
         <title>Yan Run</title>
       </head>
       <body>
