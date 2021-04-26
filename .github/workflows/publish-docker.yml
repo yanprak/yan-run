@@ -43,9 +43,9 @@ jobs:
           tags: dubaidev/yanrun-web:latest
           push: true
 
-      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/${{ secrets.SSH_USERNAME }}/.ssh/id_rsa
+      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
       - name: SSH and install
-        run: ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_IP }} -i /home/${{ secrets.SSH_USERNAME }}/.ssh/id_rsa "cd /apps/yanrun/ && sudo docker-compose pull web api-server && (sudo docker-compose stop || true) && sudo docker-compose up -d"
+        run: ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_IP }} -i id_rsa "cd /apps/yanrun/ && sudo docker-compose pull web api-server && (sudo docker-compose stop || true) && sudo docker-compose up -d"
 
       - name: Validate status #optional
         run: curl https://dubai-yanrun-03.ya-praktikum.tech -i | grep status
