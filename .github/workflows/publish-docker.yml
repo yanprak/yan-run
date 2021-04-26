@@ -2,94 +2,49 @@ name: CI/CD into Yandex.Cloud
 
 on:
   push:
-    branches: [ master ]
+    branches: [ env-11-ci-cd ]
   workflow_dispatch:
 
 jobs:
-  build_api:
+  build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    steps:
-      -
-        name: Check out the repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      -
-        name: Build Docker image
-        run: npm run docker:api
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push Docker images
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: .
-          tags: dubaidev/yanrun-api:latest
-          push: true
-
-  build_web:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    needs: build_api
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Build Docker image
-        run: npm run docker:web
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push Docker images
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+#      - name: Build docker images and push
+#        run: docker-compose tag dubaidev/yanrun-api:latest dubaidev/yanrun-web:latest
+#      - run: docker-compose push
+      - name: Build and push API
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
+          file: ./src/api-server/Dockerfile
+          tags: dubaidev/yanrun-api:latest
+          push: true
+
+      - name: Build and push WEB
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          file: ./src/client/Dockerfile
           tags: dubaidev/yanrun-web:latest
           push: true
 
-  deploy:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    needs: build_web
-    steps:
-      -
-        name: Deploy to Yandex.Cloud via SSH action
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          HOST: ${{ secrets.SSH_IP }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
-          script: |
-            # Stop running containers
-            docker stop $(echo $IMAGE_NAME)
+#      - name: SSH and install
+#        run:
 
-            # Remove old containers
-            docker rm $(echo $IMAGE_NAME)
-
-            # Run a new container from a new image
-            # docker-compose up
-            docker run -d \
-            --restart always \
-            --env-file .env \
-            -p 8000:8000 \
-            --name $(echo $IMAGE_NAME) \
-            $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) $(echo $COMMAND)
+#      - name: Validate status #optional
+#        run: curl https://dubai-yanrun-03.ya-praktikum.tech -i | grep status
