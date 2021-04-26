@@ -8,7 +8,7 @@ import './home.scss';
 
 export default function Home() {
   return (
-    <div className="container container_is-column container_center page home">
+    <div className="container container_is-column container_center home">
       <div className="home__intro">
         <video autoPlay muted loop id="myVideo" className="home__demo">
           <source src={gameVideoPath} type="video/mp4" />
@@ -23,7 +23,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="home__ranking">
+      <div className="container container_is-column container_center-items home__ranking ">
         <h3 className="h3">Чемпионы</h3>
         <LeaderboardTable limit={5} />
       </div>

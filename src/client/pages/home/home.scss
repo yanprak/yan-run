@@ -1,10 +1,12 @@
 .home {
+  height: 100%;
+  width: 100%;
+
   &__intro {
     position: relative;
     flex: 0 0 300px;
     overflow: hidden;
-    border: 2px solid var(--primary-border-color);
-    margin-top: 2rem;
+    border-bottom: 2px solid var(--primary-border-color);
   }
 
   &__content {
@@ -26,7 +28,7 @@
     //background-color: var(--dark-bg-color);
     //padding: 1rem 1rem 0;
     //margin: 0.7rem;
-    padding-top: 6rem;
+    padding: 6rem;
     font-size: 3rem;
     position: relative;
   }
@@ -38,9 +40,9 @@
 
   &__demo {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
+    left: -2px;
+    bottom: -2px;
+    width: 101%;
     opacity: 0.5;
   }
 }
