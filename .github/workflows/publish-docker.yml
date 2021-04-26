@@ -74,9 +74,9 @@ jobs:
         name: Deploy to Yandex.Cloud via SSH action
         uses: appleboy/ssh-action@v0.1.4
         with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          KEY: ${{ secrets.SSHKEY }}
+          HOST: ${{ secrets.SSH_IP }}
+          USERNAME: ${{ secrets.SSH_USERNAME }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
           script: |
             # Stop running containers
