@@ -19,6 +19,8 @@ const {
   MONGO_USER = '',
   MONGO_PASS = '',
   MONGO_DB = '',
+
+  NODE_ENV='development',
 } = process.env;
 
 const sequelizeOptions: SequelizeOptions = {
@@ -36,9 +38,11 @@ const sequelizeOptions: SequelizeOptions = {
   ],
 };
 
+const IS_DEV = NODE_ENV === 'development';
+
 // connect POSTGRES
 const sequelize = new Sequelize(sequelizeOptions);
-sequelize.sync({ force: true })
+sequelize.sync({ force: IS_DEV })
   .then(() => {
     console.log('[PostgreSQL] Connection established');
     return dataGenerator();

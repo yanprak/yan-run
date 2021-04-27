@@ -14,9 +14,9 @@ if (IS_DEV) {
   const cert = readFileSync(resolve('cert', 'cert.pem'), 'utf8');
 
   https
-    .createServer({key, cert}, server)
+    .createServer({ key, cert }, server)
     .listen(PORT, '0.0.0.0', () => {
-        console.info(`API server listens on port: ${PORT} - https://localhost:${PORT}`);
+      console.info(`API server listens on port: ${PORT} - https://localhost:${PORT}`);
     });
   return;
 }

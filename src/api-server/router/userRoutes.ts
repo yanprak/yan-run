@@ -26,8 +26,8 @@ export default function userRoutes(router: Router) {
       include: [Themes],
     })
       .then(result => {
-        console.log('result =>', userId, result);
-        console.log('Theme =>', result?.theme);
+        console.log('result =>', userId, result?.login);
+        console.log('Theme =>', result?.themeId);
         res.json({
           message: 'OK',
           result,
