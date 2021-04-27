@@ -40,12 +40,11 @@ export default function useApiAuth() {
   }, [dispatch]);
 
   const handleRedirectYa = useCallback(() => {
-    signYaGetId()
+    const loc = window.location;
+    const redirectUrl = `${loc.protocol}//${loc.host}`;
+    signYaGetId(redirectUrl)
       .then((r:AxiosResponse) => {
         const { service_id } = r.data;
-        const loc = window.location;
-        // const port = loc.port ? `:${loc.port}` : '';
-        const redirectUrl = `${loc.protocol}//${loc.host}/`;
         const urlYa = urlOauth(service_id, redirectUrl);
         loc.replace(urlYa);
       })
