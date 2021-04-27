@@ -36,7 +36,7 @@ export default function useApiAuth() {
   }, [dispatch]);
 
   const handleSignYa = useCallback((code: string) => {
-    dispatch(thunkSignYa({ code }));
+    dispatch(thunkSignYa({ code, redirect_uri: 'https://dubai-yanrun-03.ya-praktikum.tech' }));
   }, [dispatch]);
 
   const handleRedirectYa = useCallback(() => {
