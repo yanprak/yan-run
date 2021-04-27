@@ -33,8 +33,8 @@ export default function useApiMessages() {
     dispatch(thunkUpdateMessage(topicId, messageId, data, page));
   }, [dispatch]);
 
-  const deleteMessage = useCallback((topicId: number, messageId: number) => {
-    dispatch(thunkDeleteMessage(topicId, messageId));
+  const deleteMessage = useCallback((topicId: number, messageId: number, page: number) => {
+    dispatch(thunkDeleteMessage(topicId, messageId, page));
   }, [dispatch]);
 
   const toggleReaction = useCallback((
