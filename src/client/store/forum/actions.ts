@@ -10,9 +10,12 @@ export const topicsRequested: ActionCreator<FetchTopicsRequest> = () => ({
   type: FETCH_TOPICS_REQUEST,
 });
 
-export const topicsLoaded: ActionCreator<FetchTopicsSuccess> = (topics: TopicEntry[]) => ({
+export const topicsLoaded: ActionCreator<FetchTopicsSuccess> = (topics: TopicEntry[], total: number) => ({
   type: FETCH_TOPICS_SUCCESS,
-  payload: topics,
+  payload: {
+    topics,
+    total,
+  },
 });
 
 export const topicsError: ActionCreator<FetchTopicsFailure> = () => ({

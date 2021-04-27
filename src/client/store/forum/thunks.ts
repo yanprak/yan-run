@@ -8,7 +8,7 @@ export const thunkFetchTopics = (page?: number) => (dispatch: Dispatch) => {
   dispatch(topicsRequested());
   fetchTopics(page)
     .then(response => {
-      dispatch(topicsLoaded(response.data.result || []));
+      dispatch(topicsLoaded(response.data.result || [], response.data.total || 0));
     })
     .catch(() => dispatch(topicsError()));
 };
