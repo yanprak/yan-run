@@ -3,7 +3,7 @@ import axios from 'axios';
 const {
   NODE_ENV = 'development',
   API_HOST = 'https://local.ya-praktikum.tech',
-  API_PORT = '3000'
+  API_PORT = '3000',
 } = process.env;
 
 const IS_DEV = NODE_ENV === 'development';
@@ -48,5 +48,5 @@ const createUserWithCookies = <T>(data: T, cookies: string) => BACKEND_API.post(
 export {
   fetchUserInfoWithCookies,
   createUserWithCookies,
-  getUserByIdWithCookies
+  getUserByIdWithCookies,
 };

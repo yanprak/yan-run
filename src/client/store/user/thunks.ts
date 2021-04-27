@@ -37,7 +37,7 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
       // dispatch(setCurrentTheme(theme));
       changeTheme(theme);
     })
-    .catch(e => console.log(e));
+    .catch(() => {});
 };
 
 const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => syncUser(signin, data, dispatch);
@@ -51,7 +51,7 @@ const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
       const { result } = r.data;
       return dispatch(setUser(result));
     })
-    .catch(e => console.log('SignUp ERROR => ', e));
+    .catch(() => {});
 };
 
 const thunkCheckLogin = () => (dispatch: Dispatch) => {

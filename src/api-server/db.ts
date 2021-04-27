@@ -20,7 +20,7 @@ const {
   MONGO_PASS = '',
   MONGO_DB = '',
 
-  NODE_ENV='development',
+  NODE_ENV = 'development',
 } = process.env;
 
 const sequelizeOptions: SequelizeOptions = {
@@ -45,7 +45,8 @@ const sequelize = new Sequelize(sequelizeOptions);
 sequelize.sync({ force: IS_DEV })
   .then(() => {
     console.log('[PostgreSQL] Connection established');
-    return dataGenerator();
+
+    return IS_DEV ? dataGenerator() : Promise.resolve();
   })
   .catch(e => console.log(e));
 

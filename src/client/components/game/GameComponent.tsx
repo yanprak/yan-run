@@ -10,6 +10,8 @@ import { RATING_FIELD_NAME } from '../../API/leaderboard';
 import isServer from '../../utils/isServer';
 import './game.scss';
 
+const GameComponentServer = () => null;
+
 const GameComponent = () => {
   let game: Game;
   const refGameContainer = useRef<HTMLDivElement>(null);
@@ -84,6 +86,6 @@ const GameComponent = () => {
   );
 };
 
-const component = isServer ? null : memo(GameComponent);
+const component = isServer ? GameComponentServer : memo(GameComponent);
 
 export default component;
