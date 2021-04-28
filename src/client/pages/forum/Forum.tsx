@@ -66,7 +66,7 @@ export default function Forum() {
       </div>
     );
   } else {
-    children = data.map((item: TopicEntry) => (
+    children = data.topics.map((item: TopicEntry) => (
       <TopicLink
         key={item.id}
         uid={item.id}
@@ -79,10 +79,12 @@ export default function Forum() {
     }
   }
 
+  const total = Math.ceil(data.total / 10);
+
   return (
     <div className="page forum-page container container_is-column container_size-auto container_center">
       <div className="margin_tb_s-7 forum-page__header">
-        <Pagination path="/forum" current={Number(page)} total={5} className="forum-page__pagination" />
+        <Pagination path="/forum" current={Number(page)} total={total} className="forum-page__pagination" />
         <Button
           size="small"
           styleType="primary"

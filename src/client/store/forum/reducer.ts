@@ -4,7 +4,10 @@ import { FETCH_TOPICS_FAILURE, FETCH_TOPICS_REQUEST, FETCH_TOPICS_SUCCESS } from
 const initialState: TopicsState = {
   error: false,
   loading: true,
-  data: [],
+  data: {
+    topics: [],
+    total: 0,
+  },
 };
 
 export default function reducer(state = initialState, action: TopicsActions) {

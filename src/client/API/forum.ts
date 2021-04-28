@@ -2,7 +2,8 @@ import { BACKEND_API } from './index';
 
 interface FetchTopicsResponse {
   result: TopicEntry[],
-  message: string
+  message: string,
+  total: number,
 }
 
 export interface CreateTopicRequestData {

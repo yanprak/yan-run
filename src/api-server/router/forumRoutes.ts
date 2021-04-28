@@ -19,15 +19,19 @@ export default function forumRoutes(router: Router) {
 
   router.get(TOPICS_URL, (req, res) => {
     const { page } = req.query;
-    Topics.findAll({
-      offset: (Number(page) || 0) * PAGE_LIMIT,
-      limit: PAGE_LIMIT,
-    })
-      .then(topics => {
-        res.json({
-          message: 'OK',
-          result: topics,
-        });
+    Topics.count()
+      .then((topicsAmount) => {
+        Topics.findAll({
+          offset: (Number(page) || 0) * PAGE_LIMIT,
+          limit: PAGE_LIMIT,
+        })
+          .then(topics => {
+            res.json({
+              message: 'OK',
+              result: topics,
+              total: topicsAmount
+            });
+          })
       })
       .catch(e => console.log(e));
   });
