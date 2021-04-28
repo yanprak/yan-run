@@ -5,9 +5,9 @@ import {
   signup,
   signout,
   signinYa,
-  fetchUserInfoWithCookies,
   createUser,
-  getUserById, updateUser,
+  getUserById,
+  updateUser,
 } from '../../API/auth';
 import { changeProfile, changePassword, changeAvatar } from '../../API/user';
 import { removeUser, setUser } from './actions';
@@ -37,7 +37,7 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
       // dispatch(setCurrentTheme(theme));
       changeTheme(theme);
     })
-    .catch(e => console.log(e));
+    .catch(() => {});
 };
 
 const thunkSignin = <T>(data:T) => (dispatch: Dispatch) => syncUser(signin, data, dispatch);
@@ -51,7 +51,7 @@ const thunkSignup = <T>(data:T) => (dispatch: Dispatch) => {
       const { result } = r.data;
       return dispatch(setUser(result));
     })
-    .catch(e => console.log('SignUp ERROR => ', e));
+    .catch(() => {});
 };
 
 const thunkCheckLogin = () => (dispatch: Dispatch) => {
@@ -138,28 +138,6 @@ const thunkAvatar = <T>(data:T) => (dispatch: Dispatch) => {
     .catch(() => {});
 };
 
-const thunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInfoWithCookies(cookies)
-  .then(r => {
-    const { id } = r.data;
-    return getUserById(id)
-      .then(res => {
-        const { result } = res.data;
-        if (result) {
-          return Promise.resolve(res);
-        }
-        return createUser(r.data);
-      });
-  })
-  .then(r => {
-    const { result, them } = r.data;
-    if (them) {
-      dispatch(setCurrentTheme(them));
-    }
-    return dispatch(setUser(result));
-  })
-  .catch(() => {
-  });
-
 export {
   thunkSignin,
   thunkSignup,
@@ -169,6 +147,5 @@ export {
   thunkPassword,
   thunkAvatar,
   thunkSignYa,
-  thunkFetchUser,
   thunkUpdateUser,
 };

@@ -7,7 +7,10 @@ import { useApiLeaderboard, useFullscreen, useHero } from '../../hooks';
 import { User, UserState } from '../../store/user/types';
 
 import { RATING_FIELD_NAME } from '../../API/leaderboard';
+import isServer from '../../utils/isServer';
 import './game.scss';
+
+const GameComponentServer = () => null;
 
 const GameComponent = () => {
   let game: Game;
@@ -83,4 +86,6 @@ const GameComponent = () => {
   );
 };
 
-export default memo(GameComponent);
+const component = isServer ? GameComponentServer : memo(GameComponent);
+
+export default component;

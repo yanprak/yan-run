@@ -33,6 +33,7 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-useless-escape': 'off',
     'object-curly-newline': 'off',
+    'no-console': 'off',
 
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
