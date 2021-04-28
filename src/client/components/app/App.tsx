@@ -4,6 +4,7 @@ import getRoutes from '../../routes';
 import Header from '../header';
 import changeTheme from '../../utils/theme';
 import useTheme from '../../hooks/useTheme';
+import Footer from '../footer/Footer';
 
 export default function App() {
   const isAuthenticated = useAuth();
@@ -20,6 +21,9 @@ export default function App() {
     <div className="main">
       <Header />
       {routes}
+      <Footer>
+        <div>Footer</div>
+      </Footer>
     </div>
   );
 }
