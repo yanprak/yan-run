@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { createBrowserHistory } from 'history';
 import {
   fetchUserInfo,
   signin,
@@ -33,8 +34,11 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
     .then(r => {
       const { result, theme } = r.data;
       dispatch(setUser(result));
+      console.log('=log= PUSH');
+      // const history = createBrowserHistory({forceRefresh:true});
+      const history = createBrowserHistory();
+      history.push('/');
       setTimeout(() => dispatch(setCurrentTheme(theme)), 1000);
-      // dispatch(setCurrentTheme(theme));
       changeTheme(theme);
     })
     .catch(() => {});
