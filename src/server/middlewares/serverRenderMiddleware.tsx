@@ -16,6 +16,7 @@ import { ApplicationState } from '../../client/store/types';
 function getHtml(reactHtml: string, reduxState = {}): string {
   const html = renderToStaticMarkup(
     <html lang="en">
+      <base href="/" />
       <head>
         <meta charSet="UTF-8" />
         <meta
