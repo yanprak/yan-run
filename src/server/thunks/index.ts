@@ -8,6 +8,8 @@ import { createUserWithCookies, fetchUserInfoWithCookies, getUserByIdWithCookies
 const serverThunkFetchUser = (cookies: string) => (dispatch: Dispatch) => fetchUserInfoWithCookies(cookies)
   .then(r => {
     const { id } = r.data;
+    console.log('server thunk fetch user: data =', r.data);
+    console.log('server thunk fetch user: cookies =', cookies);
     return getUserByIdWithCookies(id, cookies)
       .then(res => {
         const { result } = res.data;

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-// import { push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import {
   fetchUserInfo,
   signin,
@@ -35,10 +35,7 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
       const { result, theme } = r.data;
       dispatch(setUser(result));
       dispatch(setCurrentTheme(theme));
-      // const history = createBrowserHistory({forceRefresh:true});
-      // const history = createBrowserHistory();
-      // history.push('/');
-      // dispatch(push('/'));
+      dispatch(push('/'));
       changeTheme(theme);
     })
     .catch(() => {});
