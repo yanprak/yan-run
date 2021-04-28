@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { push } from 'connected-react-router';
 import {
   fetchUserInfo,
   signin,
@@ -33,8 +34,8 @@ const syncUser = <T>(handler: HandlerSign, data: T, dispatch: Dispatch) => {
     .then(r => {
       const { result, theme } = r.data;
       dispatch(setUser(result));
-      setTimeout(() => dispatch(setCurrentTheme(theme)), 1000);
-      // dispatch(setCurrentTheme(theme));
+      dispatch(setCurrentTheme(theme));
+      dispatch(push('/'));
       changeTheme(theme);
     })
     .catch(() => {});

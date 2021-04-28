@@ -2,7 +2,7 @@ name: CI/CD into Yandex.Cloud
 
 on:
   push:
-    branches: [ env-11-ci-cd ]
+    branches: [ develop ]
   workflow_dispatch:
 
 jobs:

@@ -5,6 +5,7 @@ import isServer from '../utils/isServer';
 export const HOST_URL = 'https://ya-praktikum.tech';
 export const BASE_URL = `${HOST_URL}/api/v2/`;
 export const RESOURCES_URL = `${BASE_URL}resources`;
+export const PROJECT_URL = 'https://dubai-yanrun-03.ya-praktikum.tech';
 
 const API = axios.create({
   baseURL: BASE_URL,

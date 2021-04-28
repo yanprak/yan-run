@@ -8,7 +8,7 @@ const {
 
 const IS_DEV = NODE_ENV === 'development';
 
-const BACKEND_BASE_URL = IS_DEV ? `${API_HOST}:${API_PORT}/api/v1` : 'localhost:3001/api/v1';
+const BACKEND_BASE_URL = IS_DEV ? `${API_HOST}:${API_PORT}/api/v1` : 'http://api-server:3000/api/v1';
 
 const BACKEND_API = axios.create({
   baseURL: BACKEND_BASE_URL,

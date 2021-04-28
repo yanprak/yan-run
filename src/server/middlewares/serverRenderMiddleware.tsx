@@ -16,6 +16,7 @@ import { ApplicationState } from '../../client/store/types';
 function getHtml(reactHtml: string, reduxState = {}): string {
   const html = renderToStaticMarkup(
     <html lang="en">
+      <base href="/" />
       <head>
         <meta charSet="UTF-8" />
         <meta
@@ -24,6 +25,7 @@ function getHtml(reactHtml: string, reduxState = {}): string {
         />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+        <link rel="stylesheet" href="/assets/style/index.css" />
         <title>Yan Run</title>
       </head>
       <body>
