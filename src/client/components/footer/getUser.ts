@@ -1,9 +1,13 @@
-function getUser(username:string) {
-  return fetch(`https://api.github.com/users/${username}`)
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-    });
-}
+import axios from 'axios';
+
+const GH_API = axios.create({
+  baseURL: 'https://api.github.com/users',
+  responseType: 'json',
+  headers: {
+    'content-type': 'application/json',
+  },
+});
+
+const getUser = (username:string) => GH_API.get(`/${username}`);
 
 export default getUser;

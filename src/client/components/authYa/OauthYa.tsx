@@ -19,7 +19,11 @@ export default function OauthYa(props: PropsAuth) {
     }
   }, [handleSignYa, code]);
   if (code) {
-    return <Loader />;
+    return (
+      <div className="container">
+        <Loader />
+      </div>
+    );
   }
   return <Redirect to="/signin" />;
 }

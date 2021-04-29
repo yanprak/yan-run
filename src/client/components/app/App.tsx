@@ -21,9 +21,7 @@ export default function App() {
     <div className="main">
       <Header />
       {routes}
-      <Footer>
-        <div>Footer</div>
-      </Footer>
+      <Footer />
     </div>
   );
 }
