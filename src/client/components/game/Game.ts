@@ -1,9 +1,16 @@
 import { Config, CTX, GameResult } from './type';
 import Player from './Player';
 import Box from './Box';
+import Coin from './Coin';
+import Sound from './Sound';
 import { Nullable } from '../../types';
 
-import backgroundImage from './textures/background.png';
+import backgroundImage from './textures/background/background.png';
+import bgSound from './audio/background.mp3';
+import jumpSound from './audio/jump.mp3';
+import hitSound from './audio/hit.mp3';
+import clickSound from './audio/click.mp3';
+import coinSound from './audio/coin.mp3';
 
 export default class Game {
   private readonly ctx: CTX;
@@ -12,15 +19,18 @@ export default class Game {
 
   private readonly uiView: HTMLElement | null = null;
 
-  // структуру config необходимо переработать: разбить на ветки
-  // в аналогии с background
   private config: Config = {
     gravity: 0.6,
-    canJump: true,
+    jumpsRemaining: 2,
+    canDoubleJump: true,
     box: [],
     box_max: 42,
     box_speed: 6,
     box_x: 800,
+    coin: [],
+    coin_max: 100,
+    coin_speed: 6,
+    coin_x: 800,
     score: 0,
     isRun: false,
     width: 800,
@@ -37,6 +47,12 @@ export default class Game {
 
   bgImg: HTMLImageElement;
 
+  backgroundSound: Sound;
+  jumpSound: Sound;
+  hitSound: Sound;
+  clickSound: Sound;
+  coinSound: Sound;
+
   score = 0;
 
   private idAnimate: Nullable<number> = null;
@@ -45,11 +61,11 @@ export default class Game {
 
   updateScore: (score: number) => void;
 
-  constructor(canvas: CanvasRenderingContext2D | null, updateScore: (score: number) => void) {
+  constructor(canvas: CanvasRenderingContext2D | null, updateScore: (score: number) => void, characterNumber = 0) {
     this.ctx = canvas;
     this.updateScore = updateScore;
     // create Player
-    this.config.player = new Player(this.config, this.ctx);
+    this.config.player = new Player(this.config, this.ctx, characterNumber);
 
     // create Box
     for (let i = 0; i < this.config.box_max; i++) {
@@ -58,21 +74,39 @@ export default class Game {
       this.config.box_x += Math.floor(Math.random() * 500) + 300;
     }
 
+    for (let i = 0; i < this.config.coin_max; i++) {
+      const coin = new Coin(this.config, this.ctx);
+      this.config.coin.push(coin);
+      this.config.coin_x += Math.floor(Math.random() * 500) + 100;
+    }
+
     this.bgImg = new Image();
     this.bgImg.src = backgroundImage;
 
     this.scoreView = document.getElementById('game-score');
     this.uiView = document.getElementById('game-ui');
+
+    this.backgroundSound = new Sound(bgSound);
+    this.jumpSound = new Sound(jumpSound);
+    this.hitSound = new Sound(hitSound);
+    this.clickSound = new Sound(clickSound);
+    this.coinSound = new Sound(coinSound);
   }
 
   private keyDown(k: number) {
     const key = +k;
     const player = this.config.player as Player;
-    if ((key === 38 || key === 87) && this.config.canJump) {
+    if ((key === 38 || key === 87) && (this.config.jumpsRemaining > 0)) {
       player.ySpeed = -10;
+      this.config.jumpsRemaining -= 1;
+      if (!this.pause) {
+        this.jumpSound.stop();
+        this.jumpSound.play();
+      }
     }
     // pause press key "space"
     if (key === 32) {
+      this.clickSound.play();
       this.handlePause();
     }
   }
@@ -143,6 +177,21 @@ export default class Game {
     return resultGame;
   }
 
+  private updateCoin() {
+    for (let i = 0; i < this.config.coin.length; i++) {
+      const coin = this.config.coin[i] as Coin;
+      coin.show();
+      const wasCollected = coin.update();
+      if (wasCollected && !coin.wasCollected) {
+        coin.collect();
+        this.coinSound.stop();
+        this.coinSound.play();
+        this.score += 1000;
+      }
+      coin.state.x -= this.config.coin_speed;
+    }
+  }
+
   private update() {
     if (!this.ctx) return;
     if (this.pause) return;
@@ -150,7 +199,6 @@ export default class Game {
     this.ctx.clearRect(0, 0, width, height);
 
     // create and show ground
-    // если не анимировать то лучше убрать его в отдельный слой (другой canvas)
     this.updateBackground();
 
     // show player
@@ -159,9 +207,13 @@ export default class Game {
     // show box
     const gameResult: GameResult = this.updateBox();
 
+    // show coin
+    this.updateCoin();
+
     // collision
     switch (gameResult) {
       case 'losing':
+        this.hitSound.play();
         this.stop();
         break;
       case 'win':
@@ -179,13 +231,19 @@ export default class Game {
       const { keyCode } = event;
       this.keyDown(keyCode);
     };
+    document.onclick = () => {
+      this.keyDown(38);
+    };
     if (this.uiView) this.uiView.classList.toggle('hidden');
     this.startAnimate();
+    this.backgroundSound.play();
   }
 
   public stop(isWin?: boolean): number {
     this.updateScore(this.score);
+    this.backgroundSound.stop();
     document.onkeydown = null;
+    document.onclick = null;
     if (this.uiView) {
       this.uiView.classList.toggle('hidden');
     }
@@ -206,6 +264,10 @@ export default class Game {
     if (this.pause) {
       this.startAnimate();
       this.pause = false;
-    } else this.pause = true;
+      this.backgroundSound.play();
+    } else {
+      this.pause = true;
+      this.backgroundSound.pause();
+    }
   }
 }

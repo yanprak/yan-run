@@ -33,8 +33,11 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-useless-escape': 'off',
     'object-curly-newline': 'off',
+    'no-console': 'off',
 
     'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
 
     'max-len': ['error', { 'code': 120 }],
     'arrow-parens': [
@@ -54,6 +57,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/naming-convention': 'off'

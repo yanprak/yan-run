@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-// import { Redirect } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { useApiAuth } from '../../hooks';
+import Loader from '../loader';
 
 type PropsAuth = {
   location: {
@@ -19,7 +19,11 @@ export default function OauthYa(props: PropsAuth) {
     }
   }, [handleSignYa, code]);
   if (code) {
-    return null;
+    return (
+      <div className="container">
+        <Loader />
+      </div>
+    );
   }
   return <Redirect to="/signin" />;
 }

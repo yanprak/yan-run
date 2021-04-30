@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { Request, Response } from 'express';
@@ -9,12 +10,13 @@ import { ThunkDispatch } from 'redux-thunk';
 import App from '../../client/components/app';
 import configureStore from '../../client/store';
 import safelyRenderObject from '../../client/utils/safelyRenderObject';
-import { thunkFetchUser, thunkSignout } from '../../client/store/user/thunks';
+import { serverThunkFetchUser, serverThunkSignout } from '../thunks';
 import { ApplicationState } from '../../client/store/types';
 
 function getHtml(reactHtml: string, reduxState = {}): string {
   const html = renderToStaticMarkup(
     <html lang="en">
+      <base href="/" />
       <head>
         <meta charSet="UTF-8" />
         <meta
@@ -23,6 +25,7 @@ function getHtml(reactHtml: string, reduxState = {}): string {
         />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+        <link rel="stylesheet" href="/assets/style/index.css" />
         <title>Yan Run</title>
       </head>
       <body>
@@ -50,9 +53,9 @@ function selectAuthThunk(cookies: Cookies): (dispatch: Dispatch) => Promise<unkn
       .entries(cookies)
       .map(([key, value]) => `${key}=${value}`)
       .join(';');
-    return thunkFetchUser(cookiesString);
+    return serverThunkFetchUser(cookiesString);
   }
-  return thunkSignout();
+  return serverThunkSignout();
 }
 
 export default function serverRenderMiddleware(req: Request, res: Response) {
@@ -69,7 +72,13 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
         </StaticRouter>
       </Provider>
     );
-    const reactHtml = renderToString(jsx);
+    let reactHtml = '';
+    try {
+      reactHtml = renderToString(jsx);
+    } catch (e) {
+      console.log('ERROR RENDERING SERVER REACT');
+      console.log(e);
+    }
     const reduxState = store.getState();
 
     if (context.url) {

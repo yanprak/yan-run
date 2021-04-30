@@ -92,8 +92,7 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     const isCurrentPageLast = currentPage === totalPages;
     const pageToFetchMessagesFor = isCurrentPageLast ? lastPage : currentPage;
 
-    deleteMessage(topicId, messageId, currentPage);
-    fetchMessages(topicId, pageToFetchMessagesFor);
+    deleteMessage(topicId, messageId, pageToFetchMessagesFor);
 
     history.push(`/forum/topics/${topicId}/${lastPage}`);
   }, [
@@ -104,8 +103,8 @@ const ForumMessage: FC<OwnProps> = (props: OwnProps) => {
     history,
     updateTopic,
     deleteMessage,
-    currentPage,
     setIsDeleteModalOpen,
+    fetchMessages,
   ]);
 
   return (

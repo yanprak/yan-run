@@ -48,9 +48,10 @@ export const thunkUpdateMessage = (
 export const thunkDeleteMessage = (
   topicId: number,
   messageId: number,
-  page?: number,
+  page: number,
 ) => (dispatch: MyThunkDispatch) => {
   deleteMessage(topicId, messageId)
+    .then(() => dispatch(thunkFetchMessages(topicId, page)))
     .catch(() => {});
 };
 

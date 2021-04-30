@@ -6,6 +6,7 @@ import ForumMessage from '../../components/forum-message';
 import Pagination from '../../components/pagination';
 import Button from '../../components/button';
 import MessageEditor from '../../components/message-editor';
+import Loader from '../../components/loader';
 import { useApiMessages, useApiForum } from '../../hooks';
 import { ApplicationState } from '../../store/types';
 import { User } from '../../store/user/types';
@@ -37,7 +38,7 @@ export default function Topic() {
 
   useEffect(() => {
     fetchMessages(topicId, currentPage);
-  }, [fetchMessages, topicId, page]);
+  }, [fetchMessages, topicId, currentPage]);
 
   const submitHandler = useCallback((message: string) => {
     const requestData: CreateMessageRequestData = {
@@ -49,7 +50,7 @@ export default function Topic() {
     createMessage(topicId, requestData, lastPage);
     updateTopic(topicId, { messagesCount: messagesCount + 1 });
     history.push(`/forum/topics/${topicId}/${lastPage}`);
-  }, [createMessage, topicId, user.id, totalPages, messagesCount, history, currentPage]);
+  }, [createMessage, topicId, user.id, totalPages, messagesCount, history, updateTopic]);
 
   let topicTitle;
   if (topicError || !topicName) {
@@ -64,9 +65,13 @@ export default function Topic() {
 
   let children;
   if (messagesError) {
-    children = 'Something when wrong. Reload page, please';
+    children = 'Something went wrong. Reload page, please';
   } else if (messagesLoading) {
-    children = 'Loading...';
+    children = (
+      <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+        <Loader />
+      </div>
+    );
   } else {
     children = messages.map(({ id: messageId, ...messageProps }: MessageEntry) => (
       <ForumMessage

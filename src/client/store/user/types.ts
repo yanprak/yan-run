@@ -18,6 +18,7 @@ export interface User {
   login: string,
   phone: string,
   themeId: number,
+  heroId?: number
 }
 
 export interface SetUserAction extends Action {
@@ -27,4 +28,11 @@ export interface SetUserAction extends Action {
   };
 }
 
-export type UserActions = SetUserAction;
+export interface SetHero extends Action {
+  type: 'SET_HERO';
+  payload: {
+    heroId: number;
+  };
+}
+
+export type UserActions = SetUserAction | SetHero;

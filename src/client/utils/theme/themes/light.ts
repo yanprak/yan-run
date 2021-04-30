@@ -8,6 +8,7 @@ const style = {
   '--primary-bg-color': '#003fe0',
   '--primary-bg-hover-color': '#0033b8',
   '--primary-color': '#ffffff',
+  '--primary-border-color': '#0033b8',
   // secondary
   '--secondary-bg-color': '#eaeaea',
   '--secondary-bg-hover-color': '#dcdcdc',

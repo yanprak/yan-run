@@ -1,0 +1,28 @@
+.footer {
+  background-color: var(--dark-bg-color);
+  color: var(--primary-color);
+  padding: 0.8rem;
+  width: 100%;
+  display: flex;
+
+  &__authors {
+    display: flex;
+    margin: 0 auto;
+  }
+
+  &__contributor {
+    color: var(--primary-bg-color);
+    border: 2px solid var(--secondary-bg-color);
+    border-radius: 60px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+  }
+
+  &__avatar {
+    border-radius: 60px;
+    overflow: hidden;
+  }
+}

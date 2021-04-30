@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
 import ErrorBoundary from './components/error-boundary';
 import App from './components/app';
 import configureStore from './store';
 import { saveState } from './utils/localStorage';
 import throttle from './utils/throttle';
 import './css/common.scss';
-import { thunkCheckLogin } from './store/user/thunks';
 
 const initialState = window.__INITIAL_STATE__;
 delete window.__INITIAL_STATE__;
@@ -29,7 +26,7 @@ store.subscribe(throttle(() => {
   in our project if they logged in theirs. And it looks not like something secure
   for real prod projects.
  */
-(store.dispatch as ThunkDispatch<unknown, unknown, Action<string>>)(thunkCheckLogin());
+// (store.dispatch as ThunkDispatch<unknown, unknown, Action<string>>)(thunkCheckLogin());
 
 // Makes application hot-reloadable
 const HotApp = hot(() => (

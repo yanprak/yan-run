@@ -5,9 +5,14 @@ export interface FetchTopicsRequest extends Action {
   type: 'FETCH_TOPICS_REQUEST'
 }
 
+export interface TopicsResponse {
+  topics: TopicEntry[],
+  total: number,
+}
+
 export interface FetchTopicsSuccess extends Action {
   type: 'FETCH_TOPICS_SUCCESS',
-  payload: TopicEntry[]
+  payload: TopicsResponse
 }
 
 export interface FetchTopicsFailure extends Action {
@@ -17,7 +22,7 @@ export interface FetchTopicsFailure extends Action {
 export type TopicsActions = FetchTopicsRequest | FetchTopicsSuccess | FetchTopicsFailure;
 
 export interface TopicsState {
-  data: TopicEntry[],
+  data: TopicsResponse,
   loading: boolean,
   error: boolean
 }

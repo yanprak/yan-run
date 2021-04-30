@@ -1,10 +1,14 @@
+import 'dotenv/config';
 import path from 'path';
 import webpack, { Configuration } from 'webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import { IS_DEV } from './env';
 import tsLoader from './loaders/ts';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
+import audioLoader from './loaders/audio';
+import videoLoader from './loaders/video';
 
 const IS_SSR = process.env.SR === 'server';
 
@@ -34,10 +38,15 @@ export default {
       tsLoader.client,
       cssLoader.client,
       fileLoader.client,
+      audioLoader.client,
+      videoLoader.client,
     ],
   },
   plugins: [
     // Plugin for hot replacement of built bundle
+    new MiniCssExtractPlugin({
+      filename: 'assets/style/index.css',
+    }),
     IS_DEV && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),
 } as Configuration;

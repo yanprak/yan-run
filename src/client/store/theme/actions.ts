@@ -10,9 +10,7 @@ export const setThemes: ActionCreator<ThemeAction> = (themes: UserTheme[]) => ({
   payload: themes,
 });
 
-export const setCurrentTheme: ActionCreator<ThemeAction> = (current: UserTheme) => {
-  return {
-    type: SET_CURRENT_THEME,
-    payload: current,
-  };
-};
+export const setCurrentTheme: ActionCreator<ThemeAction> = (current: UserTheme) => ({
+  type: SET_CURRENT_THEME,
+  payload: current,
+});

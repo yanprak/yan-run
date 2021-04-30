@@ -4,7 +4,8 @@ import { AxiosResponse } from 'axios';
 import { FormState } from '../useForm/types';
 import { thunkSignin, thunkSignup, thunkSignout, thunkSignYa } from '../../store/user/thunks';
 import { signYaGetId } from '../../API/auth';
-import { urlOauth } from '../../config';
+import { PROJECT_URL } from '../../API';
+import urlOauth from '../../config';
 
 export default function useApiAuth() {
   const dispatch = useDispatch();
@@ -36,15 +37,17 @@ export default function useApiAuth() {
   }, [dispatch]);
 
   const handleSignYa = useCallback((code: string) => {
-    dispatch(thunkSignYa({ code }));
+    dispatch(thunkSignYa({ code, redirect_uri: PROJECT_URL }));
   }, [dispatch]);
 
   const handleRedirectYa = useCallback(() => {
-    signYaGetId()
+    const loc = window.location;
+    const redirectUrl = PROJECT_URL;
+    signYaGetId(redirectUrl)
       .then((r:AxiosResponse) => {
         const { service_id } = r.data;
-        const urlYa = urlOauth(service_id);
-        window.location.replace(urlYa);
+        const urlYa = urlOauth(service_id, redirectUrl);
+        loc.replace(urlYa);
       })
       .catch(() => {});
   }, []);
