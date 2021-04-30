@@ -1,6 +1,7 @@
 import { Config, CTX, GameResult } from './type';
 import Player from './Player';
 import Box from './Box';
+import Coin from './Coin';
 import Sound from './Sound';
 import { Nullable } from '../../types';
 
@@ -9,6 +10,7 @@ import bgSound from './audio/background.mp3';
 import jumpSound from './audio/jump.mp3';
 import hitSound from './audio/hit.mp3';
 import clickSound from './audio/click.mp3';
+import coinSound from './audio/coin.mp3';
 
 export default class Game {
   private readonly ctx: CTX;
@@ -25,6 +27,10 @@ export default class Game {
     box_max: 42,
     box_speed: 6,
     box_x: 800,
+    coin: [],
+    coin_max: 100,
+    coin_speed: 6,
+    coin_x: 800,
     score: 0,
     isRun: false,
     width: 800,
@@ -45,6 +51,7 @@ export default class Game {
   jumpSound: Sound;
   hitSound: Sound;
   clickSound: Sound;
+  coinSound: Sound;
 
   score = 0;
 
@@ -67,6 +74,12 @@ export default class Game {
       this.config.box_x += Math.floor(Math.random() * 500) + 300;
     }
 
+    for (let i = 0; i < this.config.coin_max; i++) {
+      const coin = new Coin(this.config, this.ctx);
+      this.config.coin.push(coin);
+      this.config.coin_x += Math.floor(Math.random() * 500) + 100;
+    }
+
     this.bgImg = new Image();
     this.bgImg.src = backgroundImage;
 
@@ -77,6 +90,7 @@ export default class Game {
     this.jumpSound = new Sound(jumpSound);
     this.hitSound = new Sound(hitSound);
     this.clickSound = new Sound(clickSound);
+    this.coinSound = new Sound(coinSound);
   }
 
   private keyDown(k: number) {
@@ -86,6 +100,7 @@ export default class Game {
       player.ySpeed = -10;
       this.config.jumpsRemaining -= 1;
       if (!this.pause) {
+        this.jumpSound.stop();
         this.jumpSound.play();
       }
     }
@@ -162,6 +177,21 @@ export default class Game {
     return resultGame;
   }
 
+  private updateCoin() {
+    for (let i = 0; i < this.config.coin.length; i++) {
+      const coin = this.config.coin[i] as Coin;
+      coin.show();
+      const wasCollected = coin.update();
+      if (wasCollected && !coin.wasCollected) {
+        coin.collect();
+        this.coinSound.stop();
+        this.coinSound.play();
+        this.score += 1000;
+      }
+      coin.state.x -= this.config.coin_speed;
+    }
+  }
+
   private update() {
     if (!this.ctx) return;
     if (this.pause) return;
@@ -176,6 +206,9 @@ export default class Game {
 
     // show box
     const gameResult: GameResult = this.updateBox();
+
+    // show coin
+    this.updateCoin();
 
     // collision
     switch (gameResult) {
