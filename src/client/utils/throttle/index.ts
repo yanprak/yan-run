@@ -1,11 +1,28 @@
 export default function throttle(callback: (...args: unknown[]) => unknown, wait: number, context = null) {
-  let previousCall: number;
+  let isThrottled = false;
+  let savedArgs: unknown[] | null;
+  let savedThis: unknown;
 
-  return function wrapper(...args: unknown[]) {
-    const currentCall = Date.now();
-    if (previousCall === undefined || (currentCall - previousCall) > wait) {
-      previousCall = currentCall;
-      callback.apply(context, args);
+  function wrapper(...args: unknown[]) {
+    if (isThrottled) {
+      savedArgs = args;
+      savedThis = context;
+      return;
     }
-  };
+
+    callback.apply(context, args);
+
+    isThrottled = true;
+
+    setTimeout(() => {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = null;
+        savedThis = null;
+      }
+    }, wait);
+  }
+
+  return wrapper;
 }
