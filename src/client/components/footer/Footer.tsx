@@ -8,8 +8,8 @@ type UserGitHub = {
 
 const usersGitHub: UserGitHub[] = [
   {
-    login: 'antonkagakin',
-    id: 74297088,
+    login: 'chidori',
+    id: 301098,
   },
   {
     login: 'ferahar',
