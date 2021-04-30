@@ -9,48 +9,58 @@ import configureStore from './store';
 import { saveState, loadState } from './utils/localStorage';
 import throttle from './utils/throttle';
 import './css/common.scss';
+import getIsOnline from './utils/isOnline';
 
 // const initialState = window.__INITIAL_STATE__;
 // delete window.__INITIAL_STATE__;
 // const { store, history } = configureStore(initialState);
 
-let configuredStore;
-if (window.__INITIAL_STATE__) {
-  configuredStore = configureStore(window.__INITIAL_STATE__);
-  delete window.__INITIAL_STATE__;
-} else {
-  configuredStore = configureStore(loadState());
+function renderApp(isOnline: boolean) {
+  let configuredStore;
+
+  if (!isOnline) {
+    console.log('Restoring from localStorage');
+    configuredStore = configureStore(loadState());
+  } else {
+    console.log('Restoring from INITIAL STATE (SSR)');
+    configuredStore = configureStore(window.__INITIAL_STATE__);
+    delete window.__INITIAL_STATE__;
+  }
+
+  const { store, history } = configuredStore;
+  console.log('-= STATE = ', store.getState());
+
+  store.subscribe(throttle(() => {
+    const state = store.getState();
+    saveState(state);
+  }, 1000));
+
+  /*
+    Here we are trying to fetch user info from auth server, if we have access
+    we will put user into redux store. We need this specifically for SSR+HMR,
+    because with help of this other YaPraStudents will be authenticated automatically
+    in our project if they logged in theirs. And it looks not like something secure
+    for real prod projects.
+   */
+  // (store.dispatch as ThunkDispatch<unknown, unknown, Action<string>>)(thunkCheckLogin());
+
+  // Makes application hot-reloadable
+  const HotApp = hot(() => (
+    <Provider store={store}>
+      <ErrorBoundary>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </ErrorBoundary>
+    </Provider>
+  ));
+
+  ReactDOM.hydrate(
+    <HotApp />,
+    document.getElementById('root'),
+  );
 }
 
-const { store, history } = configuredStore;
-console.log('-= STATE = ', store.getState());
-
-store.subscribe(throttle(() => {
-  const state = store.getState();
-  saveState(state);
-}, 1000));
-
-/*
-  Here we are trying to fetch user info from auth server, if we have access
-  we will put user into redux store. We need this specifically for SSR+HMR,
-  because with help of this other YaPraStudents will be authenticated automatically
-  in our project if they logged in theirs. And it looks not like something secure
-  for real prod projects.
- */
-// (store.dispatch as ThunkDispatch<unknown, unknown, Action<string>>)(thunkCheckLogin());
-
-// Makes application hot-reloadable
-const HotApp = hot(() => (
-  <Provider store={store}>
-    <ErrorBoundary>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
-    </ErrorBoundary>
-  </Provider>
-));
-
-ReactDOM.hydrate(
-  <HotApp />,
-  document.getElementById('root'),
-);
+getIsOnline()
+  .then(isOnline => renderApp(isOnline))
+  .catch(() => renderApp(true));
