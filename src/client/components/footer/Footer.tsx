@@ -1,27 +1,11 @@
 import React from 'react';
 import './footer.scss';
-// import getUser from './getUser';
 
 type UserGitHub = {
   login: string,
   id: number,
 };
 
-// const listName = [
-//   'antonkagakin',
-//   'rade363',
-//   'ferahar',
-// ];
-//
-// listName.forEach(name => {
-//   getUser(name)
-//     .then(r => {
-//       console.log(r);
-//     })
-//     .catch(() => {});
-// });
-
-// const usersGitHub: UserGitHub[] = [];
 const usersGitHub: UserGitHub[] = [
   {
     login: 'antonkagakin',
