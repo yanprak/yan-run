@@ -7,22 +7,22 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/index.css">
   <script>
-    // function startServiceWorker() {
-    //   if ('serviceWorker' in navigator) {
-    //     window.addEventListener('load', () => {
-    //       navigator.serviceWorker.register('/sw.js')
-    //         .then(registration => {
-    //           window.console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    //         })
-    //         .catch(error => {
-    //           window.console.log('ServiceWorker registration failed: ', error);
-    //         });
-    //     });
-    //   }
-    // }
+    function startServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              window.console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              window.console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    }
 
-    // TODO(anton.kagakin): Turn off until development done
-    // startServiceWorker();
+    TODO(anton.kagakin): Turn off until development done
+    startServiceWorker();
   </script>
 </head>
 <body>

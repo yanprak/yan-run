@@ -27,6 +27,7 @@ function getHtml(reactHtml: string, reduxState = {}): string {
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
         <link rel="stylesheet" href="/assets/style/index.css" />
         <title>Yan Run</title>
+        <script src="/assets/sw/startServiceWorker.js" />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: reactHtml }} />

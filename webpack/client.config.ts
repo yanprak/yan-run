@@ -2,6 +2,7 @@ import 'dotenv/config';
 import path from 'path';
 import webpack, { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
 import { IS_DEV } from './env';
 import tsLoader from './loaders/ts';
@@ -46,6 +47,11 @@ export default {
     // Plugin for hot replacement of built bundle
     new MiniCssExtractPlugin({
       filename: 'assets/style/index.css',
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/client/sw', to: 'assets/sw/' },
+      ],
     }),
     IS_DEV && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),

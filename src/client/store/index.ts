@@ -27,3 +27,4 @@ export default function configureStore(initialState: ApplicationState | undefine
 
   return { store, history };
 }
+

@@ -6,13 +6,24 @@ import { hot } from 'react-hot-loader/root';
 import ErrorBoundary from './components/error-boundary';
 import App from './components/app';
 import configureStore from './store';
-import { saveState } from './utils/localStorage';
+import { saveState, loadState } from './utils/localStorage';
 import throttle from './utils/throttle';
 import './css/common.scss';
 
-const initialState = window.__INITIAL_STATE__;
-delete window.__INITIAL_STATE__;
-const { store, history } = configureStore(initialState);
+// const initialState = window.__INITIAL_STATE__;
+// delete window.__INITIAL_STATE__;
+// const { store, history } = configureStore(initialState);
+
+let configuredStore;
+if (window.__INITIAL_STATE__) {
+  configuredStore = configureStore(window.__INITIAL_STATE__);
+  delete window.__INITIAL_STATE__;
+} else {
+  configuredStore = configureStore(loadState());
+}
+
+const { store, history } = configuredStore;
+console.log('-= STATE = ', store.getState());
 
 store.subscribe(throttle(() => {
   const state = store.getState();
