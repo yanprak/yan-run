@@ -33,7 +33,9 @@ const Contributor = (index:number, user: UserGitHub) => (
 function Footer() {
   return (
     <div className="footer">
-      { usersGitHub.map((key, index) => Contributor(index, key)) }
+      <div className="footer__authors">
+        { usersGitHub.map((key, index) => Contributor(index, key)) }
+      </div>
     </div>
   );
 }
