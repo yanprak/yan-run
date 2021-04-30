@@ -5,6 +5,11 @@
   width: 100%;
   display: flex;
 
+  &__authors {
+    display: flex;
+    margin: 0 auto;
+  }
+
   &__contributor {
     color: var(--primary-bg-color);
     border: 2px solid var(--secondary-bg-color);
