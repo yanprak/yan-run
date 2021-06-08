@@ -59,9 +59,7 @@ export const thunkToggleReaction = (
   topicId: number,
   messageId: number,
   data: ToggleReactionRequestData,
-  page?: number,
-) => (dispatch: MyThunkDispatch) => {
+) => () => {
   toggleReaction(topicId, messageId, data)
-    .then(() => dispatch(thunkFetchMessages(topicId, page)))
     .catch(() => {});
 };
