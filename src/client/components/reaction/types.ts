@@ -12,3 +12,8 @@ export type OwnProps = {
   userId: number;
   currentPage: number;
 };
+
+export type stateToggle = {
+  classname: string,
+  total: number,
+};
